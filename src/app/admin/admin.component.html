@@ -1,0 +1,6 @@
+<div class="flex justify-center">
+  <ul nz-menu nzMode="horizontal" *ngIf="menuSelected$ | async as menuSelected">
+    <li nz-menu-item *ngFor="let item of menuList" [nzSelected]="item === menuSelected" (click)="onSelectMenu(item)">{{ item.title }}</li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,36 @@
+<div class="flex justify-center h-16 bg-red-custom items-center">
+  <a href=""><img class="hover:cursor-pointer h-16" src="assets/icon/large-icon.png"></a>
+  <i class="text-white text-4xl flex items-center hover:cursor-pointer ml-4" cl nz-icon nzType="bars" nzTheme="outline"
+    nz-dropdown [nzDropdownMenu]="menu"  nzPlacement="bottomRight" nzTrigger="click">
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu nzSelectable>
+        <li nz-menu-item>1st menu item</li>
+        <li nz-menu-item>2nd menu item</li>
+        <li nz-menu-item>3rd menu item</li>
+      </ul>
+    </nz-dropdown-menu>
+  </i>
+  <nz-input-group nzSize="small" class="w-64 h-10 ml-4 rounded-md input-group" [nzSuffix]="suffixIconSearch">
+    <input type="text" class="text-base" nz-input placeholder="Bạn cần tìm gì?" />
+  </nz-input-group>
+  <i class="text-white text-4xl flex items-center hover:cursor-pointer ml-4 rotate-90" nz-icon nzType="phone"
+    nzTheme="outline"></i>
+  <div class="ml-1 text-white">
+    <div class="font-medium">Gọi mua hàng:</div>
+    <div class="font-bold text-base">1800.2097</div>
+  </div>
+  <div class="ml-6 hover:cursor-pointer flex items-center">
+    <nz-badge [nzCount]="5" class="text-white text-3xl flex items-center">
+      <i nz-icon nzType="shopping" nzTheme="fill"></i>
+    </nz-badge>
+    <span class="font-medium ml-1 text-base text-white">Giỏ hàng</span>
+  </div>
+  <div class="ml-6 items-center text-white flex hover:cursor-pointer" (click)="login()"><i class="text-3xl flex items-center" nz-icon
+      nzType="user" nzTheme="outline"></i><span class="font-medium text-baseF">Đăng nhập</span></div>
+</div>
+
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<app-login #loginPage></app-login>
