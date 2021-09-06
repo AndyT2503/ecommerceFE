@@ -1,3 +1,4 @@
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { SupplierEditComponent } from './supplier-edit/supplier-edit.component';
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierComponent } from './supplier/supplier.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 
 const nzModule = [
@@ -18,7 +20,9 @@ const nzModule = [
   NzPaginationModule,
   NzButtonModule,
   NzAvatarModule,
-  NzCheckboxModule
+  NzCheckboxModule,
+  NzMessageModule,
+  NzPopconfirmModule
 ];
 
 @NgModule({

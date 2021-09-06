@@ -2,11 +2,21 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const apiUrl = 'http://localhost:22837'
+const apiUrl = 'https://localhost:5001';
+const firebaseConfig = {
+  apiKey: "AIzaSyCO0LFM25Esi5tsmeG1MIIvwQr4gfXrDT0",
+  authDomain: "ecommerce-andyt.firebaseapp.com",
+  projectId: "ecommerce-andyt",
+  storageBucket: "ecommerce-andyt.appspot.com",
+  messagingSenderId: "140986464214",
+  appId: "1:140986464214:web:d3df44974eaaf0c0915677",
+  measurementId: "G-HGCE662ET9"
+};
 
 export const environment = {
   production: false,
-  apiUrl
+  apiUrl,
+  firebaseConfig
 };
 
 /*
