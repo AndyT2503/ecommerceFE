@@ -1,8 +1,15 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { persistState } from '@datorama/akita';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+
+persistState({
+  include: ['authentication'], // list store key
+  // key: '', // your local state key(optional)
+  storage: localStorage, // (optional) default localStorage
+});
 
 if (environment.production) {
   enableProdMode();

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { SupplierStore } from './../states/supplier/supplier.store';
@@ -39,7 +39,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   menuSelected$ = new BehaviorSubject<Menu>(this.menuList[0]);
   currentMenuSelected = {} as Menu;
-  constructor(private readonly router: Router, private readonly supplierStore: SupplierStore) { }
+  constructor(
+    private readonly router: Router,
+    private readonly supplierStore: SupplierStore
+  ) { }
 
   ngOnInit(): void {
     const currentUrl = this.router.url.substr(1);
@@ -50,6 +53,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.currentMenuSelected = currentMenuSelected;
     }
     this.menuSelected$.next(this.currentMenuSelected);
+
   }
 
   onSelectMenu(item: Menu): void {

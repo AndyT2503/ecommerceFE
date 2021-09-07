@@ -1,10 +1,12 @@
+import { AuthenticationGuard } from './core/gaurds/authentication.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [AuthenticationGuard]
   },
   {
     path: '',

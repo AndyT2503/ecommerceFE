@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -15,7 +17,8 @@ const nzModule = [
   NzBadgeModule,
   NzDropDownModule,
   NzModalModule,
-  NzButtonModule
+  NzButtonModule,
+  NzMessageModule
 ];
 
 
@@ -26,7 +29,8 @@ const nzModule = [
   ],
   imports: [
     CommonModule,
-    nzModule
+    nzModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent
