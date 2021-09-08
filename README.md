@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.4.
 
-## Development server
+## Development
 
 Run `npm install` to install necessary node modules
 Run `npm start` to run project at port 4500
