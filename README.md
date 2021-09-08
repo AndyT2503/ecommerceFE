@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development
 
 Run `npm install` to install necessary node modules
+
 Run `npm start` to run project at port 4500
 
 
@@ -15,11 +16,13 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## State Management
 
 [Akita State](https://datorama.github.io/akita/)
+
 Run `ng g @datorama/akita:feature <state-name>` to generate new akita feature files
 
 ## UI Library
 
 [NG-ZORRO Ant Design](https://ng.ant.design/docs/introduce/en)
+
 [TailwindCSS](https://tailwindcss.com/docs)
 
 
