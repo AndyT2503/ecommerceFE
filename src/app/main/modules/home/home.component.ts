@@ -1,3 +1,5 @@
+import { Supplier } from './../../../states/supplier/supplier.model';
+import { SupplierService } from './../../../states/supplier/supplier.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -14,9 +16,17 @@ export class HomeComponent implements OnInit {
     {src: 'assets/promotion/slider_4.png'},
     {src: 'assets/promotion/slider_5.png'},
   ];
-  constructor() { }
+
+  hotSuppliers: Supplier[] = [];
+  constructor(private readonly supplierService: SupplierService) { }
 
   ngOnInit(): void {
+    this.getHotSupplier();
   }
 
+  getHotSupplier(): void {
+    this.supplierService.getSupplier('', 1, 4).subscribe(
+      res => this.hotSuppliers = res.items
+    );
+  }
 }

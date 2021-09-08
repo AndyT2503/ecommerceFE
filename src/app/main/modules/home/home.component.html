@@ -1,3 +1,4 @@
+
 <div class="mt-4 grid grid-cols-4">
   <div class="col-span-3">
     <nz-carousel class="h-407 w-900" nzAutoPlay>
@@ -13,3 +14,8 @@
   </div>
 </div>
 <img src="assets/promotion/main_banner.png" class="mt-2">
+<div class="mt-4 grid grid-cols-4 space-x-2">
+  <div *ngFor="let item of hotSuppliers" class="col-span-1 h-20 flex justify-center items-center shadow-lg bg-white">
+    <img class="h-20 object-contain" [src]="item.logo">
+  </div>
+</div>

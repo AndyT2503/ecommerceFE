@@ -1,13 +1,9 @@
 <div class="flex justify-center h-16 bg-red-custom items-center" *ngIf="userProfile$ | async as userProfile">
   <a href=""><img class="hover:cursor-pointer h-16" src="assets/icon/large-icon.png"></a>
-  <i class="text-white text-4xl flex items-center hover:cursor-pointer ml-4" cl nz-icon nzType="bars" nzTheme="outline"
+  <i class="text-white text-4xl flex items-center hover:cursor-pointer ml-4" cl nz-icon nzType="menu" nzTheme="outline"
     nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight" nzTrigger="click">
     <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu nzSelectable>
-        <li nz-menu-item>1st menu item</li>
-        <li nz-menu-item>2nd menu item</li>
-        <li nz-menu-item>3rd menu item</li>
-      </ul>
+     <app-menu></app-menu>
     </nz-dropdown-menu>
   </i>
   <nz-input-group nzSize="small" class="w-64 h-10 ml-4 rounded-md input-group" [nzSuffix]="suffixIconSearch">

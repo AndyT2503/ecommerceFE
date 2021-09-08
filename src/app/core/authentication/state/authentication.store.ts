@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { Authentication, User } from './authentication.model';
+import { Authentication, AuthenticationUser } from './authentication.model';
 
 export interface AuthenticationState extends EntityState<Authentication> {
   accessToken: string;
-  userProfile: User;
+  userProfile: AuthenticationUser;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +13,7 @@ export class AuthenticationStore extends EntityStore<AuthenticationState> {
 
   constructor() {
     super({
-      userProfile: {} as User
+      userProfile: {} as AuthenticationUser
     });
   }
 

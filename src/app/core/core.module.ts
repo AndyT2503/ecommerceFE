@@ -10,6 +10,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { LoginComponent } from './authentication/login/login.component';
 import { HeaderComponent } from './layouts/header/header.component';
+import { MenuComponent } from './layouts/menu/menu.component';
 
 const nzModule = [
   NzIconModule,
@@ -25,7 +26,8 @@ const nzModule = [
 @NgModule({
   declarations: [
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule,

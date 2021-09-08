@@ -1,3 +1,5 @@
+import { RoleGuard } from './../core/gaurds/role.guard';
+import { AppRole } from './../core/const/app-role';
 import { AdminComponent } from './admin.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,11 +11,27 @@ const routes: Routes = [
     children: [
       {
         path: 'supplier',
-        loadChildren: () => import('./modules/supplier/supplier.module').then((m) => m.SupplierModule)
+        loadChildren: () => import('./modules/supplier/supplier.module').then((m) => m.SupplierModule),
+        data: {
+          requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
+        },
+        canActivate: [RoleGuard]
       },
       {
         path: 'product-type',
-        loadChildren: () => import('./modules/product-type/product-type.module').then((m) => m.ProductTypeModule)
+        loadChildren: () => import('./modules/product-type/product-type.module').then((m) => m.ProductTypeModule),
+        data: {
+          requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
+        },
+        canActivate: [RoleGuard]
+      },
+      {
+        path: 'user',
+        loadChildren: () => import('./modules/user/user.module').then((m) => m.UserModule),
+        data: {
+          requireRoles: [AppRole.SuperAdmin]
+        },
+        canActivate: [RoleGuard]
       },
       {
         path: '**',

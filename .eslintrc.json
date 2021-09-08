@@ -19,6 +19,8 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"],
         "@angular-eslint/component-selector": [
           "warn",
           {

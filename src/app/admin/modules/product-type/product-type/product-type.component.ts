@@ -1,9 +1,9 @@
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ProductTypeService } from './../../../../states/product-type/product-type.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductType } from 'src/app/states/product-type/product-type.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-type',
@@ -35,7 +35,6 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getProductType();
     this.setupFilterName();
   }
 
@@ -45,18 +44,23 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   }
 
   setupFilterName(): void {
-    this.searchName$.pipe(takeUntil(this.destroyed$), debounceTime(300)).subscribe(val => this.getProductType(val));
+    this.searchName$
+      .pipe(
+        takeUntil(this.destroyed$),
+        startWith(''),
+        debounceTime(300),
+        switchMap(val => this.getProductType(val))).subscribe(res => {
+          this.productTypes = res;
+          this.updateEditCache();
+        });
   }
 
   onFilterNameChange(value: string): void {
     this.searchName$.next(value);
   }
 
-  getProductType(name?: string): void {
-    this.productTypeService.getProductType(name || '').subscribe(res => {
-      this.productTypes = res;
-      this.updateEditCache();
-    });
+  getProductType(name?: string): Observable<ProductType[]> {
+    return this.productTypeService.getProductType(name || '');
   }
 
   updateEditCache(): void {
@@ -71,11 +75,11 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   createProductType(name: string, code: string): void {
     this.productTypeService.createProductType(name, code).subscribe(() => {
       this.nzMessage.success('Tạo loại sản phẩm thành công');
-      this.getProductType();
+      this.searchName$.next('');
       this.filterName = '';
       this.closeAddRow();
     },
-      (err) => this.nzMessage.error(err.error.detail))
+      (err) => this.nzMessage.error(err.error.detail));
   }
 
   saveNewItem(): void {
@@ -91,9 +95,9 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   deleteProductType(id: string): void {
     this.productTypeService.deleteProductType(id).subscribe(() => {
       this.nzMessage.success('Xoá loại sản phẩm thành công');
-      this.getProductType();
+      this.searchName$.next('');
     },
-      (err) => this.nzMessage.error(err.error.detail))
+      (err) => this.nzMessage.error(err.error.detail));
   }
 
   onEditClick(id: string): void {
@@ -117,7 +121,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
         Object.assign(this.productTypes[index], editItem.data);
       },
       (err) => this.nzMessage.error(err.error.detail)
-    )
+    );
   }
 
 }

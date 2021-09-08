@@ -1,3 +1,4 @@
+import { AppRole } from './../core/const/app-role';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -6,6 +7,7 @@ import { SupplierStore } from './../states/supplier/supplier.store';
 export interface Menu {
   title: string;
   link: string;
+  requireRole?: string[];
 }
 
 @Component({
@@ -17,23 +19,28 @@ export class AdminComponent implements OnInit, OnDestroy {
   menuList: Menu[] = [
     {
       title: 'Nhà cung cấp',
-      link: 'admin/supplier'
+      link: 'admin/supplier',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Loại sản phẩm',
-      link: 'admin/product-type'
+      link: 'admin/product-type',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Sản phẩm',
-      link: 'admin/product'
+      link: 'admin/product',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Đơn hàng',
-      link: 'admin/order'
+      link: 'admin/order',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Quản trị',
-      link: 'admin/user'
+      link: 'admin/user',
+      requireRole: [AppRole.SuperAdmin]
     }
   ];
 

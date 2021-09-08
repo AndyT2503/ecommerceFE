@@ -62,7 +62,7 @@ export class SupplierEditComponent implements OnInit {
         item.isSelected = res.productTypes.some(x => x.id === item.id);
         return item;
       });
-    })
+    });
   }
 
   handleFileInput(event: Event) {
@@ -137,19 +137,19 @@ export class SupplierEditComponent implements OnInit {
     this.supplierService.createSupplier(this.supplierName, this.supplierCode, this.supplierLogo, this.productTypeIdsSelected).subscribe(
       () => {
         this.nzMessage.success('Tạo nhà cung cấp thành công');
-        this.router.navigate(['admin/supplier'])
+        this.router.navigate(['admin/supplier']);
       },
       (err) => this.nzMessage.error(err.error.detail)
-    )
+    );
   }
 
   updateSupplier(): void {
     this.supplierService.updateSupplier(this.supplierId, this.supplierName, this.supplierCode, this.supplierLogo, this.productTypeIdsSelected).subscribe(
       () => {
         this.nzMessage.success('Cập nhật thông tin nhà cung cấp thành công');
-        this.router.navigate(['admin/supplier'])
+        this.router.navigate(['admin/supplier']);
       },
       (err) => this.nzMessage.error(err.error.detail)
-    )
+    );
   }
 }

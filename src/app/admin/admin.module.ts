@@ -1,3 +1,4 @@
+import { RoleDirectiveModule } from './../shared/directives/role-directive/role-directive.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +8,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 const nzModule = [
   NzMenuModule
-]
+];
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ const nzModule = [
   imports: [
     CommonModule,
     AdminRoutingModule,
-    nzModule
+    nzModule,
+    RoleDirectiveModule
   ]
 })
 export class AdminModule { }

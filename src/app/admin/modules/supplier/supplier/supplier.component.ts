@@ -34,7 +34,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
       this.searchName = filterName;
     }
     if (!pageIndex) {
-      pageIndex = 1
+      pageIndex = 1;
     }
     this.getSupplier(pageIndex, this.searchName);
     this.setupSearchName();
@@ -46,15 +46,17 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   setupSearchName(): void {
-    this.searchName$.pipe(takeUntil(this.destroyed$), debounceTime(300)).subscribe(
+    this.searchName$.pipe(
+      takeUntil(this.destroyed$), 
+      debounceTime(300)).subscribe(
       (val) => {
         this.getSupplier(1, val);
       }
-    )
+    );
   }
 
   onPageIndexChange(pageIndex: number): void {
-    this.getSupplier(pageIndex, this.searchName)
+    this.getSupplier(pageIndex, this.searchName);
   }
 
   onSearchNameChange(value: string): void {
@@ -76,7 +78,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
         this.getSupplier(1);
       },
       (err) => this.nzMessage.error(err.error.detail)
-    )
+    );
   }
 
   editSupplier(id: string): void {
