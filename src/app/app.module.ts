@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { interceptorProviders } from './core/interceptors';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -24,6 +25,7 @@ export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoad
 @NgModule({
   declarations: [
     AppComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

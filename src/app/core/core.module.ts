@@ -13,6 +13,7 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { MenuComponent } from './layouts/menu/menu.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { FooterComponent } from './layouts/footer/footer.component';
 
 const nzModule = [
   NzIconModule,
@@ -30,7 +31,8 @@ const nzModule = [
   declarations: [
     HeaderComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ const nzModule = [
     TranslateModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class CoreModule { }
