@@ -8,13 +8,13 @@ import { AuthenticationQuery } from 'src/app/core/authentication/state/authentic
 })
 export class RoleDirective implements OnInit, OnDestroy {
   requireRoles!: string[] | undefined;
-  
+  userRole!: string;
   @Input()
   set appRole(roles: string[] | undefined) {
     this.requireRoles = roles;
     this.updateView();
   }
-  userRole!: string;
+
   destroyed$ = new Subject<void>();
   constructor(
     private readonly templateRef: TemplateRef<any>,
@@ -33,7 +33,9 @@ export class RoleDirective implements OnInit, OnDestroy {
 
   private updateView(): void {
     if (this.checkRole()) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
+      if (!this.viewContainer.length) {
+        this.viewContainer.createEmbeddedView(this.templateRef);
+      }
     } else {
       this.viewContainer.clear();
     }
