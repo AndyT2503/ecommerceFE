@@ -1,8 +1,9 @@
-import { AuthenticationQuery } from './authentication.query';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap, filter, mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { Authentication, AuthenticationUser } from './authentication.model';
+import { AuthenticationQuery } from './authentication.query';
 import { AuthenticationStore } from './authentication.store';
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +18,7 @@ export class AuthenticationService {
       username,
       password
     }).pipe(tap((res) => {
-      this.authenticationStore.update({accessToken: res.accessToken});
+      this.authenticationStore.update({ accessToken: res.accessToken });
     }));
   }
 
@@ -31,10 +32,28 @@ export class AuthenticationService {
         return this.http.get<AuthenticationUser>('api/auth/user-profile', {
           headers: header
         }).pipe(tap(res => {
-          this.authenticationStore.update({userProfile: {...res, isAuthenticate: true}});
+          this.authenticationStore.update({ userProfile: { ...res, isAuthenticate: true } });
         }));
       })
     );
   }
 
+  hasValidToken() {
+    const { accessToken } = this.authenticationQuery.getValue();
+    if (!accessToken) {
+      return of(false);
+    }
+    const header = new HttpHeaders({
+      'authorization': `Bearer ${accessToken}`
+    });
+    return this.http.get<AuthenticationUser>('api/auth/user-profile', {
+      headers: header
+    }).pipe(
+      map(_ => {
+        return true;
+      }),
+      catchError(_ => {
+        return of(false);
+      }));
+  }
 }
