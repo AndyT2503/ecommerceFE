@@ -60,7 +60,6 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.currentMenuSelected = currentMenuSelected;
     }
     this.menuSelected$.next(this.currentMenuSelected);
-
   }
 
   onSelectMenu(item: Menu): void {

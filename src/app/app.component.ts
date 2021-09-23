@@ -16,9 +16,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.getUserProfile().subscribe(
-      () => {},
-      (err) => this.authenticationStore.reset()
-    );
+    this.authenticationService.getUserProfile().subscribe();
   }
 }

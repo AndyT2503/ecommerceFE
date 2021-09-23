@@ -67,7 +67,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
 
   setupFilterUsername(): void {
-    this.searchName$.pipe(takeUntil(this.destroyed$), debounceTime(300)).subscribe(val => this.getUsers(1, val));
+    this.searchName$.pipe(debounceTime(300), takeUntil(this.destroyed$)).subscribe(val => this.getUsers(1, val));
   }
 
   onFilterNameChange(value: string): void {

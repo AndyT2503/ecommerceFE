@@ -46,9 +46,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   setupSearchName(): void {
-    this.searchName$.pipe(
-      takeUntil(this.destroyed$), 
-      debounceTime(300)).subscribe(
+    this.searchName$.pipe( 
+      debounceTime(300),
+      takeUntil(this.destroyed$)
+      ).subscribe(
       (val) => {
         this.getSupplier(1, val);
       }

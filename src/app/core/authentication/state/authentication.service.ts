@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { Authentication, AuthenticationUser } from './authentication.model';
 import { AuthenticationQuery } from './authentication.query';
@@ -31,9 +31,15 @@ export class AuthenticationService {
         });
         return this.http.get<AuthenticationUser>('api/auth/user-profile', {
           headers: header
-        }).pipe(tap(res => {
-          this.authenticationStore.update({ userProfile: { ...res, isAuthenticate: true } });
-        }));
+        }).pipe(
+          catchError((err) => {
+            this.authenticationStore.reset();
+            return EMPTY;
+          })
+        );
+      }),
+      tap(res => {
+        this.authenticationStore.update({ userProfile: { ...res, isAuthenticate: true } });
       })
     );
   }

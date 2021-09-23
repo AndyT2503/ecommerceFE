@@ -46,13 +46,13 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   setupFilterName(): void {
     this.searchName$
       .pipe(
-        takeUntil(this.destroyed$),
         startWith(''),
         debounceTime(300),
         switchMap(val => this.getProductType(val))).subscribe(res => {
           this.productTypes = res;
           this.updateEditCache();
-        });
+        },
+        takeUntil(this.destroyed$));
   }
 
   onFilterNameChange(value: string): void {
