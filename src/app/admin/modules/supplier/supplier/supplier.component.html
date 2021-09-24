@@ -13,25 +13,30 @@
     <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm nhà cung cấp
   </button>
 </div>
-<div class="mt-2">
-  <ng-container *ngFor="let item of supplierPaging.items">
-    <div class="flex mt-4 items-center p-4 rounded-r-2xl rounded-l-2xl shadow-lg border-2 border-gray-100">
-      <img [src]="item.logo" class="w-16 h-16 object-contain">
-      <h4 class="ml-4 text-base font-medium">{{item.name | uppercase}}</h4>
-      <div class="ml-auto">
-        <i nz-icon nzType="delete" class="text-2xl mr-1 text-red-500 cursor-pointer" nzTheme="outline" nz-popconfirm
-          nzPopconfirmTitle="Bạn có muốn xoá nhà cung cấp này?" nzPopconfirmPlacement="bottom"
-          (nzOnConfirm)="deleteSupplier(item.id)"></i>
-        <i nz-icon nzType="edit" class="text-2xl text-blue-500 cursor-pointer" nzTheme="outline"
-          (click)="editSupplier(item.id)"></i>
-      </div>
-    </div>
-  </ng-container>
-</div>
 
-<nz-pagination class="mt-8 flex justify-center" [nzPageIndex]="supplierPaging.pageIndex"
-  [nzTotal]="supplierPaging.totalCount" [nzPageSize]="supplierPaging.pageSize" [nzItemRender]="renderItemTemplate" (nzPageIndexChange)="onPageIndexChange($event)">
-</nz-pagination>
+<ng-container *ngIf="supplierPaging$ | async as supplierPaging">
+  <div class="mt-2">
+    <ng-container *ngFor="let item of supplierPaging.items">
+      <div class="flex mt-4 items-center p-4 rounded-r-2xl rounded-l-2xl shadow-lg border-2 border-gray-100">
+        <img [src]="item.logo" class="w-16 h-16 object-contain">
+        <h4 class="ml-4 text-base font-medium">{{item.name | uppercase}}</h4>
+        <div class="ml-auto">
+          <i nz-icon nzType="delete" class="text-2xl mr-1 text-red-500 cursor-pointer" nzTheme="outline" nz-popconfirm
+            nzPopconfirmTitle="Bạn có muốn xoá nhà cung cấp này?" nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="deleteSupplier(item.id)"></i>
+          <i nz-icon nzType="edit" class="text-2xl text-blue-500 cursor-pointer" nzTheme="outline"
+            (click)="editSupplier(item.id)"></i>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <nz-pagination class="mt-8 flex justify-center" [nzPageIndex]="supplierPaging.pageIndex"
+    [nzTotal]="supplierPaging.totalCount" [nzPageSize]="supplierPaging.pageSize" [nzItemRender]="renderItemTemplate"
+    (nzPageIndexChange)="onPageIndexChange($event)">
+  </nz-pagination>
+</ng-container>
+
 <ng-template #renderItemTemplate let-type let-page="page">
   <ng-container [ngSwitch]="type">
     <a *ngSwitchCase="'page'">{{ page }}</a>

@@ -2,7 +2,7 @@ import { AppRole } from './../core/const/app-role';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { SupplierStore } from './../states/supplier/supplier.store';
+import { SupplierStore } from './modules/supplier/state/supplier.store';
 
 export interface Menu {
   title: string;
@@ -15,7 +15,7 @@ export interface Menu {
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent implements OnInit {
   menuList: Menu[] = [
     {
       title: 'Nhà cung cấp',
@@ -64,18 +64,14 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   onSelectMenu(item: Menu): void {
     if (item !== this.currentMenuSelected) {
-      this.resetAdminModuleState();
+      this.resetModuleState();
     }
     this.currentMenuSelected = item;
     this.menuSelected$.next(item);
     this.router.navigate([item.link]);
   }
 
-  resetAdminModuleState(): void {
+  resetModuleState(): void {
     this.supplierStore.reset();
-  }
-
-  ngOnDestroy(): void {
-    this.resetAdminModuleState();
   }
 }

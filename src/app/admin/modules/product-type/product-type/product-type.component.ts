@@ -1,9 +1,9 @@
 import { Observable, Subject } from 'rxjs';
-import { ProductTypeService } from './../../../../states/product-type/product-type.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ProductType } from 'src/app/states/product-type/product-type.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { debounceTime, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { ProductTypeApiService } from 'src/app/shared/api-services/product-type-api.service';
+import { ProductType } from 'src/app/shared/models/product-type.model';
 
 @Component({
   selector: 'app-product-type',
@@ -30,7 +30,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
 
   destroyed$ = new Subject<void>();
   constructor(
-    private readonly productTypeService: ProductTypeService,
+    private readonly productTypeApiService: ProductTypeApiService,
     private readonly nzMessage: NzMessageService
   ) { }
 
@@ -60,7 +60,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   }
 
   getProductType(name?: string): Observable<ProductType[]> {
-    return this.productTypeService.getProductType(name || '');
+    return this.productTypeApiService.getProductType(name || '');
   }
 
   updateEditCache(): void {
@@ -73,7 +73,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   }
 
   createProductType(name: string, code: string): void {
-    this.productTypeService.createProductType(name, code).subscribe(() => {
+    this.productTypeApiService.createProductType(name, code).subscribe(() => {
       this.nzMessage.success('Tạo loại sản phẩm thành công');
       this.searchName$.next('');
       this.filterName = '';
@@ -93,7 +93,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   }
 
   deleteProductType(id: string): void {
-    this.productTypeService.deleteProductType(id).subscribe(() => {
+    this.productTypeApiService.deleteProductType(id).subscribe(() => {
       this.nzMessage.success('Xoá loại sản phẩm thành công');
       this.searchName$.next('');
     },
@@ -113,7 +113,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   }
 
   saveEditItem(editItem: { edit: boolean; data: ProductType }): void {
-    this.productTypeService.updateProductType(editItem.data.id, editItem.data.name, editItem.data.code).subscribe(
+    this.productTypeApiService.updateProductType(editItem.data.id, editItem.data.name, editItem.data.code).subscribe(
       () => {
         editItem.edit = false;
         this.nzMessage.success('Cập nhật loại sản phẩm thành công');

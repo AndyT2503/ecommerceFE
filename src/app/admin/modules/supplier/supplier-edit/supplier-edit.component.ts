@@ -1,11 +1,12 @@
-import { SupplierService } from './../../../../states/supplier/supplier.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { ProductType } from 'src/app/states/product-type/product-type.model';
-import { ProductTypeService } from './../../../../states/product-type/product-type.service';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductType } from 'src/app/shared/models/product-type.model';
+import { SupplierService } from '../state/supplier.service';
+import { SupplierStore } from '../state/supplier.store';
+import { ProductTypeApiService } from 'src/app/shared/api-services/product-type-api.service';
 
 export interface ProductTypeCheckBox extends ProductType {
   isSelected: boolean;
@@ -25,11 +26,12 @@ export class SupplierEditComponent implements OnInit {
   supplierLogo!: string;
   supplierId!: string;
   constructor(
-    private readonly productTypeService: ProductTypeService,
+    private readonly productTypeApiService: ProductTypeApiService,
     private readonly fireStorage: AngularFireStorage,
     private readonly activeRoute: ActivatedRoute,
     private readonly nzMessage: NzMessageService,
     private readonly supplierService: SupplierService,
+    private readonly supplierStore: SupplierStore,
     private readonly router: Router) { }
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class SupplierEditComponent implements OnInit {
   }
 
   getProductType(): void {
-    this.productTypeService.getProductType('').subscribe(x => {
+    this.productTypeApiService.getProductType('').subscribe(x => {
       this.productTypes = x.map(item => ({ ...item, isSelected: false }));
       if (this.supplierId) {
         this.getSupplierId(this.supplierId);
@@ -137,6 +139,7 @@ export class SupplierEditComponent implements OnInit {
     this.supplierService.createSupplier(this.supplierName, this.supplierCode, this.supplierLogo, this.productTypeIdsSelected).subscribe(
       () => {
         this.nzMessage.success('Tạo nhà cung cấp thành công');
+        this.supplierStore.reset();
         this.router.navigate(['admin/supplier']);
       },
       (err) => this.nzMessage.error(err.error.detail)

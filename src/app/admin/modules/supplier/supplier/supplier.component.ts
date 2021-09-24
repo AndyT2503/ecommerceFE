@@ -1,12 +1,13 @@
-import { SupplierStore } from './../../../../states/supplier/supplier.store';
 import { Router } from '@angular/router';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { PagingModel } from './../../../../shared/model/paging-model';
-import { SupplierService } from './../../../../states/supplier/supplier.service';
+import { PagingModel } from '../../../../shared/models/paging-model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Supplier } from 'src/app/states/supplier/supplier.model';
+import { SupplierService } from '../state/supplier.service';
+import { SupplierStore } from '../state/supplier.store';
+import { Supplier } from 'src/app/shared/models/supplier.model';
+import { SupplierQuery } from '../state/supplier.query';
 
 @Component({
   selector: 'app-supplier',
@@ -14,7 +15,8 @@ import { Supplier } from 'src/app/states/supplier/supplier.model';
   styleUrls: ['./supplier.component.scss']
 })
 export class SupplierComponent implements OnInit, OnDestroy {
-  supplierPaging = {} as PagingModel<Supplier>;
+
+  supplierPaging$ = this.supplierQuery.select(x => x.supplierPaging);
   searchName = '';
   searchName$ = new Subject<string>();
   destroyed$ = new Subject<void>();
@@ -22,6 +24,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
   pageSize = 1;
   constructor(
     private readonly supplierService: SupplierService,
+    private readonly supplierQuery: SupplierQuery,
     private readonly nzMessage: NzMessageService,
     private readonly router: Router,
     private readonly supplierStore: SupplierStore
@@ -66,9 +69,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
   getSupplier(pageIndex: number, name?: string): void {
     this.supplierStore.update({ supplierNameFilter: name, pageIndex: pageIndex, pageSize: this.pageSize });
-    this.supplierService.getSupplier(name || '', pageIndex, this.pageSize).subscribe(res => {
-      this.supplierPaging = res;
-    });
+    this.supplierService.getSupplier(name || '', pageIndex, this.pageSize).subscribe();
   }
 
   deleteSupplier(id: string): void {

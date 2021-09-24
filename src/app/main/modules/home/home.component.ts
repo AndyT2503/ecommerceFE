@@ -1,6 +1,7 @@
-import { Supplier } from './../../../states/supplier/supplier.model';
-import { SupplierService } from './../../../states/supplier/supplier.service';
+
 import { Component, OnInit } from '@angular/core';
+import { SupplierApiService } from 'src/app/shared/api-services/supplier-api.service';
+import { Supplier } from 'src/app/shared/models/supplier.model';
 
 @Component({
   selector: 'app-home',
@@ -18,14 +19,14 @@ export class HomeComponent implements OnInit {
   ];
 
   hotSuppliers: Supplier[] = [];
-  constructor(private readonly supplierService: SupplierService) { }
+  constructor(private readonly supplierApiService: SupplierApiService) { }
 
   ngOnInit(): void {
     this.getHotSupplier();
   }
 
   getHotSupplier(): void {
-    this.supplierService.getSupplier('', 1, 4).subscribe(
+    this.supplierApiService.getSupplier('', 1, 4).subscribe(
       res => this.hotSuppliers = res.items
     );
   }

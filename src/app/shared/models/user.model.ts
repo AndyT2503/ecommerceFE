@@ -5,9 +5,3 @@ export interface User {
   username: string;
   role: string;
 }
-
-export function createUser(params: Partial<User>) {
-  return {
-
-  } as User;
-}

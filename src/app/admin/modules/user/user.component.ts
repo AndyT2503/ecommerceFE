@@ -1,12 +1,11 @@
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppRole } from './../../../core/const/app-role';
 import { takeUntil, debounceTime, tap } from 'rxjs/operators';
-import { UserQuery } from './../../../states/user/user.query';
-import { UserService } from './../../../states/user/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { PagingModel } from 'src/app/shared/model/paging-model';
-import { User } from 'src/app/states/user/user.model';
+import { UserService } from './state/user.service';
+import { UserQuery } from './state/user.query';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-user',

@@ -1,13 +1,13 @@
-import { ProductType } from 'src/app/states/product-type/product-type.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ProductType } from '../models/product-type.model';
 
-@Injectable({ providedIn: 'root' })
-export class ProductTypeService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductTypeApiService {
 
-  constructor(private http: HttpClient) {
-  }
-
+  constructor(private readonly http: HttpClient) { }
 
   getProductType(name: string) {
     return this.http.get<ProductType[]>('api/product-type', {
@@ -35,5 +35,4 @@ export class ProductTypeService {
       code
     });
   }
-
 }

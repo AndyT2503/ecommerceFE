@@ -1,18 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { AuthenticationStore } from './../../core/authentication/state/authentication.store';
-import { PagingModel } from './../../shared/model/paging-model';
-import { User } from './user.model';
-import { UserStore } from './user.store';
+import { PagingModel } from '../models/paging-model';
+import { User } from '../models/user.model';
 
-@Injectable({ providedIn: 'root' })
-export class UserService {
+@Injectable({
+  providedIn: 'root'
+})
+export class UserApiService {
 
-  constructor(private userStore: UserStore, private http: HttpClient, private readonly authenticationStore: AuthenticationStore) {
-  }
-
-
+  constructor(private readonly http: HttpClient) { }
 
   getUsers(pageIndex: number, pageSize: number, username: string) {
     return this.http.get<PagingModel<User>>('api/auth/users', {
@@ -21,9 +17,7 @@ export class UserService {
         pageSize: `${pageSize}`,
         username
       }
-    }).pipe(tap(res => {
-      this.userStore.update({ userPaging: res });
-    }));
+    });
   }
 
   updateUserInfo(id: string, role: string, lastName: string, firstName: string) {

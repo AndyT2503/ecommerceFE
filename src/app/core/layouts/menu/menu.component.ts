@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductTypeApiService } from 'src/app/shared/api-services/product-type-api.service';
+import { ProductType } from 'src/app/shared/models/product-type.model';
 import { ProductType as productType } from '../../const/product-type';
-import { ProductType } from './../../../states/product-type/product-type.model';
-import { ProductTypeService } from './../../../states/product-type/product-type.service';
 
 
 export interface SubMenuItem extends ProductType {
@@ -15,14 +15,14 @@ export interface SubMenuItem extends ProductType {
 })
 export class MenuComponent implements OnInit {
   menu: SubMenuItem[] = [];
-  constructor(private readonly productTypeService: ProductTypeService) { }
+  constructor(private readonly productTypeApiService: ProductTypeApiService) { }
 
   ngOnInit(): void {
     this.getMenu();
   }
 
   getMenu(): void {
-    this.productTypeService.getProductType('').subscribe(
+    this.productTypeApiService.getProductType('').subscribe(
       res => {
         this.menu = res.map(item => (
           {

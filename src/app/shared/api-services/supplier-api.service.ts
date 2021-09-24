@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PagingModel } from './../../shared/model/paging-model';
-import { Supplier } from './supplier.model';
-import { SupplierStore } from './supplier.store';
+import { PagingModel } from '../models/paging-model';
+import { Supplier } from '../models/supplier.model';
 
-@Injectable({ providedIn: 'root' })
-export class SupplierService {
+@Injectable({
+  providedIn: 'root'
+})
+export class SupplierApiService {
 
-  constructor(private supplierStore: SupplierStore, private http: HttpClient) {
-  }
-
+  constructor(private readonly http: HttpClient) { }
 
   createSupplier(name: string, code: string, logo: string, productTypes: string[]) {
     return this.http.post('api/supplier', {

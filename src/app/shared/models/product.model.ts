@@ -54,9 +54,3 @@ export interface WatchConfiguration extends Configuration {
   screenDiameter: string;
   features: string[];
 }
-
-export function createProduct(params: Partial<Product>) {
-  return {
-
-  } as Product;
-}
