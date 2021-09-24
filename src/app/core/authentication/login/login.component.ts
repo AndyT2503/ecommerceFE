@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AuthenticationService } from './../state/authentication.service';
 
@@ -15,8 +14,7 @@ export class LoginComponent implements OnInit {
   password!: string;
   constructor(
     private readonly authenticationService: AuthenticationService,
-    private readonly nzMessage: NzMessageService,
-    private readonly router: Router) { }
+    private readonly nzMessage: NzMessageService) { }
 
   ngOnInit(): void {
     this.isModalVisible = false;

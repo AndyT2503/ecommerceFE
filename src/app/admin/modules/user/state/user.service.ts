@@ -1,7 +1,6 @@
-import { UserApiService } from './../../../../shared/api-services/user-api.service';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
+import { UserApiService } from './../../../../shared/api-services/user-api.service';
 import { UserStore } from './user.store';
 
 @Injectable({ providedIn: 'root' })
@@ -11,9 +10,11 @@ export class UserService {
   }
 
   getUsers(pageIndex: number, pageSize: number, username: string) {
-    return this.userApiService.getUsers(pageIndex, pageSize, username).pipe(tap(res => {
-      this.userStore.update({ userPaging: res });
-    }));
+    return this.userApiService.getUsers(pageIndex, pageSize, username).pipe(
+      tap(res => {
+        this.userStore.update({ userPaging: res });
+      })
+    );
   }
 
   updateUserInfo(id: string, role: string, lastName: string, firstName: string) {

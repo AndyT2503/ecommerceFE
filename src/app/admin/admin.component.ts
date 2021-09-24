@@ -1,7 +1,7 @@
-import { AppRole } from './../core/const/app-role';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AppRole } from './../core/const/app-role';
 import { SupplierStore } from './modules/supplier/state/supplier.store';
 
 export interface Menu {

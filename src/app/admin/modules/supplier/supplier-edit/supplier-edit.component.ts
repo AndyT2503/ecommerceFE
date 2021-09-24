@@ -1,16 +1,12 @@
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductType } from 'src/app/shared/models/product-type.model';
-import { SupplierService } from '../state/supplier.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { finalize } from 'rxjs/operators';
+import { ProductTypeCheckBox, SupplierService } from '../state/supplier.service';
 import { SupplierStore } from '../state/supplier.store';
-import { ProductTypeApiService } from 'src/app/shared/api-services/product-type-api.service';
 
-export interface ProductTypeCheckBox extends ProductType {
-  isSelected: boolean;
-}
+
 @Component({
   selector: 'app-supplier-edit',
   templateUrl: './supplier-edit.component.html',
@@ -26,7 +22,6 @@ export class SupplierEditComponent implements OnInit {
   supplierLogo!: string;
   supplierId!: string;
   constructor(
-    private readonly productTypeApiService: ProductTypeApiService,
     private readonly fireStorage: AngularFireStorage,
     private readonly activeRoute: ActivatedRoute,
     private readonly nzMessage: NzMessageService,
@@ -43,8 +38,9 @@ export class SupplierEditComponent implements OnInit {
   }
 
   getProductType(): void {
-    this.productTypeApiService.getProductType('').subscribe(x => {
-      this.productTypes = x.map(item => ({ ...item, isSelected: false }));
+    this.supplierService.getProductType()
+    .subscribe(res => {
+      this.productTypes = res;
       if (this.supplierId) {
         this.getSupplierId(this.supplierId);
       }

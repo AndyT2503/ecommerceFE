@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { CanActivate, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthenticationService } from './../authentication/state/authentication.service';
 
 @Injectable({
@@ -9,9 +9,16 @@ import { AuthenticationService } from './../authentication/state/authentication.
 })
 export class AuthenticationGuard implements CanActivate {
 
-  constructor(private readonly authenticationService: AuthenticationService) {}
-  canActivate(): Observable<boolean>  {
-    return this.authenticationService.hasValidToken();
+  constructor(private readonly authenticationService: AuthenticationService, private readonly router: Router) { }
+  canActivate(): Observable<boolean | UrlTree> {
+    return this.authenticationService.hasValidToken().pipe(
+      map(responseOk => {
+        if (!responseOk) {
+          return this.router.parseUrl('');
+        }
+        return responseOk;
+      })
+    );
   }
-  
+
 }
