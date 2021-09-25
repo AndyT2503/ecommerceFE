@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { finalize } from 'rxjs/operators';
 import { ProductTypeCheckBox, SupplierService } from '../state/supplier.service';
 import { SupplierStore } from '../state/supplier.store';
+import { FirebaseService } from './../../../../shared/util-services/firebase.service';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class SupplierEditComponent implements OnInit {
   supplierLogo!: string;
   supplierId!: string;
   constructor(
-    private readonly fireStorage: AngularFireStorage,
+    private readonly firebaseService: FirebaseService,
     private readonly activeRoute: ActivatedRoute,
     private readonly nzMessage: NzMessageService,
     private readonly supplierService: SupplierService,
@@ -84,47 +83,26 @@ export class SupplierEditComponent implements OnInit {
     }
     // Create new supplier
     if (!this.supplierId) {
-      const uploadFirebase = this.handleUploadFileToFirebase();
-      const fileRef = uploadFirebase.fileRef;
-      const task = uploadFirebase.task;
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(url => {
-            this.supplierLogo = url;
-            this.createSupplier();
-          });
-        })
-      ).subscribe();
+      this.firebaseService.uploadImages(this.fileToUpload!).subscribe(
+        url => {
+          this.supplierLogo = url;
+          this.createSupplier();
+        }
+      );
     } else {
       //Update Supplier Info
       if (this.fileToUpload) {
-        const uploadFirebase = this.handleUploadFileToFirebase();
-        const fileRef = uploadFirebase.fileRef;
-        const task = uploadFirebase.task;
-        task.snapshotChanges().pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe(url => {
-              this.supplierLogo = url;
-              this.updateSupplier();
-            });
-          })
-        ).subscribe();
+        this.firebaseService.uploadImages(this.fileToUpload!).subscribe(
+          url => {
+            this.supplierLogo = url;
+            this.updateSupplier();
+          }
+        );
       } else {
         this.updateSupplier();
       }
     }
 
-  }
-
-  handleUploadFileToFirebase(): { task: AngularFireUploadTask; fileRef: AngularFireStorageReference } {
-    const now = Date.now();
-    const nameImg = `images/${this.fileToUpload?.name}${now}`;
-    const fileRef = this.fireStorage.ref(nameImg);
-    const task = this.fireStorage.upload(nameImg, this.fileToUpload);
-    return ({
-      task,
-      fileRef
-    });
   }
 
   closeEdit(): void {
