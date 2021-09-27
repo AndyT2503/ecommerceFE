@@ -11,6 +11,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { LoginComponent } from './authentication/login/login.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { MenuComponent } from './layouts/menu/menu.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 const nzModule = [
   NzIconModule,
@@ -19,7 +21,8 @@ const nzModule = [
   NzDropDownModule,
   NzModalModule,
   NzButtonModule,
-  NzMessageModule
+  NzMessageModule,
+  NzRadioModule,
 ];
 
 
@@ -32,7 +35,8 @@ const nzModule = [
   imports: [
     CommonModule,
     nzModule,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   exports: [
     HeaderComponent

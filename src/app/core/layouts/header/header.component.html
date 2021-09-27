@@ -1,30 +1,44 @@
-<div class="flex justify-center h-16 bg-red-custom items-center" *ngIf="userProfile$ | async as userProfile">
+<div class="flex justify-center h-16 w-full bg-red-custom items-center" *ngIf="userProfile$ | async as userProfile">
   <a href=""><img class="hover:cursor-pointer h-16" src="assets/icon/large-icon.png"></a>
   <i class="text-white text-4xl flex items-center hover:cursor-pointer ml-4" cl nz-icon nzType="menu" nzTheme="outline"
     nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight" nzTrigger="click">
     <nz-dropdown-menu #menu="nzDropdownMenu">
-     <app-menu></app-menu>
+      <app-menu></app-menu>
     </nz-dropdown-menu>
   </i>
   <nz-input-group nzSize="small" class="w-64 h-10 ml-4 rounded-md input-group" [nzSuffix]="suffixIconSearch">
     <input type="text" class="text-base" nz-input placeholder="Bạn cần tìm gì?" />
   </nz-input-group>
+  <div class="ml-4 border-2 border-white">
+    <img [src]="flagLanguageSelected" class="w-6">
+  </div>
+  <i nz-icon nzType="down" class="text-white ml-1 cursor-pointer" nzTheme="outline" nz-dropdown
+    [nzDropdownMenu]="languageMenu" nzPlacement="bottomCenter">
+    <nz-dropdown-menu #languageMenu="nzDropdownMenu">
+      <div nz-menu class="px-2 py-1 w-36">
+        <p class="font-medium">{{'CHANGE LANGUAGE' | translate}}</p>
+        <nz-radio-group [(ngModel)]="languageSelected" (ngModelChange)="onChangeLanguage($event)">
+          <label nz-radio *ngFor="let lang of languages" [nzValue]="lang">{{lang | translate}}</label>
+        </nz-radio-group>
+      </div>
+    </nz-dropdown-menu>
+  </i>
   <i class="text-white text-4xl flex items-center hover:cursor-pointer ml-4 rotate-90" nz-icon nzType="phone"
     nzTheme="outline"></i>
   <div class="ml-1 text-white">
-    <div class="font-medium">Gọi mua hàng:</div>
+    <div class="font-medium">{{'HEADER.CONTACT' | translate}}:</div>
     <div class="font-bold text-base">1800.2097</div>
   </div>
   <div class="ml-6 hover:cursor-pointer flex items-center">
     <nz-badge [nzCount]="5" class="text-white text-3xl flex items-center">
       <i nz-icon nzType="shopping" nzTheme="fill"></i>
     </nz-badge>
-    <span class="font-medium ml-1 text-base text-white">Giỏ hàng</span>
+    <span class="font-medium ml-1 text-base text-white">{{'HEADER.CART' | translate}}</span>
   </div>
   <div class="ml-6 items-center text-white flex hover:cursor-pointer" *ngIf="!userProfile.isAuthenticate else userTmp"
     (click)="login()">
     <i class="text-3xl flex items-center" nz-icon nzType="user" nzTheme="outline"></i><span
-      class="font-medium text-baseF">Đăng nhập</span>
+      class="font-medium text-baseF">{{'HEADER.LOGIN' | translate}}</span>
   </div>
   <ng-template #userTmp>
     <div class="ml-6 items-center text-white flex hover:cursor-pointer" nz-dropdown [nzDropdownMenu]="userMenu"
