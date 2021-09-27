@@ -13,7 +13,7 @@ import { User } from 'src/app/shared/models/user.model';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit, OnDestroy {
-  userPaging$ = this.userQuery.select(x => x.userPaging).pipe(tap((res) => this.userList = res?.items));
+  userPaging$ = this.userQuery.userPaging$.pipe(tap((res) => this.userList = res?.items));
   userList: User[] = [];
   newUser: {
     username: string;

@@ -16,7 +16,7 @@ import { SupplierQuery } from '../state/supplier.query';
 })
 export class SupplierComponent implements OnInit, OnDestroy {
 
-  supplierPaging$ = this.supplierQuery.select(x => x.supplierPaging);
+  supplierPaging$ = this.supplierQuery.supplierPaging$;
   searchName = '';
   searchName$ = new Subject<string>();
   destroyed$ = new Subject<void>();

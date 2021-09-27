@@ -13,7 +13,7 @@ import { LanguageService } from './state/language.service';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('loginPage') loginComponent!: LoginComponent;
-  userProfile$ = this.authenticationQuery.select(x => x.userProfile);
+  userProfile$ = this.authenticationQuery.userProfile$;
   languages = this.translateService.getLangs();
   languageSelected!: string;
   listFlag = [
