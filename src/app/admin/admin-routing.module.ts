@@ -17,7 +17,15 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
         },
-        canActivate: [RoleGuard]
+        //canActivate: [RoleGuard]
+      },
+      {
+        path: 'product',
+        loadChildren: () => import('./modules/product/product.module').then((m) => m.ProductModule),
+        data: {
+          requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
+        },
+        //canActivate: [RoleGuard]
       },
       {
         path: 'product-type',
@@ -25,7 +33,7 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
         },
-        canActivate: [RoleGuard]
+        //canActivate: [RoleGuard]
       },
       {
         path: 'user',
@@ -33,7 +41,7 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.SuperAdmin]
         },
-        canActivate: [RoleGuard]
+        //canActivate: [RoleGuard]
       },
       {
         path: 'sale-code',
