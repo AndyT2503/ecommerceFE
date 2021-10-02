@@ -20,27 +20,27 @@ export class AdminComponent implements OnInit {
     {
       title: 'Nhà cung cấp',
       link: 'admin/supplier',
-      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Loại sản phẩm',
       link: 'admin/product-type',
-      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Sản phẩm',
       link: 'admin/product',
-      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Đơn hàng',
       link: 'admin/order',
-      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Quản trị',
       link: 'admin/user',
-      requireRole: [AppRole.SuperAdmin]
+      //requireRole: [AppRole.SuperAdmin]
     }
   ];
 

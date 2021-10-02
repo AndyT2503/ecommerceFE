@@ -10,7 +10,6 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { ProductTypeRoutingModule } from './product-type-routing.module';
 import { ProductTypeComponent } from './product-type/product-type.component';
 
-
 const nzModule = [
   NzInputModule,
   NzIconModule,
