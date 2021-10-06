@@ -1,8 +1,8 @@
-<nz-card style="width: 300px;" [nzCover]="coverTemplate" [nzActions]="[LEFT_BUTTON,RIGHT_BUTTON]">
+<nz-card class="w-60 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:shadow-md" [nzCover]="coverTemplate" [nzActions]="[LEFT_BUTTON,RIGHT_BUTTON]">
   <nz-card-meta class="mb-1" nzTitle={{nameProduct}}></nz-card-meta>
   <p class="cellphones-color-price">{{priceProduct | currency:'VND'}}</p>
-  <nz-rate [(ngModel)]="rate" nzAllowHalf nzDisabled></nz-rate>
-  <span class="ml-2">5 đánh giá </span>
+  <nz-rate class="text-sm" [(ngModel)]="rate" nzAllowHalf nzDisabled></nz-rate>
+  <span class="ml-2 text-sm">5 đánh giá </span>
 </nz-card>
 
 
@@ -11,10 +11,10 @@
 </ng-template>
 
 <ng-template #LEFT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-blue-500 font-medium hover:bg-blue-700">{{leftButtonTitle}}</button>
+  <button class="w-20 h-7 text-base text-white bg-blue-700 font-medium rounded-sm">{{leftButtonTitle}}</button>
 </ng-template>
 <ng-template #RIGHT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-red-500 font-medium m-6hover:bg-red-700">{{rightButtonTitle}}</button>
+  <button class="w-20 h-7 text-base text-white bg-red-700 rounded-sm font-medium">{{rightButtonTitle}}</button>
 </ng-template>
 
 

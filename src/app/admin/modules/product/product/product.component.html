@@ -4,23 +4,32 @@
   </div>
 </div>
 <div class="flex items-center mt-2">
-  <button nz-button nzDanger class="flex items-center p-2 rounded-lg" routerLink="edit">
+  <button
+    nz-button
+    nzDanger
+    class="flex items-center p-2 rounded-lg"
+    routerLink="edit"
+  >
     <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm nhà cung cấp
   </button>
 </div>
 
 <!-- Form Search -->
 <div class="flex items-center mt-2">
-  <nz-input-group nzSize="small" class="mr-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
+  <nz-input-group
+    nzSize="small"
+    class="mr-auto w-1/3 rounded-md input-group"
+    [nzSuffix]="suffixIconSearch"
+  >
     <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" />
   </nz-input-group>
-  <h6>Loại sản phẩm </h6>
+  <h6>Loại sản phẩm</h6>
   <nz-select ngModel="lucy" class="m-1">
     <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
     <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
     <nz-option nzValue="disabled" nzLabel="Disabled"></nz-option>
   </nz-select>
-  <h6>Hãng sản xuất </h6>
+  <h6>Hãng sản xuất</h6>
   <nz-select ngModel="lucy" class="m-1">
     <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
     <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
@@ -32,10 +41,8 @@
 </ng-template>
 <!-- End Form Search -->
 
-<div class="w-900">
-  <ng-container *ngFor="let item of list">
-    <div nz-row>
-      <div nz-col nzSpan="6"><app-product-card></app-product-card></div>
-    </div>
-  </ng-container>
+<div nz-row class="w-1200">
+  <div *ngFor="let item of list" nz-col nzSpan="6" class="py-2">
+    <app-product-card class="w-fit"></app-product-card>
+  </div>
 </div>
