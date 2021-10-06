@@ -1,3 +1,4 @@
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -23,7 +24,8 @@ const nzModule = [
   NzDropDownModule,
   NzModalModule,
   NzPopconfirmModule,
-  NzDatePickerModule
+  NzDatePickerModule,
+  NzMessageModule
 ];
 
 @NgModule({

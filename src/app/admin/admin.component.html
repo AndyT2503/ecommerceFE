@@ -1,28 +1,66 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar" nzCollapsible nzTheme="light" nzWidth="268px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
+  <nz-sider
+    class="menu-sidebar"
+    nzTheme="light"
+    nzWidth="268px"
+    nzBreakpoint="md"
+    [nzTrigger]="null"
+  >
     <div class="sidebar-logo">
-      <a routerLink="" target="_blank">
-        <img src="assets/icon/large-icon.png" class="w-full" alt="logo" />
-      </a>
+      <div>
+        <img src="assets/icon/large-icon.png" class="w-80" alt="logo" />
+      </div>
     </div>
-    <ul nz-menu nzTheme="light" nzMode="inline" *ngIf="menuSelected$ | async as menuSelected">
+    <ul
+      nz-menu
+      nzTheme="light"
+      nzMode="inline"
+      *ngIf="menuSelected$ | async as menuSelected"
+    >
       <ng-container *ngFor="let item of menuList">
-        <li nz-menu-item  *appRole="item.requireRole" [nzSelected]="item === menuSelected" (click)="onSelectMenu(item)">{{ item.title }}</li>
+        <li
+          nz-menu-item
+          *appRole="item.requireRole"
+          [nzSelected]="item === menuSelected"
+          (click)="onSelectMenu(item)"
+        >
+          <i nz-icon [nzType]="item.icon" class="mr-2" nzTheme="outline"></i
+          >{{ item.title }}
+        </li>
       </ng-container>
     </ul>
   </nz-sider>
   <nz-layout>
     <nz-header>
       <div class="app-header px-5">
-        <!-- <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
-        </span>
-        <app-user-menu class="flex ml-auto items-center"></app-user-menu> -->
+        <div
+          class="ml-auto items-center flex hover:cursor-pointer"
+          nz-dropdown
+          [nzDropdownMenu]="userMenu"
+          nzTrigger="click"
+          *ngIf="userProfile$ | async as userProfile"
+        >
+          <nz-avatar [nzSize]="32" nzIcon="user" class="mr-2"></nz-avatar
+          ><span class="font-medium text-base text-red-500"
+            >{{ userProfile.firstName | uppercase }}
+            {{ userProfile.lastName | uppercase }}</span
+          >
+        </div>
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item routerLink="">
+              <i nz-icon nzType="home" nzTheme="outline" class="mr-2"></i
+              >Trang chủ
+            </li>
+            <li nz-menu-item (click)="logout()">
+              <i nz-icon nzType="logout" nzTheme="outline" class="mr-2"></i
+              >Logout
+            </li>
+          </ul>
+        </nz-dropdown-menu>
       </div>
     </nz-header>
     <nz-content class="mx-6 my-4">
-      
       <div class="inner-content">
         <router-outlet></router-outlet>
       </div>

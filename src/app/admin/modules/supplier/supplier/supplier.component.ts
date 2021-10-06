@@ -21,7 +21,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
   searchName$ = new Subject<string>();
   destroyed$ = new Subject<void>();
 
-  pageSize = 1;
+  pageSize = 10;
   constructor(
     private readonly supplierService: SupplierService,
     private readonly supplierQuery: SupplierQuery,

@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
-        <ng-container *ngIf="!editCache[data.id].edit else editTmp">
+        <ng-container *ngIf="!editCache[data.id]?.edit else editTmp">
           <td>{{data.username}}</td>
           <td>{{data.role}}</td>
           <td>{{data.lastName}}</td>

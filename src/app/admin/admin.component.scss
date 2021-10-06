@@ -27,7 +27,7 @@
 .sidebar-logo {
   position: relative;
   height: 64px;
-  padding-left: 24px;
+  padding-bottom: 8px;
   overflow: hidden;
   line-height: 64px;
   background: var(--cellphones-color);
@@ -41,9 +41,9 @@
 
 .sidebar-logo h1 {
   display: inline-block;
-  margin: 0 0 0 12px;
+  margin: 0 0 0 8px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 32px;
   font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
   vertical-align: middle;
 }
@@ -69,4 +69,20 @@ nz-header {
   background: #fff;
   height: calc(100vh - 124px);
   overflow-y: auto;
+}
+
+:host ::ng-deep .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #FFF1F0;
+}
+
+:host ::ng-deep .ant-menu-item-selected {
+  color: #f5222d;
+}
+
+:host ::ng-deep .ant-menu-inline .ant-menu-item::after {
+  border-right: 3px solid #f5222d;
+}
+
+:host ::ng-deep .ant-menu-light .ant-menu-item:hover {
+  color: #f5222d;
 }
