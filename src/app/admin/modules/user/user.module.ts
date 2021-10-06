@@ -1,3 +1,4 @@
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
@@ -21,7 +22,8 @@ const nzModule = [
   NzSelectModule,
   NzDropDownModule,
   NzModalModule,
-  NzPopconfirmModule
+  NzPopconfirmModule,
+  NzMessageModule
 ];
 @NgModule({
   declarations: [

@@ -16,6 +16,7 @@ export interface Menu {
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  isCollapsed = false;
   menuList: Menu[] = [
     {
       title: 'Nhà cung cấp',

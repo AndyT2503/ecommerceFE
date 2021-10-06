@@ -1,13 +1,17 @@
-import { RoleDirectiveModule } from './../shared/directives/role-directive/role-directive.module';
-import { NgModule } from '@angular/core';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
-
+import { NgModule } from '@angular/core';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { RoleDirectiveModule } from './../shared/directives/role-directive/role-directive.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+
 
 const nzModule = [
-  NzMenuModule
+  NzMenuModule,
+  NzLayoutModule,
+  NzIconModule
 ];
 
 @NgModule({

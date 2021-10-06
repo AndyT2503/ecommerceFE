@@ -1,8 +1,31 @@
-<div class="flex justify-center">
-  <ul nz-menu nzMode="horizontal" *ngIf="menuSelected$ | async as menuSelected">
-    <ng-container *ngFor="let item of menuList">
-      <li nz-menu-item  *appRole="item.requireRole" [nzSelected]="item === menuSelected" (click)="onSelectMenu(item)">{{ item.title }}</li>
-    </ng-container>
-  </ul>
-</div>
-<router-outlet></router-outlet>
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" nzCollapsible nzTheme="light" nzWidth="268px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a routerLink="" target="_blank">
+        <img src="assets/icon/large-icon.png" class="w-full" alt="logo" />
+      </a>
+    </div>
+    <ul nz-menu nzTheme="light" nzMode="inline" *ngIf="menuSelected$ | async as menuSelected">
+      <ng-container *ngFor="let item of menuList">
+        <li nz-menu-item  *appRole="item.requireRole" [nzSelected]="item === menuSelected" (click)="onSelectMenu(item)">{{ item.title }}</li>
+      </ng-container>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header px-5">
+        <!-- <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        </span>
+        <app-user-menu class="flex ml-auto items-center"></app-user-menu> -->
+      </div>
+    </nz-header>
+    <nz-content class="mx-6 my-4">
+      
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

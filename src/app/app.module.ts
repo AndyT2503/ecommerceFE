@@ -26,7 +26,6 @@ export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoad
     AppComponent,
   ],
   imports: [
-    CoreModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
