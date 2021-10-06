@@ -1,0 +1,16 @@
+@import './color';
+.w-fit {
+  width: fit-content !important;
+}
+
+.h-fit {
+  height: fit-content !important;
+}
+
+.w-1200 {
+  width: 1200px;
+}
+
+.bg-red-custom {
+  background-color: var(--cellphones-color);
+}

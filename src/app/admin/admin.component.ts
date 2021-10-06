@@ -40,7 +40,12 @@ export class AdminComponent implements OnInit {
     {
       title: 'Quản trị',
       link: 'admin/user',
-      //requireRole: [AppRole.SuperAdmin]
+      requireRole: [AppRole.SuperAdmin]
+    },
+    {
+      title: 'Mã giảm giá',
+      link: 'admin/sale-code',
+      requireRole: [AppRole.SuperAdmin]
     }
   ];
 

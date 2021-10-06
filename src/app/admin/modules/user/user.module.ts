@@ -20,7 +20,8 @@ const nzModule = [
   NzInputModule,
   NzSelectModule,
   NzDropDownModule,
-  NzModalModule
+  NzModalModule,
+  NzPopconfirmModule
 ];
 @NgModule({
   declarations: [

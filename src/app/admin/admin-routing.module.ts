@@ -1,3 +1,4 @@
+import { SaleCodeModule } from './modules/sale-code/sale-code.module';
 import { RoleGuard } from './../core/gaurds/role.guard';
 import { AppRole } from './../core/const/app-role';
 import { AdminComponent } from './admin.component';
@@ -40,6 +41,14 @@ const routes: Routes = [
           requireRoles: [AppRole.SuperAdmin]
         },
         //canActivate: [RoleGuard]
+      },
+      {
+        path: 'sale-code',
+        loadChildren: () => import('./modules/sale-code/sale-code.module').then((m) => m.SaleCodeModule),
+        data: {
+          requireRoles: [AppRole.SuperAdmin]
+        },
+        canActivate: [RoleGuard]
       },
       {
         path: '**',

@@ -125,6 +125,7 @@
   },
   "defaultProject": "ecommerce-fe",
   "cli": {
+    "analytics": "78ff5bf0-e70e-4be9-83dd-039198e05808",
     "defaultCollection": "@datorama/akita"
   }
 }
