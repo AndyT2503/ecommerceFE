@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { LoginComponent } from './../../authentication/login/login.component';
 import { AuthenticationQuery } from './../../authentication/state/authentication.query';
 import { AuthenticationStore } from './../../authentication/state/authentication.store';
+import { LanguageQuery } from './state/language.query';
 import { LanguageService } from './state/language.service';
 
 @Component({
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
     private readonly authenticationQuery: AuthenticationQuery,
     private readonly authenticationStore: AuthenticationStore,
     private readonly router: Router,
+    private readonly languageQuery: LanguageQuery,
     private readonly translateService: TranslateService,
     private readonly languageService: LanguageService
   ) { }
@@ -41,9 +43,9 @@ export class HeaderComponent implements OnInit {
 
 
   getCurrentLanguage(): void {
-    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.languageSelected = event.lang;
-      this.flagLanguageSelected = this.listFlag.find(x => x.lang === event.lang)!.flag;
+    this.languageQuery.select(x => x.language).subscribe((lang) => {
+      this.languageSelected = lang;
+      this.flagLanguageSelected = this.listFlag.find(x => x.lang === lang)!.flag;
     });
   }
 
