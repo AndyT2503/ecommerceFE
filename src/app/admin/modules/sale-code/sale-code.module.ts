@@ -37,7 +37,6 @@ const nzModule = [
     SaleCodeRoutingModule,
     FormsModule,
     nzModule,
-    FormsModule,
     ReactiveFormsModule
     ]
 })

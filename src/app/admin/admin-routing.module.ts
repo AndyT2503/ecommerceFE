@@ -17,7 +17,7 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
         },
-        //canActivate: [RoleGuard]
+        canActivate: [RoleGuard]
       },
       {
         path: 'product',
@@ -25,7 +25,7 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
         },
-        //canActivate: [RoleGuard]
+        canActivate: [RoleGuard]
       },
       {
         path: 'product-type',
@@ -33,7 +33,7 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
         },
-        //canActivate: [RoleGuard]
+        canActivate: [RoleGuard]
       },
       {
         path: 'user',
@@ -41,7 +41,7 @@ const routes: Routes = [
         data: {
           requireRoles: [AppRole.SuperAdmin]
         },
-        //canActivate: [RoleGuard]
+        canActivate: [RoleGuard]
       },
       {
         path: 'sale-code',

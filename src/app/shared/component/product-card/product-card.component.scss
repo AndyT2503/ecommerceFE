@@ -2,3 +2,7 @@
   color: #e0052b;
   font-size:15px
 }
+
+:host ::ng-deep .anticon.anticon-star {
+  font-size: 14px !important;
+}

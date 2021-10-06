@@ -1,3 +1,60 @@
-<p>
-  product-edit works!
-</p>
+<div class="pt-4">
+  <h4 class="flex justify-center text-base font-bold mb-2">Thông tin sản phẩm</h4>
+  <form [formGroup]="createProductForm">
+    <div class="grid grid-cols-2">
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Name: *</label>
+        <input  nz-input type="text" placeholder="Nhập tên sản phẩm" formControlName="name">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Description: *</label>
+        <input  nz-input type="text"  placeholder="Nhập mô tả" formControlName="description">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Tình trạng: *</label>
+        <input nz-input  type="text"  placeholder="Nhập tình trạng sản phẩm" formControlName="status">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Giá gốc: *</label>
+        <input nz-input  type="number"  placeholder="Nhập giá gốc" formControlName="originalPrice">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Trạng thái: *</label>
+        <nz-select class="block w-full" formControlName="availableStatus">
+          <nz-option *ngFor="let item of availableStatus" [nzValue]="item.value" [nzLabel]="item.status"></nz-option>
+        </nz-select>
+      </div>
+      <div class="col-span-1 p-2" *ngIf="supplierList$ | async as supplierList">
+        <label class="font-semibold">Nhà cung cấp: *</label>
+        <nz-select class="block w-full" formControlName="availableStatus">
+          <nz-option *ngFor="let item of supplierList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+        </nz-select>
+      </div>
+      <div class="col-span-1 p-2" *ngIf="productTypeList$ | async as productTypeList">
+        <label class="font-semibold">Loại sản phẩm: *</label>
+        <nz-select class="block w-full" formControlName="availableStatus">
+          <nz-option *ngFor="let item of productTypeList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+        </nz-select>
+      </div>
+      <!-- <div class="col-span-1 p-2">
+        <label class="font-semibold">Đặc điểm nổi bật: *</label>
+        <button (click)="addSpecial()" class="btn btn-btn-success"> add </button>
+
+        <div formArrayName="specialFeatures" *ngFor="let item of specialFeatures?.controls; let i = index;">
+          <div [formGroupName]="i" nz-row>
+              <input nz-input  type="text"  placeholder="Nhập đặc điểm nổi bật" formControlName="description">
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </form>
+  <div class="flex justify-center">
+    <button nz-button (click)="closeEdit()">Huỷ</button>
+    <button class="ml-2 bg-red-500 text-white p-1 flex justify-center items-center hover:bg-red-600" (click)="submit()">Lưu thông tin</button>
+  </div>
+</div>
+
+
+      <!-- specialFeatures : [[], Validators.required],
+      configuration: ['', Validators.required],
+      categories: [[], Validators.required], -->
