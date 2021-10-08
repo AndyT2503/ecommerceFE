@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, of } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
+import { SignalRService } from './../../signalR/signal-r.service';
 import { Authentication, AuthenticationUser } from './authentication.model';
 import { AuthenticationQuery } from './authentication.query';
 import { AuthenticationStore } from './authentication.store';
@@ -9,7 +11,13 @@ import { AuthenticationStore } from './authentication.store';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  constructor(private authenticationStore: AuthenticationStore, private http: HttpClient, private authenticationQuery: AuthenticationQuery) {
+  constructor(
+    private authenticationStore: AuthenticationStore,
+    private http: HttpClient,
+    private authenticationQuery: AuthenticationQuery,
+    private signalRService: SignalRService,
+    private router: Router
+  ) {
   }
 
 
@@ -20,6 +28,12 @@ export class AuthenticationService {
     }).pipe(tap((res) => {
       this.authenticationStore.update({ accessToken: res.accessToken });
     }));
+  }
+
+  logout(): void {
+    this.disconnectSocket();
+    this.authenticationStore.reset();
+    this.router.navigate(['']);
   }
 
   getUserProfile() {
@@ -33,15 +47,25 @@ export class AuthenticationService {
           headers: header
         }).pipe(
           catchError((err) => {
+            this.disconnectSocket();
             this.authenticationStore.reset();
             return EMPTY;
           })
         );
       }),
       tap(res => {
+        this.connectSocket();
         this.authenticationStore.update({ userProfile: { ...res, isAuthenticate: true } });
       })
     );
+  }
+
+  private disconnectSocket(): void {
+    this.signalRService.disconnectConnection();
+  }
+
+  private connectSocket(): void {
+    this.signalRService.startConnection();
   }
 
   hasValidToken() {
