@@ -2,8 +2,7 @@
   <div class="flex items-center">
     <h4 class="text-base font-bold">Danh sách nhà cung cấp</h4>
     <nz-input-group nzSize="small" class="ml-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
-      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [(ngModel)]="searchName"
-        (ngModelChange)="onSearchNameChange($event)" />
+      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [formControl]=searchNameForm />
     </nz-input-group>
 
   </div>

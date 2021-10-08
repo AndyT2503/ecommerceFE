@@ -1,5 +1,5 @@
 import { NzMessageModule } from 'ng-zorro-antd/message';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -34,7 +34,8 @@ const nzModule = [
     CommonModule,
     SupplierRoutingModule,
     nzModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SupplierModule { }

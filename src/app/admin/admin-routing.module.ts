@@ -38,7 +38,7 @@ const routes: Routes = [
         path: 'sale-code',
         loadChildren: () => import('./modules/sale-code/sale-code.module').then((m) => m.SaleCodeModule),
         data: {
-          requireRoles: [AppRole.SuperAdmin]
+          requireRoles: [AppRole.SuperAdmin, AppRole.Admin]
         },
         canActivate: [RoleGuard]
       },

@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppRole } from './../../../core/const/app-role';
 import { takeUntil, debounceTime, tap } from 'rxjs/operators';
@@ -37,11 +38,8 @@ export class UserComponent implements OnInit, OnDestroy {
   roleList = [AppRole.Admin, AppRole.SuperAdmin];
   pageSize = 10;
 
-  filterName = '';
-
   editCache: { [key: string]: { edit: boolean; data: User } } = {};
-
-  searchName$ = new Subject<string>();
+  searchNameForm = new FormControl('');
 
   destroyed$ = new Subject<void>();
 
@@ -66,11 +64,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
 
   setupFilterUsername(): void {
-    this.searchName$.pipe(debounceTime(300), takeUntil(this.destroyed$)).subscribe(val => this.getUsers(1, val));
-  }
-
-  onFilterNameChange(value: string): void {
-    this.searchName$.next(value);
+    this.searchNameForm.valueChanges.pipe(debounceTime(300), takeUntil(this.destroyed$)).subscribe(val => this.getUsers(1, val));
   }
 
   getUsers(pageIndex: number, username?: string): void {
@@ -89,7 +83,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onPageIndexChange(index: number): void {
-    this.getUsers(index);
+    this.getUsers(index, this.searchNameForm.value);
   }
 
   saveNewItem(): void { }

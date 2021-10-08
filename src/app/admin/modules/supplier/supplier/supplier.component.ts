@@ -1,13 +1,12 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { takeUntil, debounceTime } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { PagingModel } from '../../../../shared/models/paging-model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { SupplierQuery } from '../state/supplier.query';
 import { SupplierService } from '../state/supplier.service';
 import { SupplierStore } from '../state/supplier.store';
-import { Supplier } from 'src/app/shared/models/supplier.model';
-import { SupplierQuery } from '../state/supplier.query';
 
 @Component({
   selector: 'app-supplier',
@@ -17,8 +16,7 @@ import { SupplierQuery } from '../state/supplier.query';
 export class SupplierComponent implements OnInit, OnDestroy {
 
   supplierPaging$ = this.supplierQuery.supplierPaging$;
-  searchName = '';
-  searchName$ = new Subject<string>();
+  searchNameForm = new FormControl('');
   destroyed$ = new Subject<void>();
 
   pageSize = 10;
@@ -34,12 +32,12 @@ export class SupplierComponent implements OnInit, OnDestroy {
     const filterName = this.supplierStore.getValue().supplierNameFilter;
     let pageIndex = this.supplierStore.getValue().pageIndex;
     if (filterName) {
-      this.searchName = filterName;
+      this.searchNameForm.setValue(filterName);
     }
     if (!pageIndex) {
       pageIndex = 1;
     }
-    this.getSupplier(pageIndex, this.searchName);
+    this.getSupplier(pageIndex, this.searchNameForm.value);
     this.setupSearchName();
   }
 
@@ -49,7 +47,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   setupSearchName(): void {
-    this.searchName$.pipe( 
+    this.searchNameForm.valueChanges.pipe( 
       debounceTime(300),
       takeUntil(this.destroyed$)
       ).subscribe(
@@ -60,11 +58,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   onPageIndexChange(pageIndex: number): void {
-    this.getSupplier(pageIndex, this.searchName);
-  }
-
-  onSearchNameChange(value: string): void {
-    this.searchName$.next(value);
+    this.getSupplier(pageIndex, this.searchNameForm.value);
   }
 
   getSupplier(pageIndex: number, name?: string): void {
@@ -76,7 +70,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     this.supplierService.deleteSupplier(id).subscribe(
       () => {
         this.nzMessage.success('Xoá nhà cung cấp thành công');
-        this.searchName = '';
+        this.searchNameForm.setValue('');
         this.getSupplier(1);
       },
       (err) => this.nzMessage.error(err.error.detail)
