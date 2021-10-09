@@ -1,12 +1,10 @@
-import { SocketEvent } from './../const/socket-event';
-import { AuthenticationQuery } from 'src/app/core/authentication/state/authentication.query';
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
+import { environment } from 'src/environments/environment';
+import { AuthenticationQuery } from '../authentication/authentication.query';
+import { SocketEvent } from './../const/socket-event';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   constructor(

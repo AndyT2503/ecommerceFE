@@ -7,7 +7,7 @@ export interface AuthenticationState extends EntityState<Authentication> {
   userProfile: AuthenticationUser;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 @StoreConfig({ name: 'authentication', resettable: true })
 export class AuthenticationStore extends EntityStore<AuthenticationState> {
 

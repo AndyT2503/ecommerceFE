@@ -1,14 +1,14 @@
-import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
-import { SignalRService } from './../../signalR/signal-r.service';
+import { SignalRService } from '../signalR/signal-r.service';
 import { Authentication, AuthenticationUser } from './authentication.model';
 import { AuthenticationQuery } from './authentication.query';
 import { AuthenticationStore } from './authentication.store';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthenticationService {
 
   constructor(

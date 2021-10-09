@@ -1,4 +1,3 @@
-import { AuthenticationQuery } from './../authentication/state/authentication.query';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -7,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthenticationQuery } from '../authentication/authentication.query';
 
 @Injectable()
 export class BearerTokenInterceptor implements HttpInterceptor {

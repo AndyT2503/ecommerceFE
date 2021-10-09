@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LoginComponent } from './../../authentication/login/login.component';
-import { AuthenticationQuery } from './../../authentication/state/authentication.query';
-import { AuthenticationService } from './../../authentication/state/authentication.service';
-import { LanguageQuery } from './state/language.query';
-import { LanguageService } from './state/language.service';
+import { AuthenticationQuery } from 'src/app/core/authentication/authentication.query';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
+import { LanguageQuery } from 'src/app/core/localization/language.query';
+import { LanguageService } from 'src/app/core/localization/language.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -64,4 +64,5 @@ export class HeaderComponent implements OnInit {
   goAdminPage(): void {
     this.router.navigate(['admin']);
   }
+
 }

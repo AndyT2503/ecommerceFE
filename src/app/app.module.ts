@@ -7,14 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { interceptorProviders } from './core/interceptors';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 
@@ -31,6 +30,7 @@ export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoad
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    CoreModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     TranslateModule.forRoot({
@@ -42,7 +42,7 @@ export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoad
       defaultLanguage: 'vi'
     })
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, interceptorProviders],
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
