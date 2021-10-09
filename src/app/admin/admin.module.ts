@@ -1,3 +1,4 @@
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
@@ -8,6 +9,7 @@ import { RoleDirectiveModule } from './../shared/directives/role-directive/role-
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NotificationBellComponent } from './components/notification-bell/notification-bell.component';
 
 
 const nzModule = [
@@ -15,12 +17,14 @@ const nzModule = [
   NzLayoutModule,
   NzIconModule,
   NzDropDownModule,
-  NzAvatarModule
+  NzAvatarModule,
+  NzBadgeModule
 ];
 
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
+    NotificationBellComponent
   ],
   imports: [
     CommonModule,

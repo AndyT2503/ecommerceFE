@@ -7,9 +7,9 @@
     [nzTrigger]="null"
   >
     <div class="sidebar-logo">
-      <div>
+      <a routerLink="">
         <img src="assets/icon/large-icon.png" class="w-80" alt="logo" />
-      </div>
+      </a>
     </div>
     <ul
       nz-menu
@@ -32,16 +32,17 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <div class="app-header px-5">
+      <div class="app-header px-5 flex justify-end items-center">
+        <app-notification-bell class="mr-6"></app-notification-bell>
         <div
-          class="ml-auto items-center flex hover:cursor-pointer"
+          class="items-center flex hover:cursor-pointer"
           nz-dropdown
           [nzDropdownMenu]="userMenu"
           nzTrigger="click"
           *ngIf="userProfile$ | async as userProfile"
         >
-          <nz-avatar [nzSize]="32" nzIcon="user" class="mr-2"></nz-avatar
-          ><span class="font-medium text-base text-red-500"
+          <nz-avatar [nzSize]="28" nzIcon="user" class="mr-1"></nz-avatar
+          ><span class="text-red-500"
             >{{ userProfile.firstName | uppercase }}
             {{ userProfile.lastName | uppercase }}</span
           >
@@ -54,7 +55,7 @@
             </li>
             <li nz-menu-item (click)="logout()">
               <i nz-icon nzType="logout" nzTheme="outline" class="mr-2"></i
-              >Logout
+              >Đăng xuất
             </li>
           </ul>
         </nz-dropdown-menu>
