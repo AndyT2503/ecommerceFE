@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AuthenticationQuery } from '../core/authentication/authentication.query';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 import { AppRole } from './../core/const/app-role';
 import { SupplierStore } from './modules/supplier/state/supplier.store';
 
@@ -8,6 +10,7 @@ export interface Menu {
   title: string;
   link: string;
   requireRole?: string[];
+  icon: string;
 }
 
 @Component({
@@ -16,36 +19,43 @@ export interface Menu {
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  userProfile$ = this.authenticationQuery.userProfile$;
   menuList: Menu[] = [
     {
       title: 'Nhà cung cấp',
       link: 'admin/supplier',
-      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      icon: 'home',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Loại sản phẩm',
       link: 'admin/product-type',
-      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      icon: 'appstore',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Sản phẩm',
       link: 'admin/product',
-      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      icon: 'shopping',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Đơn hàng',
       link: 'admin/order',
-      //requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      icon: 'shopping-cart',
+      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
     },
     {
       title: 'Quản trị',
       link: 'admin/user',
+      icon: 'user',
       requireRole: [AppRole.SuperAdmin]
     },
     {
       title: 'Mã giảm giá',
       link: 'admin/sale-code',
-      requireRole: [AppRole.SuperAdmin]
+      icon: 'barcode',
+      requireRole: [AppRole.SuperAdmin, AppRole.Admin]
     }
   ];
 
@@ -53,7 +63,9 @@ export class AdminComponent implements OnInit {
   currentMenuSelected = {} as Menu;
   constructor(
     private readonly router: Router,
-    private readonly supplierStore: SupplierStore
+    private readonly supplierStore: SupplierStore,
+    private readonly authenticationQuery: AuthenticationQuery,
+    private readonly authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -78,5 +90,9 @@ export class AdminComponent implements OnInit {
 
   resetModuleState(): void {
     this.supplierStore.reset();
+  }
+
+  logout(): void {
+    this.authenticationService.logout();
   }
 }

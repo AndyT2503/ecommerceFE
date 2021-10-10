@@ -1,6 +1,7 @@
+import { ProductEditComponent } from './product-edit/product-edit.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -17,6 +18,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ProductCardModule } from './../../../shared/component/product-card/product-card.module';
+import { ProductComponent } from './product-list/product.component';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product/product.component';
 
@@ -38,16 +40,19 @@ const nzModule = [
   NzGridModule
 ];
 
+
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
+    ProductEditComponent
   ],
   imports: [
     CommonModule,
     ProductRoutingModule,
     nzModule,
     FormsModule,
-    ProductCardModule
+    ProductCardModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductModule { }

@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { LoginComponent } from './../../authentication/login/login.component';
-import { AuthenticationQuery } from './../../authentication/state/authentication.query';
-import { AuthenticationStore } from './../../authentication/state/authentication.store';
-import { LanguageService } from './state/language.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationQuery } from 'src/app/core/authentication/authentication.query';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
+import { LanguageQuery } from 'src/app/core/localization/language.query';
+import { LanguageService } from 'src/app/core/localization/language.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -29,8 +30,9 @@ export class HeaderComponent implements OnInit {
   flagLanguageSelected!: string;
   constructor(
     private readonly authenticationQuery: AuthenticationQuery,
-    private readonly authenticationStore: AuthenticationStore,
+    private readonly authenticationService: AuthenticationService,
     private readonly router: Router,
+    private readonly languageQuery: LanguageQuery,
     private readonly translateService: TranslateService,
     private readonly languageService: LanguageService
   ) { }
@@ -41,9 +43,9 @@ export class HeaderComponent implements OnInit {
 
 
   getCurrentLanguage(): void {
-    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.languageSelected = event.lang;
-      this.flagLanguageSelected = this.listFlag.find(x => x.lang === event.lang)!.flag;
+    this.languageQuery.select(x => x.language).subscribe((lang) => {
+      this.languageSelected = lang;
+      this.flagLanguageSelected = this.listFlag.find(x => x.lang === lang)!.flag;
     });
   }
 
@@ -56,11 +58,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.authenticationStore.reset();
-    this.router.navigate(['']);
+    this.authenticationService.logout();
   }
 
   goAdminPage(): void {
     this.router.navigate(['admin']);
   }
+
 }

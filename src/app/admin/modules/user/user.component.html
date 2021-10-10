@@ -2,8 +2,7 @@
   <div class="flex items-center">
     <h4 class="text-base font-bold">Danh sách người dùng</h4>
     <nz-input-group nzSize="small" class="ml-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
-      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [(ngModel)]="filterName"
-        (ngModelChange)="onFilterNameChange($event)" />
+      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [formControl]="searchNameForm" />
     </nz-input-group>
 
   </div>
@@ -27,7 +26,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
-        <ng-container *ngIf="!editCache[data.id].edit else editTmp">
+        <ng-container *ngIf="!editCache[data.id]?.edit else editTmp">
           <td>{{data.username}}</td>
           <td>{{data.role}}</td>
           <td>{{data.lastName}}</td>

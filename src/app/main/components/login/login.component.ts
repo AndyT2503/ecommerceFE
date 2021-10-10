@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AuthenticationService } from './../state/authentication.service';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -33,4 +33,5 @@ export class LoginComponent implements OnInit {
       (err) => this.nzMessage.error(err.error.detail)
     );
   }
+
 }

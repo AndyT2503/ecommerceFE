@@ -1,12 +1,10 @@
-import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { CanActivate, UrlTree, Router } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from './../authentication/state/authentication.service';
+import { map } from 'rxjs/operators';
+import { AuthenticationService } from '../authentication/authentication.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthenticationGuard implements CanActivate {
 
   constructor(private readonly authenticationService: AuthenticationService, private readonly router: Router) { }

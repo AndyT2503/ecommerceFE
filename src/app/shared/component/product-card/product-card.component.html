@@ -1,4 +1,5 @@
-<nz-card class="w-60 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:shadow-md" [nzCover]="coverTemplate" [nzActions]="[LEFT_BUTTON,RIGHT_BUTTON]">
+<nz-card class="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:shadow-md" style="width:95%;"
+  [nzCover]="coverTemplate" [nzActions]="[LEFT_BUTTON,RIGHT_BUTTON]">
   <nz-card-meta class="mb-1" nzTitle={{nameProduct}}></nz-card-meta>
   <p class="cellphones-color-price">{{priceProduct | currency:'VND'}}</p>
   <nz-rate class="text-sm" [(ngModel)]="rate" nzAllowHalf nzDisabled></nz-rate>
@@ -16,5 +17,3 @@
 <ng-template #RIGHT_BUTTON>
   <button class="w-20 h-7 text-base text-white bg-red-700 rounded-sm font-medium">{{rightButtonTitle}}</button>
 </ng-template>
-
-

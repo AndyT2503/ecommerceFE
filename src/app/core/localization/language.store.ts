@@ -5,7 +5,7 @@ export interface LanguageState {
   language: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 @StoreConfig({ name: 'language' })
 export class LanguageStore extends EntityStore<LanguageState> {
 

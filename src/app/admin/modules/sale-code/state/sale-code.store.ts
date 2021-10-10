@@ -5,11 +5,17 @@ import { Store, StoreConfig } from '@datorama/akita';
 
 export interface SaleCodeState {
   saleCodePaging: PagingModel<SaleCode>;
+  saleCodeFilter: string;
+  pageIndex: number;
+  pageSize: number;
 }
 
 export function createInitialState(): SaleCodeState {
   return {
-    saleCodePaging: {} as PagingModel<SaleCode>
+    saleCodePaging: {} as PagingModel<SaleCode>,
+    saleCodeFilter: '',
+    pageIndex: 1,
+    pageSize: 10
   };
 }
 

@@ -1,7 +1,7 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { AuthenticationQuery } from 'src/app/core/authentication/state/authentication.query';
+import { AuthenticationQuery } from 'src/app/core/authentication/authentication.query';
 
 @Directive({
   selector: '[appRole]'

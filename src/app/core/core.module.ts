@@ -1,45 +1,26 @@
-import { FormsModule } from '@angular/forms';
-import { NzMessageModule } from 'ng-zorro-antd/message';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { LoginComponent } from './authentication/login/login.component';
-import { HeaderComponent } from './layouts/header/header.component';
-import { MenuComponent } from './layouts/menu/menu.component';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
-
-const nzModule = [
-  NzIconModule,
-  NzInputModule,
-  NzBadgeModule,
-  NzDropDownModule,
-  NzModalModule,
-  NzButtonModule,
-  NzMessageModule,
-  NzRadioModule,
-];
-
-
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { authenticationProviders } from './authentication/authentication-providers';
+import { guardProviders } from './guards/guard-providers';
+import { interceptorProviders } from './interceptors/index';
+import { localizationProviders } from './localization/localization-providers';
+import { SignalRService } from './signalR/signal-r.service';
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    LoginComponent,
-    MenuComponent
-  ],
   imports: [
     CommonModule,
-    nzModule,
-    FormsModule,
-    TranslateModule
   ],
-  exports: [
-    HeaderComponent
+  providers: [
+    interceptorProviders,
+    SignalRService,
+    authenticationProviders,
+    guardProviders,
+    localizationProviders
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    if(parentModule) {
+      throw new Error('CoreModule has already been loaded. Import the core modules in AppModule only.');
+    }
+  }
+}

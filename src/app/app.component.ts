@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from './core/authentication/state/authentication.service';
-import { LanguageQuery } from './core/layouts/header/state/language.query';
+import { AuthenticationService } from './core/authentication/authentication.service';
+import { LanguageQuery } from './core/localization/language.query';
 
 @Component({
   selector: 'app-root',
