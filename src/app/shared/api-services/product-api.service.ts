@@ -1,5 +1,5 @@
 import { PagingModel } from './../models/paging-model';
-import { Product } from './../models/product.model';
+import { Product, ProductCategory } from './../models/product.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -19,13 +19,18 @@ export class ProductApiService {
     });
   }
 
-  createSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
-    // return this.http.post('api/sale-code', {
-    //   code,
-    //   percent,
-    //   maxPrice,
-    //   validUntil,
-    // });
+  createProduct(name: string, description: string, status: string, availableStatus: string, originalPrice: number,
+    specialFeatures: string[], configuration: [], categories: ProductCategory[]) {
+    return this.http.post('api/product', {
+      name,
+      description,
+      status,
+      availableStatus,
+      originalPrice,
+      specialFeatures,
+      configuration,
+      categories
+    });
   }
 
   updateSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
