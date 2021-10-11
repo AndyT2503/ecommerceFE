@@ -1,3 +1,4 @@
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { CurrencyVNDPipe } from './../../pipe/currency.pipe';
 import { FormsModule } from '@angular/forms';
 import { NzRateModule } from 'ng-zorro-antd/rate';
@@ -13,7 +14,8 @@ const nzModule = [
   NzCardModule,
   NzAvatarModule,
   NzRateModule,
-  FormsModule
+  FormsModule,
+  NzModalModule
 ];
 
 @NgModule({

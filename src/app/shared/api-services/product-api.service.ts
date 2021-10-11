@@ -1,5 +1,5 @@
 import { PagingModel } from './../models/paging-model';
-import { Product } from './../models/product.model';
+import { Product, ProductCategory } from './../models/product.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -19,16 +19,27 @@ export class ProductApiService {
     });
   }
 
-  createSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
-    // return this.http.post('api/sale-code', {
-    //   code,
-    //   percent,
-    //   maxPrice,
-    //   validUntil,
-    // });
+  getProductBySlug(slug: string) {
+    return this.http.get<Product>(`api/product/${slug}`);
   }
 
-  updateSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
+  createProduct(name: string, description: string, status: string, availableStatus: string, originalPrice: number,
+    specialFeatures: string[], configuration: [], categories: ProductCategory[], supplierId: string, productTypeId: string) {
+    return this.http.post('api/product', {
+      name,
+      description,
+      status,
+      availableStatus,
+      originalPrice,
+      specialFeatures,
+      configuration,
+      categories,
+      supplierId,
+      productTypeId
+    });
+  }
+
+  updateProduct(code: string, percent: number, maxPrice: number, validUntil: Date) {
     // return this.http.put(`api/sale-code`, {
     //   code,
     //   percent,
@@ -37,7 +48,7 @@ export class ProductApiService {
     // });
   }
 
-  deleteSaleCode(code: string) {
-    // return this.http.delete(`api/sale-code/${code}`);
+  deleteProduct(slug: string) {
+    return this.http.delete(`api/product/${slug}`);
   }
 }

@@ -1,6 +1,6 @@
 import { SupplierApiService } from './../../../../shared/api-services/supplier-api.service';
 import { ProductTypeApiService } from './../../../../shared/api-services/product-type-api.service';
-import { Product } from './../../../../shared/models/product.model';
+import { Product, ProductCategory } from './../../../../shared/models/product.model';
 import { ProductApiService } from './../../../../shared/api-services/product-api.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,9 +14,9 @@ export class ProductService {
   constructor(
     private productStore: ProductStore,
     private http: HttpClient,
-    private productApiService : ProductApiService,
+    private productApiService: ProductApiService,
     private productTypeApiService: ProductTypeApiService,
-    private supplierApiService: SupplierApiService ) {
+    private supplierApiService: SupplierApiService) {
   }
 
 
@@ -27,14 +27,17 @@ export class ProductService {
       })
     );
   }
+  getProductBySlug(slug: string) {
+    return this.productApiService.getProductBySlug(slug);
+  }
 
   getProductTypes() {
     return this.productTypeApiService.getProductType('').pipe(
-      tap((res) => this.productStore.update({productTypeList: res}))
+      tap((res) => this.productStore.update({ productTypeList: res }))
     );
   }
 
-  getSuplliers() {
+  getSuppliers() {
     return this.supplierApiService.getSupplier('').pipe(
       tap(res => {
         this.productStore.update({ supplierList: res.items });
@@ -43,9 +46,10 @@ export class ProductService {
   }
 
 
-  // createSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
-  //   return this.saleCodeApiService.createSaleCode(code, percent, maxPrice, validUntil);
-  // }
+  createProduct(name: string, description: string, status: string, availableStatus: string, originalPrice: number,
+    specialFeatures: string[], configuration: [], categories: ProductCategory[], supplierId: string, productTypeId: string) {
+    return this.productApiService.createProduct(name, description, status, availableStatus, originalPrice, specialFeatures, configuration, categories, supplierId,productTypeId );
+  }
 
   // updateSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
   //   return this.saleCodeApiService.updateSaleCode(code, percent, maxPrice, validUntil);

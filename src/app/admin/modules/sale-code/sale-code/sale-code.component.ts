@@ -14,7 +14,7 @@ import { SaleCodeStore } from './../state/sale-code.store';
   styleUrls: ['./sale-code.component.scss']
 })
 export class SaleCodeComponent implements OnInit, OnDestroy {
-  saleCodePaging$ = this.saleCodeQuery.select(x => x.saleCodePaging).pipe(tap((res) => this.saleCodeList = res?.items));;
+  saleCodePaging$ = this.saleCodeQuery.select(x => x.saleCodePaging).pipe(tap((res) => this.saleCodeList = res?.items));
   filterName = '';
   isCreateSaleCodeModalVisible = false;
   isEditSaleCodeModalVisible = false;

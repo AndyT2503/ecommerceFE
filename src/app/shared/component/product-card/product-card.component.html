@@ -3,7 +3,7 @@
   <nz-card-meta class="mb-1" nzTitle={{nameProduct}}></nz-card-meta>
   <p class="cellphones-color-price">{{priceProduct | currency:'VND'}}</p>
   <nz-rate class="text-sm" [(ngModel)]="rate" nzAllowHalf nzDisabled></nz-rate>
-  <span class="ml-2 text-sm">5 đánh giá </span>
+  <span class="ml-2 text-sm">{{countRate}} đánh giá </span>
 </nz-card>
 
 
@@ -12,8 +12,16 @@
 </ng-template>
 
 <ng-template #LEFT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-blue-700 font-medium rounded-sm">{{leftButtonTitle}}</button>
+  <button class="w-20 h-7 text-base text-white bg-blue-700 font-medium rounded-sm" (click)="onEdit(slug)">{{leftButtonTitle}}</button>
 </ng-template>
 <ng-template #RIGHT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-red-700 rounded-sm font-medium">{{rightButtonTitle}}</button>
+  <button class="w-20 h-7 text-base text-white bg-red-700 rounded-sm font-medium" (click)="openDeleteModel(slug)">{{rightButtonTitle}}</button>
 </ng-template>
+
+
+<nz-modal [(nzVisible)]="isShowDeleteModel" nzTitle="Xác nhận xóa" (nzOnCancel)="closeModal()"
+  (nzOnOk)="deleteProduct(slug)">
+  <ng-container *nzModalContent>
+    <h2>Xác nhận xóa sản phẩm : <i style="color:red"> {{nameProduct}} </i></h2>
+  </ng-container>
+</nz-modal>
