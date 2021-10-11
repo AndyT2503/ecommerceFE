@@ -17,6 +17,11 @@ export interface Product {
   configuration?: MobileConfiguration | TabletConfiguration | LaptopConfiguration | WatchConfiguration;
 }
 
+export interface ProductConfiguration {
+  key: string;
+  description: string;
+}
+
 export interface ProductCategory {
   id?: string;
   name: string;

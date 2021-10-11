@@ -12,7 +12,7 @@
 </ng-template>
 
 <ng-template #LEFT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-blue-700 font-medium rounded-sm">{{leftButtonTitle}}</button>
+  <button class="w-20 h-7 text-base text-white bg-blue-700 font-medium rounded-sm" (click)="onEdit('abc')">{{leftButtonTitle}}</button>
 </ng-template>
 <ng-template #RIGHT_BUTTON>
   <button class="w-20 h-7 text-base text-white bg-red-700 rounded-sm font-medium">{{rightButtonTitle}}</button>

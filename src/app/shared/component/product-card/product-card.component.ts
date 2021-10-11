@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -11,11 +12,19 @@ export class ProductCardComponent implements OnInit {
   @Input() rate = 2;
   leftButtonTitle: string = "";
   rightButtonTitle: string = "";
-  constructor() { }
+  constructor(private readonly router: Router) { }
 
   ngOnInit(): void {
     this.leftButtonTitle = "Edit";
     this.rightButtonTitle = "Delete";
+  }
+
+  onEdit(id: string){
+    this.router.navigate(['admin/product/edit'], {
+      queryParams: {
+        productId: id
+      }
+    });
   }
 
 }
