@@ -22,8 +22,12 @@ export class SignalRService {
       .start()
       .then(() => {
         console.log('Connection started');
-        this.listenNotification();
       })
+      .then(
+        () => {
+          this.listenNotification();
+        }
+      )
       .catch(err => console.error('Error while starting connection: ' + err));
   }
 
