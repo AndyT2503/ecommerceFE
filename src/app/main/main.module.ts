@@ -15,7 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-
+import { FooterComponent } from './components/footer/footer.component';
 
 const nzModules = [
   NzIconModule,
@@ -33,7 +33,8 @@ const nzModules = [
     MainComponent,
     HeaderComponent,
     MenuComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
