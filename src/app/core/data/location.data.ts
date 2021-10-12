@@ -1,5 +1,6 @@
-import {Location} from "../../shared/models/location-model";
-export const LOCATIONDATA: Location.Province[] = [
+import { Province } from "src/app/shared/models/location-model";
+
+export const LOCATIONDATA: Province[] = [
   {
     code: '01',
     name: 'Thành phố Hà Nội',

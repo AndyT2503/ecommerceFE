@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { CommonModule } from '@angular/common';
@@ -34,7 +35,9 @@ const nzModules = [
   imports: [
     CommonModule,
     CartRoutingModule,
-    nzModules
+    nzModules,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CartModule { }

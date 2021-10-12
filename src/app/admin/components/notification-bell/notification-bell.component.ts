@@ -10,6 +10,8 @@ export class NotificationBellComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    //TODO: implement something
+    console.log();
   }
 
 }

@@ -65,7 +65,7 @@
   </nz-form-item>
   <nz-form-item nz-col nzSpan="12">
     <nz-form-label nzRequired
-      >Email (Vui lòng điền email để nhận hóa đơn VAT)</nz-form-label
+      >Email</nz-form-label
     >
     <nz-form-control>
       <input type="text" nz-input />
@@ -74,10 +74,8 @@
   <nz-form-item nz-col nzSpan="12">
     <nz-form-label nzRequired>Thành phố</nz-form-label>
     <nz-form-control>
-      <nz-select ngModel="lucy">
-        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-        <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+      <nz-select [(ngModel)]="provinceSelected" (ngModelChange)="provinceChange($event)" [ngModelOptions]="{standalone: true}">
+        <nz-option *ngFor="let item of provinceList" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -85,9 +83,7 @@
     <nz-form-label nzRequired>Quận/huyện</nz-form-label>
     <nz-form-control>
       <nz-select ngModel="lucy">
-        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-        <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+        <nz-option *ngFor="let item of districtList" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
