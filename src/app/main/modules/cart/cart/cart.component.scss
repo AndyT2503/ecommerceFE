@@ -1,4 +1,6 @@
-table, th, td {
+table,
+th,
+td {
   border: 1.2px solid #f0f0f0;
 }
 
@@ -25,8 +27,8 @@ nz-form-item {
 }
 
 .vnpay-logo {
-  background-image: url('/assets/logo/large-logo.png');
-  background-size: cover;
+  background-image: url("/assets/payment/vnpay.png");
+  background-size: contain;
   height: 27px;
   border-radius: 2px;
   display: inline-block;
@@ -34,4 +36,64 @@ nz-form-item {
   padding: 0;
   background-repeat: no-repeat;
   width: 85px;
+}
+
+.zalopay-logo {
+  background-image: url("/assets/payment/zalopay.png");
+  background-size: contain;
+  height: 27px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  background-repeat: no-repeat;
+  width: 85px;
+}
+
+.momo-logo {
+  background-image: url("/assets/payment/momo.png");
+  background-size: contain;
+  height: 27px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  background-repeat: no-repeat;
+  width: 85px;
+}
+
+.atm-logo {
+  background-image: url("/assets/payment/payment-icon.png");
+  height: 27px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  background-repeat: no-repeat;
+  width: 44px;
+  margin: 2px;
+  background-position: -97px 0;
+}
+
+.visa-logo {
+  background-image: url("/assets/payment/payment-icon.png");
+  height: 27px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  background-repeat: no-repeat;
+  width: 44px;
+}
+
+.mastercard-logo {
+  background-image: url("/assets/payment/payment-icon.png");
+  height: 27px;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 0;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  width: 44px;
+  background-position: -48px 0;
 }
