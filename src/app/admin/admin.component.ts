@@ -1,8 +1,8 @@
-import { AuthenticationStore } from './../core/authentication/state/authentication.store';
-import { AuthenticationQuery } from 'src/app/core/authentication/state/authentication.query';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AuthenticationQuery } from '../core/authentication/authentication.query';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 import { AppRole } from './../core/const/app-role';
 import { SupplierStore } from './modules/supplier/state/supplier.store';
 
@@ -65,7 +65,7 @@ export class AdminComponent implements OnInit {
     private readonly router: Router,
     private readonly supplierStore: SupplierStore,
     private readonly authenticationQuery: AuthenticationQuery,
-    private readonly authenticationStore: AuthenticationStore
+    private readonly authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -93,7 +93,6 @@ export class AdminComponent implements OnInit {
   }
 
   logout(): void {
-    this.authenticationStore.reset();
-    this.router.navigate(['']);
+    this.authenticationService.logout();
   }
 }

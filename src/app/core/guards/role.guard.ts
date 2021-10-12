@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, UrlTree, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthenticationQuery } from 'src/app/core/authentication/state/authentication.query';
+import { AuthenticationQuery } from '../authentication/authentication.query';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RoleGuard implements CanActivate {
 
   constructor(private readonly authenticationQuery: AuthenticationQuery, private readonly router: Router) { }

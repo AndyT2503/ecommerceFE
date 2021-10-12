@@ -1,14 +1,15 @@
-import { SaleCodeModule } from './modules/sale-code/sale-code.module';
-import { RoleGuard } from './../core/gaurds/role.guard';
+import { RoleGuard } from '../core/guards/role.guard';
 import { AppRole } from './../core/const/app-role';
 import { AdminComponent } from './admin.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationGuard } from '../core/guards/authentication.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: 'supplier',
@@ -38,7 +39,7 @@ const routes: Routes = [
         path: 'sale-code',
         loadChildren: () => import('./modules/sale-code/sale-code.module').then((m) => m.SaleCodeModule),
         data: {
-          requireRoles: [AppRole.SuperAdmin]
+          requireRoles: [AppRole.SuperAdmin, AppRole.Admin]
         },
         canActivate: [RoleGuard]
       },

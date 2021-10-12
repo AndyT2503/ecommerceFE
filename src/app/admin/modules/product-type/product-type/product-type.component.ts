@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -22,11 +23,8 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
       name: ''
     };
 
-  filterName = '';
-
   editCache: { [key: string]: { edit: boolean; data: ProductType } } = {};
-
-  searchName$ = new Subject<string>();
+  searchNameForm = new FormControl('');
 
   destroyed$ = new Subject<void>();
   constructor(
@@ -44,7 +42,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   }
 
   setupFilterName(): void {
-    this.searchName$
+    this.searchNameForm.valueChanges
       .pipe(
         startWith(''),
         debounceTime(300),
@@ -53,10 +51,6 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
           this.updateEditCache();
         },
         takeUntil(this.destroyed$));
-  }
-
-  onFilterNameChange(value: string): void {
-    this.searchName$.next(value);
   }
 
   getProductType(name?: string): Observable<ProductType[]> {
@@ -75,8 +69,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   createProductType(name: string, code: string): void {
     this.productTypeApiService.createProductType(name, code).subscribe(() => {
       this.nzMessage.success('Tạo loại sản phẩm thành công');
-      this.searchName$.next('');
-      this.filterName = '';
+      this.searchNameForm.setValue('');
       this.closeAddRow();
     },
       (err) => this.nzMessage.error(err.error.detail));
@@ -95,7 +88,7 @@ export class ProductTypeComponent implements OnInit, OnDestroy {
   deleteProductType(id: string): void {
     this.productTypeApiService.deleteProductType(id).subscribe(() => {
       this.nzMessage.success('Xoá loại sản phẩm thành công');
-      this.searchName$.next('');
+      this.searchNameForm.setValue('');
     },
       (err) => this.nzMessage.error(err.error.detail));
   }

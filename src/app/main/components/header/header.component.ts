@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LoginComponent } from './../../authentication/login/login.component';
-import { AuthenticationQuery } from './../../authentication/state/authentication.query';
-import { AuthenticationStore } from './../../authentication/state/authentication.store';
-import { LanguageQuery } from './state/language.query';
-import { LanguageService } from './state/language.service';
+import { AuthenticationQuery } from 'src/app/core/authentication/authentication.query';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
+import { LanguageQuery } from 'src/app/core/localization/language.query';
+import { LanguageService } from 'src/app/core/localization/language.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   flagLanguageSelected!: string;
   constructor(
     private readonly authenticationQuery: AuthenticationQuery,
-    private readonly authenticationStore: AuthenticationStore,
+    private readonly authenticationService: AuthenticationService,
     private readonly router: Router,
     private readonly languageQuery: LanguageQuery,
     private readonly translateService: TranslateService,
@@ -58,11 +58,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.authenticationStore.reset();
-    this.router.navigate(['']);
+    this.authenticationService.logout();
   }
 
   goAdminPage(): void {
     this.router.navigate(['admin']);
   }
+
 }
