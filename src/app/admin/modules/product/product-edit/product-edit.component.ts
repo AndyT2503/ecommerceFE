@@ -135,7 +135,10 @@ export class ProductEditComponent implements OnInit {
     this.createProductForm.value.categories[i].fileToUpload = files.item(0);
 
     const reader = new FileReader();
-    reader.onload = e => this.createProductForm.value.categories[i].previewImgSrc = reader.result as string;
+    reader.onload = e => {
+      const imageUrl = reader.result as string;
+      this.categories.controls[i].patchValue({previewImgSrc: imageUrl});
+    };
     reader.readAsDataURL(this.createProductForm.value.categories[i].fileToUpload!);
 
     console.log(this.createProductForm.value.categories);
