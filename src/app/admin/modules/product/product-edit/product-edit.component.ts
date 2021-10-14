@@ -1,3 +1,5 @@
+import { tap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
 import { ProductCategory } from './../../../../shared/models/product.model';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -134,12 +136,12 @@ export class ProductEditComponent implements OnInit {
     const target = event.target as any;
     const files = target.files;
 
-    this.createProductForm.value.categories[i].fileToUpload = files.item(0);
+    this.categories.controls[i].patchValue({fileToUpload:files.item(0)});
 
     const reader = new FileReader();
     reader.onload = e => {
       const imageUrl = reader.result as string;
-      this.categories.controls[i].patchValue({previewImgSrc: imageUrl});
+      this.categories.controls[i].patchValue({ previewImgSrc: imageUrl });
     };
     reader.readAsDataURL(this.createProductForm.value.categories[i].fileToUpload!);
   }
@@ -165,14 +167,12 @@ export class ProductEditComponent implements OnInit {
     // }
     // Create new product
     if (!this.productId) {
-      formCreate.categories.forEach((m: any) => {
-        this.firebaseService.uploadImages(m.fileToUpload!).subscribe(
-          url => {
-            m.image = url;
-          }
-        );
-      });
-      this.createProduct();
+      const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
+      forkJoin(uploadImages$).subscribe(
+        {
+          complete: () => this.createProduct()
+        }
+      );
     } else {
       //Update Product
       // if (this.fileToUpload) {
