@@ -1,1 +1,81 @@
-<p>order-tracking-info works!</p>
+<div class="my-4">
+  <h2 class="text-xl mb-2">Chi tiết đơn hàng #209845433 - <span class="font-semibold">Đang xử lý</span></h2>
+  <span><p class="text-red-500 cursor-pointer underline">Hủy đơn hàng</p></span>
+  <p class="flex justify-end">Ngày đặt hàng: 13:19 15/05/2021</p>
+  <div class="mt-4 gap-3 grid-cols-3 grid">
+    <div class="col-span-1">
+      <h5>ĐỊA CHỈ NGƯỜI NHẬN</h5>
+      <div class="mt-1 rounded-md shadow-lg px-2 py-3 h-28">
+        <h6 class="font-semibold">Hoàng Văn Tú</h6>
+        <p>Địa chỉ: 122/27/56/22 Tôn Đản, Phường 08, Quận 4, Hồ Chí Minh, Việt Nam</p>
+        <p>Điện thoại: 0346961330</p>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <h5>HÌNH THỨC GIAO HÀNG</h5>
+      <div class="mt-1 rounded-md shadow-lg px-2 py-3 h-28">
+        <p class="font-semibold">Giao hàng nhanh</p>
+        <p>Giao trước 16:00 ngày 15/05/2021</p>
+        <p>Được giao bởi TikiNOW Smart Logistics (giao từ Hồ Chí Minh)</p>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <h5>HÌNH THỨC THANH TOÁN</h5>
+      <div class="mt-1 rounded-md shadow-lg px-2 py-3 h-28">
+        <p>Thẻ ATM nội địa (Hỗ trợ Internet Banking)</p>
+        <p class="italic text-yellow-500">Thanh toán thành công</p>
+      </div>
+    </div>
+  </div>
+  <table class="w-full rounded-md mt-6 shadow-lg">
+    <thead>
+      <tr>
+        <th class="w-1/2">Sản phẩm</th>
+        <th>Đánh giá sản phẩm</th>
+        <th>Số lượng</th>
+        <th class="text-right">Giá tiền</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center">
+          <img
+            class="ml-auto mr-auto w-12 h-12 object-contain inline"
+            src="assets/logo/small-logo.png"
+          />
+          <span class="ml-2 text-base">Iphone 12 promax 64gb White</span>
+        </td>
+        <td class="text-center">
+          <button class="rounded-md text-blue-500 border-2 border-blue-500 p-1">Viết nhận xét</button>
+        </td>
+        <td class="text-center">
+          1
+        </td>
+        <td class="text-right">8,190,000 ₫</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="h-3"></tr>
+      <tr>
+        <td colspan="3">
+          <h4 class="flex justify-end">Mã khyến mãi:</h4>
+        </td>
+        <td class="text-right font-semibold">FREESHIP</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <h4 class="flex justify-end">Giảm giá:</h4>
+        </td>
+        <td class="text-right font-semibold">300,000 ₫</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <h4 class="flex justify-end font-bold">Tổng tiền:</h4>
+        </td>
+        <td class="text-right font-semibold">15,300,000 ₫</td>
+      </tr>
+      <tr class="h-3"></tr>
+    </tfoot>
+  </table>
+  <button class="mt-4 p-2 w-64 bg-red-600 text-white rounded-md" routerLink="timeline">Theo dõi đơn hàng</button>
+</div>

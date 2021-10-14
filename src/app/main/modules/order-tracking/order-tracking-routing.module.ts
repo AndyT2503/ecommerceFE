@@ -1,3 +1,4 @@
+import { OrderTrackingTimelineComponent } from './components/order-tracking-timeline/order-tracking-timeline.component';
 import { OrderTrackingFormComponent } from './components/order-tracking-form/order-tracking-form.component';
 import { OrderTrackingInfoComponent } from './components/order-tracking-info/order-tracking-info.component';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: '',
         component: OrderTrackingFormComponent
+      },
+      {
+        path: ':code/timeline',
+        component: OrderTrackingTimelineComponent
       }
     ]
   }
