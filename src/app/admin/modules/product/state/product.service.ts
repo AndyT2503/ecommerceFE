@@ -44,8 +44,8 @@ export class ProductService {
 
 
   createProduct(name: string, description: string, status: string, availableStatus: string, originalPrice: number,
-    specialFeatures: string[], configuration: [], categories: ProductCategory[]) {
-    return this.productApiService.createProduct(name, description, status, availableStatus, originalPrice, specialFeatures, configuration, categories);
+    specialFeatures: string[], configuration: [], categories: ProductCategory[], supplierId: string, productTypeId: string) {
+    return this.productApiService.createProduct(name, description, status, availableStatus, originalPrice, specialFeatures, configuration, categories, supplierId,productTypeId );
   }
 
   // updateSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {

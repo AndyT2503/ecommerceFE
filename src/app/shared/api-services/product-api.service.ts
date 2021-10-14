@@ -20,7 +20,7 @@ export class ProductApiService {
   }
 
   createProduct(name: string, description: string, status: string, availableStatus: string, originalPrice: number,
-    specialFeatures: string[], configuration: [], categories: ProductCategory[]) {
+    specialFeatures: string[], configuration: [], categories: ProductCategory[], supplierId: string, productTypeId: string) {
     return this.http.post('api/product', {
       name,
       description,
@@ -29,7 +29,9 @@ export class ProductApiService {
       originalPrice,
       specialFeatures,
       configuration,
-      categories
+      categories,
+      supplierId,
+      productTypeId
     });
   }
 

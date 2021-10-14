@@ -39,7 +39,7 @@
 
       <div class="col-span-1 p-2" *ngIf="supplierList$ | async as supplierList">
         <label class="font-semibold">Nhà cung cấp: *</label>
-        <nz-select class="block w-full" formControlName="availableStatus">
+        <nz-select class="block w-full" formControlName="supplierId">
           <nz-option *ngFor="let item of supplierList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
         </nz-select>
       </div>
@@ -47,7 +47,7 @@
 
       <div class="col-span-1 p-2" *ngIf="productTypeList$ | async as productTypeList">
         <label class="font-semibold">Loại sản phẩm: *</label>
-        <nz-select class="block w-full" formControlName="availableStatus">
+        <nz-select class="block w-full" formControlName="productTypeId">
           <nz-option *ngFor="let item of productTypeList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
         </nz-select>
       </div>
@@ -78,7 +78,7 @@
       <div class="col-span-1 p-2">
         <label class="font-semibold">Thêm configuration: *</label>
         <nz-card nzTitle="Import file configuration " [nzExtra]="extraTemplate">
-          <ng-container *ngFor="let item of configuration">
+          <ng-container *ngFor="let item of configuration;let i = index;">
             <div nz-card-grid style="width: 50%; text-align:center">
               <label class="mt-auto" style="margin-right:5px; color:blue; "> {{item.key}}: </label>
               <div>
@@ -98,8 +98,8 @@
 
       <div class="col-span-1 p-2">
         <label class="font-semibold">Thêm categories: *</label>
-        <div formArrayName="categories" *ngFor="let item of categories?.controls; let i = index; trackBy:trackByFn "
-          class="border-2 border-gray-100 mb-1">
+        <div formArrayName="categories" *ngFor="let item of categories?.controls; let i = index;"
+          class="border-2 border-gray-100 mb-1" trackBy:trackByFn>
           <div [formGroupName]="i" nz-row>
             <div nz-col nzSpan="23">
               <nz-avatar class="mt-2 flex ml-auto mr-auto w-32 h-32" nzIcon="user" nzShape="square"
@@ -114,7 +114,7 @@
                 </div>
                 <div class="mb-2">
                   <label class="text-base" for="code">Giá:</label>
-                  <input nz-input type="text" formControlName="price">
+                  <input nz-input type="number" formControlName="price">
                 </div>
               </div>
             </div>
