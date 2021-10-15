@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: 'order-tracking',
         loadChildren: () => import('./modules/order-tracking/order-tracking.module').then((m) => m.OrderTrackingModule)
+      },
+      {
+        path: 'product',
+        loadChildren: () => import('./modules/product-detail/product-detail.module').then((m) => m.ProductDetailModule)
       }
     ]
   }
