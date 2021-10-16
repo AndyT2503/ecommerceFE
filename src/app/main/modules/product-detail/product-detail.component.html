@@ -96,12 +96,12 @@
     <div class="col-span-1">
       <div class="border p-2 rounded-xl">
         <h4 class="font-semibold text-base">Thông tin máy</h4>
-        <p class="flex items-center mt-2">
-          <i nz-icon nzType="mobile" nzTheme="outline" class="mr-1"></i>Mới, đầy
+        <p class="flex items-start mt-2">
+          <i nz-icon nzType="mobile" nzTheme="outline" class="mr-1 mt-1"></i>Mới, đầy
           đủ phụ kiện từ nhà sản xuất
         </p>
-        <p class="flex items-center mt-2">
-          <i nz-icon nzType="sketch" nzTheme="outline" class="mr-1"></i>Bảo hành
+        <p class="flex items-start mt-2">
+          <i nz-icon nzType="sketch" nzTheme="outline" class="mr-1 mt-1"></i>Bảo hành
           12 tháng tại trung tâm bảo hành của CellphoneS. 1 ĐỔI 1 trong 30 ngày
           nếu có lỗi phần cứng nhà sản xuất. Gia hạn bảo hành thời gian giãn
           cách.
@@ -111,35 +111,42 @@
   </div>
   <div class="grid grid-cols-3 gap-4 mt-4">
     <div class="col-span-2 relative">
-      <div
-        class="rounded-xl border shadow-lg py-2 px-4 overflow-hidden"
-        [ngClass]="isDescriptionCollapsed ? 'description-collapsed' : ''"
-        [innerHTML]="htmlContent"
-      ></div>
-      <div class="absolute bottom-2 w-full flex">
-        <button *ngIf="isDescriptionCollapsed"
-          class="
-            rounded-lg
-            border-2
-            border-gray-200
-            w-56
-            ml-auto
-            mr-auto
-            flex
-            items-center
-            justify-center
-            bg-white
-            p-1
-            font-medium
-            hover:bg-red-100
-            hover:border-red-600
-            hover:text-red-600
-          "
-          (click)="isDescriptionCollapsed = false"
-        >
-          <span>Xem thêm</span
-          ><i class="ml-1" nz-icon nzType="down" nzTheme="outline"></i>
-        </button>
+      <div class="relative">
+        <div
+          class="rounded-xl border shadow-lg py-2 px-4 overflow-hidden"
+          [ngClass]="isDescriptionCollapsed ? 'description-collapsed' : ''"
+          [innerHTML]="htmlContent"
+        ></div>
+        <div class="absolute bottom-1 w-full flex">
+          <button
+            *ngIf="isDescriptionCollapsed"
+            class="
+              rounded-lg
+              border-2 border-gray-200
+              w-56
+              ml-auto
+              mr-auto
+              flex
+              items-center
+              justify-center
+              bg-white
+              p-1
+              font-medium
+              hover:bg-red-100 hover:border-red-600 hover:text-red-600
+            "
+            (click)="isDescriptionCollapsed = false"
+          >
+            <span>Xem thêm</span
+            ><i class="ml-1" nz-icon nzType="down" nzTheme="outline"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="py-2 px-4 mt-2 border rounded-xl shadow-lg">
+        <app-product-rating></app-product-rating>
+      </div>
+      <div class="py-2 px-4 mt-2 border rounded-xl shadow-lg">
+        <app-product-comment></app-product-comment>
       </div>
     </div>
     <div class="col-span-1">

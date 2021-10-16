@@ -44,6 +44,9 @@ export class HeaderComponent implements OnInit {
 
   getCurrentLanguage(): void {
     this.languageQuery.select(x => x.language).subscribe((lang) => {
+      if (!lang) {
+        lang = this.translateService.getDefaultLang();
+      }
       this.languageSelected = lang;
       this.flagLanguageSelected = this.listFlag.find(x => x.lang === lang)!.flag;
     });
