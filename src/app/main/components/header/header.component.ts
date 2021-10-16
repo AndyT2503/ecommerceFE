@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
   userProfile$ = this.authenticationQuery.userProfile$;
   languages = this.translateService.getLangs();
   languageSelected!: string;
+  // TODO: Get data from server
+  autoCompleteData = [1, 2, 3, 4];
   listFlag = [
     {
       lang: 'vi',
