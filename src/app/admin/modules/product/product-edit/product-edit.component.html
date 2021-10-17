@@ -1,6 +1,6 @@
 <div class="pt-4">
   <h4 class="flex justify-center text-base font-bold mb-2">Thông tin sản phẩm</h4>
-  <form [formGroup]="createProductForm">
+  <form [formGroup]="createProductForm" (keydown.enter)="$event.preventDefault()">
     <div class="grid grid-cols-2">
 
 
@@ -55,34 +55,30 @@
 
       <div class="col-span-1 p-2">
         <label class="font-semibold">Đặc điểm nổi bật: *</label>
-        <div formArrayName="specialFeatures" *ngFor="let item of specialFeatures?.controls; let i = index;">
-          <div [formGroupName]="i" nz-row>
+        <input nz-input type="text" placeholder="Nhập đặc điểm nổi bật và nhấn enter " [formControl]=specialOnEnter
+          (keyup.enter)="onAddSpecialFeatures($event)" class="mb-1">
+        <ng-container *ngFor="let item of createProductForm.get('specialFeatures')!.value; let j = index;">
+          <div nz-row>
             <div nz-col nzSpan="23">
-              <input nz-input type="text" placeholder="Nhập đặc điểm nổi bật" formControlName="description"
-                class="mb-1">
+              <span nz-typography><code>{{item}}</code></span>
             </div>
             <div nz-col nzSpan="1" class="mr-0">
               <i nz-icon nzType="delete" class="mr-2 cursor-pointer text-xl text-red-500"
-                (click)="deleteSpecial(i)"></i>
+                (click)="onDeleteSpecialFeatures(j)"></i>
             </div>
           </div>
-        </div>
-        <div class="flex justify-center">
-          <button nz-button nzDanger class="flex items-center p-2 rounded-lg" (click)="addSpecial()">
-            <i nz-icon nzType="plus" nzTheme="outline"></i>
-          </button>
-        </div>
+        </ng-container>
       </div>
 
 
       <div class="col-span-1 p-2">
         <label class="font-semibold">Thêm configuration: *</label>
         <nz-card nzTitle="Import file configuration " [nzExtra]="extraTemplate">
-          <ng-container *ngFor="let item of configuration;let i = index;">
-            <div nz-card-grid style="width: 50%; text-align:center">
-              <label class="mt-auto" style="margin-right:5px; color:blue; "> {{item.key}}: </label>
+          <ng-container *ngFor="let item of configuration?.controls;let i = index;">
+            <div nz-card-grid style="width: 50%; text-align:center" *ngIf="item.value.key && item.value.description">
+              <label class="mt-auto" style="margin-right:5px; color:blue; "> {{item.value.key}}: </label>
               <div>
-                <label class="mt-auto" > {{item.description}}</label>
+                <label class="mt-auto"> {{item.value.description}}</label>
               </div>
             </div>
           </ng-container>

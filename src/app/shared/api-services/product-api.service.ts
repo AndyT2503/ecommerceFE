@@ -19,6 +19,10 @@ export class ProductApiService {
     });
   }
 
+  getProductBySlug(slug: string) {
+    return this.http.get<Product>(`api/product/${slug}`);
+  }
+
   createProduct(name: string, description: string, status: string, availableStatus: string, originalPrice: number,
     specialFeatures: string[], configuration: [], categories: ProductCategory[], supplierId: string, productTypeId: string) {
     return this.http.post('api/product', {
@@ -35,7 +39,7 @@ export class ProductApiService {
     });
   }
 
-  updateSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
+  updateProduct(code: string, percent: number, maxPrice: number, validUntil: Date) {
     // return this.http.put(`api/sale-code`, {
     //   code,
     //   percent,
@@ -44,7 +48,7 @@ export class ProductApiService {
     // });
   }
 
-  deleteSaleCode(code: string) {
-    // return this.http.delete(`api/sale-code/${code}`);
+  deleteProduct(slug: string) {
+    return this.http.delete(`api/product/${slug}`);
   }
 }

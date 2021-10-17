@@ -27,6 +27,9 @@ export class ProductService {
       })
     );
   }
+  getProductBySlug(slug: string) {
+    return this.productApiService.getProductBySlug(slug);
+  }
 
   getProductTypes() {
     return this.productTypeApiService.getProductType('').pipe(
@@ -34,7 +37,7 @@ export class ProductService {
     );
   }
 
-  getSuplliers() {
+  getSuppliers() {
     return this.supplierApiService.getSupplier('').pipe(
       tap(res => {
         this.productStore.update({ supplierList: res.items });

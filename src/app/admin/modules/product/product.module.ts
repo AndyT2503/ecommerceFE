@@ -20,6 +20,7 @@ import { ProductCardModule } from './../../../shared/component/product-card/prod
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductComponent } from './product-list/product.component';
 import { ProductRoutingModule } from './product-routing.module';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 const nzModule = [
   NzInputModule,
@@ -36,7 +37,8 @@ const nzModule = [
   NzTabsModule,
   NzSelectModule,
   NzCardModule,
-  NzGridModule
+  NzGridModule,
+  NzTypographyModule
 ];
 
 

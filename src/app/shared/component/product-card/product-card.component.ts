@@ -1,4 +1,6 @@
-import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ProductApiService } from './../../api-services/product-api.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,24 +9,47 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./product-card.component.scss']
 })
 export class ProductCardComponent implements OnInit {
-  @Input() nameProduct = 'iPhone 13 | Chính hãng VN/A';
-  @Input() priceProduct = 23490000;
-  @Input() rate = 2;
-  leftButtonTitle: string = "";
-  rightButtonTitle: string = "";
-  constructor(private readonly router: Router) { }
+  @Input() nameProduct = '';
+  @Input() priceProduct!: number;
+  @Input() rate!: number;
+  @Input() leftButtonTitle = "";
+  @Input() rightButtonTitle = "";
+  @Input() slug!: string;
+  @Input() countRate!: number;
+  isDelete = true;
+  isShowDeleteModel = false;
+  constructor(private readonly router: Router,
+    private productApiService: ProductApiService,
+    private readonly nzMessage: NzMessageService) { }
 
-  ngOnInit(): void {
-    this.leftButtonTitle = "Edit";
-    this.rightButtonTitle = "Delete";
+  ngOnInit(){
+    if(!this.router.url.includes("admin")){
+      this.isDelete = false;
+    }
   }
-
-  onEdit(id: string){
+  onEdit(slug: string){
     this.router.navigate(['admin/product/edit'], {
       queryParams: {
-        productId: id
+        slug: slug
       }
     });
+  }
+  deleteProduct(slug: string){
+    this.productApiService.deleteProduct(slug).subscribe(
+        () => {
+          this.nzMessage.success('Tạo sản phẩm thành công');
+          this.isShowDeleteModel = false;
+        },
+        (err) => this.nzMessage.error(err.error.detail)
+      );
+  }
+
+  openDeleteModel(slug: string){
+    this.isShowDeleteModel = true;
+  }
+
+  closeModal(){
+    this.isShowDeleteModel = false;
   }
 
 }
