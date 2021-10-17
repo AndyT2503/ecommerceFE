@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Product } from 'src/app/shared/models/product.model';
 import { ProductQuery } from '../state/product.query';
 import { ProductService } from '../state/product.service';
 import { ProductStore } from '../state/product.store';
@@ -63,4 +64,11 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.getProduct(pageIndex, this.searchNameForm.value);
   }
 
+  editProduct(item: Product): void {
+    console.log('edit', item);
+  }
+
+  deleteProduct(item: Product): void {
+    console.log('delete', item);
+  }
 }

@@ -1,27 +1,64 @@
-<nz-card class="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:shadow-md" style="width:95%;"
-  [nzCover]="coverTemplate" [nzActions]="[LEFT_BUTTON,RIGHT_BUTTON]">
-  <nz-card-meta class="mb-1" nzTitle={{nameProduct}}></nz-card-meta>
-  <p class="cellphones-color-price">{{priceProduct | currency:'VND'}}</p>
-  <nz-rate class="text-sm" [(ngModel)]="rate" nzAllowHalf nzDisabled></nz-rate>
-  <span class="ml-2 text-sm">{{countRate}} đánh giá </span>
+<nz-card
+  class="
+    transition
+    delay-150
+    duration-300
+    ease-in-out
+    hover:-translate-y-1
+    card
+    rounded-xl
+    hover:scale-105 hover:shadow-md
+  "
+  [nzCover]="coverTemplate"
+>
+  <nz-card-meta class="mb-1" nzTitle="{{ product.name }}"></nz-card-meta>
+  <p class="cellphones-color-price">
+    {{ product.originalPrice | currency: "VND" }}
+  </p>
+  <nz-rate
+    class="text-sm"
+    [(ngModel)]="product.averageRate"
+    nzAllowHalf
+    nzDisabled
+  ></nz-rate>
+  <span class="ml-2 text-sm">{{ product.countRate }} đánh giá </span>
+  <div class="grid-cols-2 mt-4 card-footer" *ngIf="isShowFooter">
+    <button
+      class="
+        col-span-1
+        w-20
+        h-7
+        mr-auto
+        text-base text-white
+        bg-blue-700
+        font-medium
+        rounded-sm
+      "
+      (click)="clickLeftButton(product)"
+    >
+      {{ leftButtonTitle }}
+    </button>
+    <button
+      class="
+        col-span-1
+        ml-auto
+        w-20
+        h-7
+        text-base text-white
+        bg-red-700
+        rounded-sm
+        font-medium
+      "
+      (click)="clickRightButton(product)"
+    >
+      {{ rightButtonTitle }}
+    </button>
+  </div>
 </nz-card>
 
-
 <ng-template #coverTemplate>
-  <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+  <img
+    alt="example"
+    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+  />
 </ng-template>
-
-<ng-template #LEFT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-blue-700 font-medium rounded-sm" (click)="onEdit(slug)">{{leftButtonTitle}}</button>
-</ng-template>
-<ng-template #RIGHT_BUTTON>
-  <button class="w-20 h-7 text-base text-white bg-red-700 rounded-sm font-medium" (click)="openDeleteModel(slug)">{{rightButtonTitle}}</button>
-</ng-template>
-
-
-<nz-modal [(nzVisible)]="isShowDeleteModel" nzTitle="Xác nhận xóa" (nzOnCancel)="closeModal()"
-  (nzOnOk)="deleteProduct(slug)">
-  <ng-container *nzModalContent>
-    <h2>Xác nhận xóa sản phẩm : <i style="color:red"> {{nameProduct}} </i></h2>
-  </ng-container>
-</nz-modal>

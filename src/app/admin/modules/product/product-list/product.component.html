@@ -32,10 +32,9 @@
 </ng-template>
 <!-- End Search -->
 <ng-container *ngIf="productPaging$ | async as productPaging">
-  <div nz-row>
-    <div *ngFor="let item of productPaging.items" nz-col nzSpan="6" class="py-2">
-      <app-product-card [nameProduct]="item.name" [slug]="item.slug || ''" [priceProduct]="item.currentPrice || 0"
-       [rate]="item.mediumRate || 0" [countRate]="item.countRate || 0"  [leftButtonTitle] = "leftButtonTitle" [rightButtonTitle] = "rightButtonTitle"
+  <div class="grid grid-cols-6 gap-4">
+    <div *ngFor="let item of productPaging.items" class="py-2 col-span-1">
+      <app-product-card [product]="item" (onClickLeftButton)="editProduct(item)" (onClickRightButton)="deleteProduct(item)" [leftButtonTitle] = "leftButtonTitle" [rightButtonTitle] = "rightButtonTitle"
        class="w-fit"></app-product-card>
     </div>
   </div>

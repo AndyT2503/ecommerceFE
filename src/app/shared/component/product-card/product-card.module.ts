@@ -1,12 +1,11 @@
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { CurrencyVNDPipe } from './../../pipe/currency.pipe';
-import { FormsModule } from '@angular/forms';
-import { NzRateModule } from 'ng-zorro-antd/rate';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductCardComponent } from './product-card.component';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzRateModule } from 'ng-zorro-antd/rate';
+import { ProductCardComponent } from './product-card.component';
 
 
 
@@ -21,7 +20,6 @@ const nzModule = [
 @NgModule({
   declarations: [
     ProductCardComponent,
-    CurrencyVNDPipe
   ],
   imports: [
     CommonModule,
