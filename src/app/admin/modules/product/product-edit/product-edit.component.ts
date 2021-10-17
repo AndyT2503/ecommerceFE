@@ -11,6 +11,7 @@ import { ProductService } from '../state/product.service';
 import { Product } from './../../../../shared/models/product.model';
 import { FirebaseService } from './../../../../shared/util-services/firebase.service';
 import { ProductStore } from './../state/product.store';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -30,6 +31,7 @@ export class ProductEditComponent implements OnInit {
   // slug!: string;
   product: Product | null = null;
   specialOnEnter = new FormControl('');
+  public configurationEditor = ClassicEditor;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -214,6 +216,8 @@ export class ProductEditComponent implements OnInit {
 
   submit(): void {
     let formCreate = this.createProductForm.value;
+    console.log(formCreate);
+
     if (!formCreate.name) {
       this.nzMessage.warning('Vui lòng điền name');
       return;
@@ -222,12 +226,12 @@ export class ProductEditComponent implements OnInit {
       this.nzMessage.warning('Vui lòng điền description');
       return;
     }
-    const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
-    forkJoin(uploadImages$).subscribe(
-      {
-        complete: () => this.createProduct()
-      }
-    );
+    // const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
+    // forkJoin(uploadImages$).subscribe(
+    //   {
+    //     complete: () => this.createProduct()
+    //   }
+    // );
     // **************************TODO: IF CREATE ELSE UPDATE
     // Create new product
     // if (!this.slug) {
