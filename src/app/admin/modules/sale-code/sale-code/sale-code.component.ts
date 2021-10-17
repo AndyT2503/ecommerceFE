@@ -1,18 +1,20 @@
-import { tap } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subject } from 'rxjs';
+import { tap, debounceTime, takeUntil } from 'rxjs/operators';
 import { SaleCode } from './../../../../shared/models/sale-code.model';
 import { SaleCodeQuery } from './../state/sale-code.query';
 import { SaleCodeService } from './../state/sale-code.service';
+import { SaleCodeStore } from './../state/sale-code.store';
 
 @Component({
   selector: 'app-sale-code',
   templateUrl: './sale-code.component.html',
   styleUrls: ['./sale-code.component.scss']
 })
-export class SaleCodeComponent implements OnInit {
-  saleCodePaging$ = this.saleCodeQuery.select(x => x.saleCodePaging).pipe(tap((res) => this.saleCodeList = res?.items));;
+export class SaleCodeComponent implements OnInit, OnDestroy {
+  saleCodePaging$ = this.saleCodeQuery.select(x => x.saleCodePaging).pipe(tap((res) => this.saleCodeList = res?.items));
   filterName = '';
   isCreateSaleCodeModalVisible = false;
   isEditSaleCodeModalVisible = false;
@@ -20,19 +22,46 @@ export class SaleCodeComponent implements OnInit {
   pageSize = 10;
   editCache: { [key: string]: { edit: boolean; data: SaleCode } } = {};
   saleCodeList: SaleCode[] = [];
+  searchNameForm = new FormControl('');
+  destroyed$ = new Subject<void>();
   constructor(private formBuilder: FormBuilder,
     private readonly saleCodeQuery: SaleCodeQuery,
     private readonly saleCodeService: SaleCodeService,
-    private readonly nzMessage: NzMessageService) { }
+    private readonly nzMessage: NzMessageService,
+    private readonly saleCodeStore: SaleCodeStore) { }
 
   ngOnInit(): void {
+    const filterName = this.saleCodeStore.getValue().saleCodeFilter;
+    let pageIndex = this.saleCodeStore.getValue().pageIndex;
     this.createSaleCodeForm = this.formBuilder.group({
       code: ['', Validators.required],
       percent: ['', Validators.required],
       maxPrice: ['', Validators.required],
       validUntil: ['', Validators.required],
     });
-    this.getSaleCodes(1);
+
+    if (filterName) {
+      this.searchNameForm.setValue(filterName);
+    }
+    if (!pageIndex) {
+      pageIndex = 1;
+    }
+    this.getSaleCodes(pageIndex, this.searchNameForm.value);
+    this.setupSearchName();
+  }
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+  setupSearchName(): void {
+    this.searchNameForm.valueChanges.pipe(
+      debounceTime(300),
+      takeUntil(this.destroyed$)
+      ).subscribe(
+      (val) => {
+        this.getSaleCodes(1, val);
+      }
+    );
   }
   getSaleCodes(pageIndex: number, code?: string): void {
     this.saleCodeService.getSaleCodes(pageIndex, this.pageSize, code || '').subscribe((res) => {
@@ -95,18 +124,21 @@ export class SaleCodeComponent implements OnInit {
       () => {
         item.edit = false;
         this.nzMessage.success('Cập nhật thông tin mã giảm giá thành công');
+        this.searchNameForm.setValue('');
         this.getSaleCodes(1);
       },
       (err) => this.nzMessage.error(err.error.detail)
     );
   }
 
-  onPageIndexChange(index: number): void {
+  onPageIndexChange(pageIndex: number): void {
+    this.getSaleCodes(pageIndex, this.searchNameForm.value);
   }
   deleteSaleCode(code: string): void {
     this.saleCodeService.deleteSaleCode(code).subscribe(
       () => {
         this.nzMessage.success('Xoá mã giảm giá thành công');
+        this.searchNameForm.setValue('');
         this.getSaleCodes(1);
       },
 

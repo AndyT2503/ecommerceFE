@@ -20,6 +20,14 @@ const routes: Routes = [
         canActivate: [RoleGuard]
       },
       {
+        path: 'product',
+        loadChildren: () => import('./modules/product/product.module').then((m) => m.ProductModule),
+        data: {
+          requireRoles: [AppRole.Admin, AppRole.SuperAdmin]
+        },
+        canActivate: [RoleGuard]
+      },
+      {
         path: 'product-type',
         loadChildren: () => import('./modules/product-type/product-type.module').then((m) => m.ProductTypeModule),
         data: {

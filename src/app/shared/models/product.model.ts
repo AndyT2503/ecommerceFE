@@ -14,7 +14,19 @@ export interface Product {
   currentPrice?: number;
   image?: number;
   categories?: ProductCategory[];
-  configuration?: MobileConfiguration | TabletConfiguration | LaptopConfiguration | WatchConfiguration;
+  configuration?: any;
+  mediumRate?: number;
+  countRate?: number;
+}
+
+export interface ProductConfiguration {
+  key: string;
+  description: string;
+}
+
+export interface ProductConfiguration {
+  key: string;
+  description: string;
 }
 
 export interface ProductCategory {
