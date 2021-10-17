@@ -35,3 +35,21 @@
   white-space: unset;
   text-overflow: unset;
 }
+
+.sale-tag {
+  width: 80px;
+  height: 31px;
+  background: url("/assets/img/sale-tag.svg") center center no-repeat;
+  position: absolute;
+  top: 0px;
+  left: -4px;
+  p {
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    color: #ffffff;
+  }
+}

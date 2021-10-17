@@ -13,7 +13,7 @@ export class ProductCardComponent {
   @Output() onClickRightButton = new EventEmitter(); 
   @Output() onClickLeftButton = new EventEmitter();
   @Output() onClickToCard = new EventEmitter();
-  @Input() isShowFooter = true;
+  @Input() isShowFooter = false;
   constructor() { }
 
   clickLeftButton(product: Product) {

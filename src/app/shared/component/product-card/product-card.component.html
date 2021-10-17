@@ -9,10 +9,14 @@
     rounded-xl
     hover:scale-105 hover:shadow-md
     cursor-pointer
+    relative
   "
   (click)="clickToCard(product)"
   [nzCover]="coverTemplate"
 >
+  <div class="sale-tag">
+    <p>Giảm 8%</p>
+  </div>
   <nz-card-meta class="mb-1" nzTitle="Tai nghe Bluetooth Samsung Galaxy Buds Live"></nz-card-meta>
   <div>
     <p class="cellphones-color-price inline-block">
