@@ -1,0 +1,178 @@
+<h2 class="text-xl font-medium mt-4 flex justify-center">Giỏ hàng của bạn</h2>
+<table class="w-full mt-3">
+  <thead>
+    <tr>
+      <th>Sản phẩm</th>
+      <th class="w-96">Tên sản phẩm</th>
+      <th class="w-32">Số lượng</th>
+      <th class="w-48">Giá tiền</th>
+      <th class="w-24">Xóa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          class="ml-auto mr-auto w-24 h-24 object-contain"
+          src="assets/logo/small-logo.png"
+        />
+      </td>
+      <td>GVN AXE M</td>
+      <td>
+        <nz-input-number
+          [nzMin]="1"
+          [nzMax]="10"
+          [nzStep]="1"
+        ></nz-input-number>
+      </td>
+      <td>8,190,000 ₫</td>
+      <td>
+        <i nz-icon nzType="delete" nzTheme="outline"></i>
+      </td>
+    </tr>
+    <tr class="h-12 text-base">
+      <td colspan="3">Nhập mã khuyến mãi:</td>
+      <td colspan="2" class="p-1">
+        <div class="flex items-center justify-center">
+          <input class="w-32" type="text" nz-input />
+          <button nz-button nzDanger nzType="primary">Áp dụng</button>
+        </div>
+      </td>
+    </tr>
+    <tr class="h-12 text-base">
+      <td colspan="3">Giảm giá:</td>
+      <td colspan="2">0 ₫</td>
+    </tr>
+    <tr class="h-12 text-base font-bold text-red-700">
+      <td colspan="3">Tổng tiền:</td>
+      <td colspan="2">8,190,000 ₫</td>
+    </tr>
+  </tbody>
+</table>
+<h2 class="text-xl font-bold mt-4 flex justify-center">Thông tin mua hàng</h2>
+<form class="mt-4 w-1/2 ml-auto mr-auto" nz-form nz-row>
+  <nz-form-item nz-col nzSpan="12">
+    <nz-form-label nzRequired>Họ và tên</nz-form-label>
+    <nz-form-control>
+      <input type="text" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="12">
+    <nz-form-label nzRequired>Số điện thoại đặt hàng</nz-form-label>
+    <nz-form-control>
+      <input type="text" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="12">
+    <nz-form-label nzRequired
+      >Email</nz-form-label
+    >
+    <nz-form-control>
+      <input type="text" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="12">
+    <nz-form-label nzRequired>Thành phố</nz-form-label>
+    <nz-form-control>
+      <nz-select [(ngModel)]="provinceSelected" (ngModelChange)="provinceChange($event)" [ngModelOptions]="{standalone: true}">
+        <nz-option *ngFor="let item of provinceList" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="12">
+    <nz-form-label nzRequired>Quận/huyện</nz-form-label>
+    <nz-form-control>
+      <nz-select ngModel="lucy">
+        <nz-option *ngFor="let item of districtList" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="12">
+    <nz-form-label nzRequired>Địa chỉ</nz-form-label>
+    <nz-form-control>
+      <input type="text" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-col nzSpan="24">
+    <nz-form-label nzRequired>Lưu ý của quý khách</nz-form-label>
+    <nz-form-control>
+      <input type="text" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<button
+  class="
+    mt-4
+    flex
+    justify-center
+    text-lg
+    items-center
+    font-bold
+    text-white
+    bg-blue-500
+    hover:text-blue-500 hover:bg-white hover:border-blue-500 hover:border-2
+    rounded-md
+    ml-auto
+    mr-auto
+    h-12
+    w-1/2
+  "
+  nz-button
+>
+  ĐẶT HÀNG TRƯỚC THANH TOÁN SAU
+</button>
+<div class="ml-auto mr-auto w-1/2">
+  <nz-divider nzText=" HOẶC CHỌN THANH TOÁN ONLINE"></nz-divider>
+</div>
+<div class="ml-auto mr-auto w-1/2">
+  <nz-radio-group class="space-y-4">
+    <label nz-radio nzValue="A">
+      <i class="vnpay-logo mr-2"></i>
+      Thanh toán qua VNPAY
+      <i class="atm-logo ml-2"></i>
+    </label>
+    <label nz-radio nzValue="B">
+      <i class="zalopay-logo mr-2"></i>Cổng thanh toán ZaloPay
+      <i class="atm-logo ml-2"></i>
+      <i class="visa-logo ml-2"></i>
+      <i class="mastercard-logo ml-2"></i>
+    </label>
+    <label nz-radio nzValue="C">
+      <i class="momo-logo mr-2"></i>Thanh toán qua Ví Momo
+    </label>
+  </nz-radio-group>
+</div>
+<button
+  class="
+    mt-4
+    w-1/2
+    flex
+    justify-center
+    text-lg
+    items-center
+    font-bold
+    text-white
+    bg-red-500
+    hover:text-red-500 hover:bg-white hover:border-red-500 hover:border-2
+    rounded-md
+    ml-auto
+    mr-auto
+    h-12
+  "
+  nz-button
+>
+  THANH TOÁN ONLINE
+</button>
+<div class="mt-4 flex justify-center mb-4">
+  <label nzChecked nz-checkbox></label
+  ><span class="text-sm italic ml-2"
+    >Bằng cách đặt hàng, bạn đồng ý với
+    <a
+      target="_blank"
+      href="https://cellphones.com.vn/tos"
+      class="underline text-blue-500"
+      >điều khoản sử dụng</a
+    >
+    của CellphoneS.</span
+  >
+</div>

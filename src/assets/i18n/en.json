@@ -12,6 +12,8 @@
   "HEADER": {
     "LOGIN": "Login",
     "CART": "Cart",
-    "CONTACT": "Contact"
+    "CONTACT": "Contact",
+    "ORDER": "Order lookup",
+    "SEARCH": "What are you looking for?"
   }
 }

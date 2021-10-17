@@ -14,7 +14,8 @@ const routes: Routes = [
     path: '**',
     pathMatch: 'full',
     redirectTo: ''
-  }
+  },
+ 
 ];
 
 @NgModule({

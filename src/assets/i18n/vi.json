@@ -12,6 +12,8 @@
   "HEADER": {
     "LOGIN": "Đăng nhập",
     "CART": "Giỏ hàng",
-    "CONTACT": "Gọi mua hàng"
+    "CONTACT": "Gọi mua hàng",
+    "ORDER": "Tra cứu đơn hàng",
+    "SEARCH": "Bạn cần tìm gì?"
   }
 }

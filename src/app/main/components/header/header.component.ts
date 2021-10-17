@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
   userProfile$ = this.authenticationQuery.userProfile$;
   languages = this.translateService.getLangs();
   languageSelected!: string;
+  // TODO: Get data from server
+  autoCompleteData = [1, 2, 3, 4];
   listFlag = [
     {
       lang: 'vi',
@@ -44,6 +46,9 @@ export class HeaderComponent implements OnInit {
 
   getCurrentLanguage(): void {
     this.languageQuery.select(x => x.language).subscribe((lang) => {
+      if (!lang) {
+        lang = this.translateService.getDefaultLang();
+      }
       this.languageSelected = lang;
       this.flagLanguageSelected = this.listFlag.find(x => x.lang === lang)!.flag;
     });

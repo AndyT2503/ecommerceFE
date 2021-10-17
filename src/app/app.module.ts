@@ -22,7 +22,7 @@ registerLocaleData(en);
 export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoader(http,`${window.location.origin}/assets/i18n/`, '.json');
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
