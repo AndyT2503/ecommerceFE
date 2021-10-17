@@ -30,3 +30,8 @@
   border-top-left-radius: 0.75rem;
   border-top-right-radius: 0.75rem;
 }
+
+:host ::ng-deep .ant-card-meta-title {
+  white-space: unset;
+  text-overflow: unset;
+}

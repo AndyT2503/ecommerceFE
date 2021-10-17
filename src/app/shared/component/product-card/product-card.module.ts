@@ -6,6 +6,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { ProductCardComponent } from './product-card.component';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 
 
@@ -14,7 +15,8 @@ const nzModule = [
   NzAvatarModule,
   NzRateModule,
   FormsModule,
-  NzModalModule
+  NzModalModule,
+  NzTypographyModule
 ];
 
 @NgModule({

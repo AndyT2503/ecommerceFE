@@ -8,20 +8,25 @@
     card
     rounded-xl
     hover:scale-105 hover:shadow-md
+    cursor-pointer
   "
+  (click)="clickToCard(product)"
   [nzCover]="coverTemplate"
 >
-  <nz-card-meta class="mb-1" nzTitle="{{ product.name }}"></nz-card-meta>
-  <p class="cellphones-color-price">
-    {{ product.originalPrice | currency: "VND" }}
-  </p>
+  <nz-card-meta class="mb-1" nzTitle="Tai nghe Bluetooth Samsung Galaxy Buds Live"></nz-card-meta>
+  <div>
+    <p class="cellphones-color-price inline-block">
+      <span class="font-bold">{{ product.originalPrice | number: '1.0-2' }}</span> ₫
+    </p>
+    <span class="ml-2 text-xs text-gray-500" nz-typography><del>10.000.000 ₫</del></span>
+  </div>
   <nz-rate
     class="text-sm"
     [(ngModel)]="product.averageRate"
     nzAllowHalf
     nzDisabled
   ></nz-rate>
-  <span class="ml-2 text-sm">{{ product.countRate }} đánh giá </span>
+  <span class="ml-2 text-sm">{{ product.countRate || 0 }} đánh giá </span>
   <div class="grid-cols-2 mt-4 card-footer" *ngIf="isShowFooter">
     <button
       class="
@@ -59,6 +64,7 @@
 <ng-template #coverTemplate>
   <img
     alt="example"
+    class="h-48"
     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
   />
 </ng-template>

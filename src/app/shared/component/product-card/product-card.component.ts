@@ -12,6 +12,7 @@ export class ProductCardComponent {
   @Input() rightButtonTitle!: string;
   @Output() onClickRightButton = new EventEmitter(); 
   @Output() onClickLeftButton = new EventEmitter();
+  @Output() onClickToCard = new EventEmitter();
   @Input() isShowFooter = true;
   constructor() { }
 
@@ -21,5 +22,9 @@ export class ProductCardComponent {
 
   clickRightButton(product: Product) {
     this.onClickRightButton.emit(product);
+  }
+
+  clickToCard(product: Product) {
+    this.onClickToCard.emit(product);
   }
 }
