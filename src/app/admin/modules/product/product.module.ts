@@ -22,6 +22,8 @@ import { ProductComponent } from './product-list/product.component';
 import { ProductRoutingModule } from './product-routing.module';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzFormModule } from 'ng-zorro-antd/form';
 const nzModule = [
   NzInputModule,
   NzIconModule,
@@ -39,7 +41,9 @@ const nzModule = [
   NzCardModule,
   NzGridModule,
   NzTypographyModule,
-  CKEditorModule
+  CKEditorModule,
+  NzSpinModule,
+  NzFormModule
 ];
 
 

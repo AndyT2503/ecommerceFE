@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { NzButtonSize } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -11,7 +13,6 @@ import { ProductService } from '../state/product.service';
 import { Product } from './../../../../shared/models/product.model';
 import { FirebaseService } from './../../../../shared/util-services/firebase.service';
 import { ProductStore } from './../state/product.store';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -25,22 +26,19 @@ export class ProductEditComponent implements OnInit {
   productTypeList$ = this.productQuery.select(x => x.productTypeList);
   supplierList$ = this.productQuery.select(x => x.supplierList);
   configuration!: FormArray;
-  previewImgSrc!: string; // khi upload lên nó sẽ lưu tạm để hiển thị ra
-  categoryLogo!: string; // Lấy từ db ra theo category là logo trong bảng category
-  fileToUpload: File | null = null;  // File để lưu firsBay
-  // slug!: string;
-  product: Product | null = null;
+  product?: Product ;
   specialOnEnter = new FormControl('');
+  size: NzButtonSize = 'default';
   public configurationEditor = ClassicEditor;
+  isSpinning = false;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private productService: ProductService,
     private productQuery: ProductQuery,
     private readonly nzMessage: NzMessageService,
-    private readonly activeRoute: ActivatedRoute,
     private readonly firebaseService: FirebaseService,
-    private productStore: ProductStore,
+    private productStore: ProductStore
   ) { }
 
   ngOnInit() {
@@ -108,7 +106,7 @@ export class ProductEditComponent implements OnInit {
       specialFeatures: [[]],
       supplierId: ['', Validators.required],
       productTypeId: ['', Validators.required],
-      configuration: this.formBuilder.array([this.createConfiguration("", "")]),
+      configuration: this.formBuilder.array([this.createConfiguration()]),
       categories: this.formBuilder.array([this.createCategories()]),
     });
     this.categories = this.createProductForm.get('categories') as FormArray;
@@ -125,7 +123,7 @@ export class ProductEditComponent implements OnInit {
     });
   }
 
-  createConfiguration(key: string, description: string): FormGroup {
+  createConfiguration(): FormGroup {
     return this.formBuilder.group({
       key: '',
       description: ''
@@ -179,15 +177,15 @@ export class ProductEditComponent implements OnInit {
       let workbook = XLSX.read(binaryData, { type: 'binary' });
       workbook.SheetNames.forEach(sheet => {
         let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
+
         // Remove Formarray configuration
-        while (this.configuration.length !== 0) {
-          this.configuration.removeAt(0);
-        }
+        this.configuration.clear();
+
         // set FormArray
         data.forEach((m: any, i) => {
           if (m.key && m.description) {
             this.configuration = this.createProductForm.get('configuration') as FormArray;
-            this.configuration.push(this.createConfiguration("", ""));
+            this.configuration.push(this.createConfiguration());
             this.configuration.controls[i].patchValue({ key: m.key, description: m.description });
           }
         });
@@ -226,12 +224,12 @@ export class ProductEditComponent implements OnInit {
       this.nzMessage.warning('Vui lòng điền description');
       return;
     }
-    // const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
-    // forkJoin(uploadImages$).subscribe(
-    //   {
-    //     complete: () => this.createProduct()
-    //   }
-    // );
+    const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
+    forkJoin(uploadImages$).subscribe(
+      {
+        complete: () => this.createProduct()
+      }
+    );
     // **************************TODO: IF CREATE ELSE UPDATE
     // Create new product
     // if (!this.slug) {
@@ -257,6 +255,7 @@ export class ProductEditComponent implements OnInit {
 
   }
   createProduct(): void {
+    this.isSpinning = true;
     let formCreate = this.createProductForm.value;
     this.productService.createProduct(formCreate.name, formCreate.description, formCreate.status, formCreate.availableStatus,
       formCreate.originalPrice, formCreate.specialFeatures, formCreate.configuration, formCreate.categories, formCreate.supplierId, formCreate.productTypeId).subscribe(
@@ -265,7 +264,10 @@ export class ProductEditComponent implements OnInit {
           this.productStore.reset();
           this.router.navigate(['admin/product']);
         },
-        (err) => this.nzMessage.error(err.error.detail)
+
+        (err) => this.nzMessage.error(err.error.detail),
+
+        () => this.isSpinning = false
       );
   }
 
