@@ -65,10 +65,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   editProduct(item: Product): void {
-    console.log('edit', item);
   }
 
   deleteProduct(item: Product): void {
-    console.log('delete', item);
   }
 }

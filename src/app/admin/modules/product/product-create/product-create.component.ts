@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { NzButtonSize } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -13,12 +12,13 @@ import { ProductService } from '../state/product.service';
 import { Product } from './../../../../shared/models/product.model';
 import { FirebaseService } from './../../../../shared/util-services/firebase.service';
 import { ProductStore } from './../state/product.store';
+
 @Component({
-  selector: 'app-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.scss']
+  selector: 'app-product-create',
+  templateUrl: './product-create.component.html',
+  styleUrls: ['./product-create.component.scss']
 })
-export class ProductEditComponent implements OnInit {
+export class ProductCreateComponent implements OnInit {
 
   createProductForm!: FormGroup; // ! là khai báo not null
   categories!: FormArray;
@@ -27,8 +27,7 @@ export class ProductEditComponent implements OnInit {
   supplierList$ = this.productQuery.select(x => x.supplierList);
   configuration!: FormArray;
   product?: Product ;
-  specialOnEnter = new FormControl('');
-  size: NzButtonSize = 'default';
+  specialOnEnter!: string;
   public configurationEditor = ClassicEditor;
   isSpinning = false;
   constructor(
@@ -42,70 +41,20 @@ export class ProductEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // *********************TODO : Get slug + get Product when edit
-    // const queryParams = this.activeRoute.snapshot.queryParams;
-    // if (queryParams) {
-    //   this.slug = queryParams.slug;
-    // }
-    // this.getProduct();
     this.initForm();
     this.getProductTypeList();
     this.getSupplierList();
   }
-  // *********************TODO: Get Product
-  // getProduct() {
-  //   this.initForm();
-  //   if (this.slug) {
-  //     this.productService.getProductBySlug(this.slug).subscribe(
-  //       {
-  //         next: (res) => this.product = res,
-
-  //         complete: () => this.setValueForm()
-
-  //       }
-  //     );
-  //   }
-  // }
-  // *******************TODO:  Set Form when Edit
-  // setValueForm() {
-  //   this.createProductForm.patchValue({ name: this.product?.name });
-  //   this.createProductForm.patchValue({ description: this.product?.description });
-  //   this.createProductForm.patchValue({ status: this.product?.status });
-  //   this.createProductForm.patchValue({ availableStatus: this.product?.availableStatus });
-  //   this.createProductForm.patchValue({ originalPrice: this.product?.originalPrice });
-  //   this.createProductForm.patchValue({ specialFeatures: this.product?.specialFeatures });
-  //   this.createProductForm.patchValue({ supplierId: this.product?.supplierId });
-  //   this.createProductForm.patchValue({ productTypeId: this.product?.productTypeId });
-  //   while (this.configuration.length !== 0) {
-  //     this.configuration.removeAt(0);
-  //   }
-  //   this.product?.configuration?.forEach((m:any,i:number) => {
-  //     if(m.key && m.description){
-  //       this.configuration = this.createProductForm.get('configuration') as FormArray;
-  //       this.configuration.push(this.createConfiguration("", ""));
-  //       this.configuration.controls[i].patchValue({ key: m.key, description: m.description });
-  //     }
-  //   });
-  //   while (this.categories.length !== 0) {
-  //     this.categories.removeAt(0);
-  //   }
-  //   this.product?.categories?.forEach((m,i) => {
-  //       this.categories = this.createProductForm.get('categories') as FormArray;
-  //       this.categories.push(this.createCategories());
-  //       this.categories.controls[i].patchValue({ name: m.name, price: m.price,image: m.image, id: m.id  });
-  //   });
-  // }
-
   initForm() {
     this.createProductForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      status: ['', Validators.required],
-      availableStatus: ['', Validators.required],
-      originalPrice: ['', Validators.required],
+      status: [''],
+      availableStatus: [''],
+      originalPrice: [''],
       specialFeatures: [[]],
-      supplierId: ['', Validators.required],
-      productTypeId: ['', Validators.required],
+      supplierId: [''],
+      productTypeId: [''],
       configuration: this.formBuilder.array([this.createConfiguration()]),
       categories: this.formBuilder.array([this.createCategories()]),
     });
@@ -148,7 +97,7 @@ export class ProductEditComponent implements OnInit {
     if (event.target.value) {
       this.createProductForm.value.specialFeatures.push(event.target.value);
     }
-    this.specialOnEnter.setValue('');
+    this.specialOnEnter = '';
   }
 
   onDeleteSpecialFeatures(i: number) {
@@ -214,45 +163,22 @@ export class ProductEditComponent implements OnInit {
 
   submit(): void {
     let formCreate = this.createProductForm.value;
-    console.log(formCreate);
+    for (const i in this.createProductForm.controls) {
+      if (this.createProductForm.controls.hasOwnProperty(i)) {
+        this.createProductForm.controls[i].markAsDirty();
+        this.createProductForm.controls[i].updateValueAndValidity();
+      }
+    }
+    if(this.createProductForm.invalid){
+      return;
+    }
 
-    if (!formCreate.name) {
-      this.nzMessage.warning('Vui lòng điền name');
-      return;
-    }
-    if (!formCreate.description) {
-      this.nzMessage.warning('Vui lòng điền description');
-      return;
-    }
     const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
     forkJoin(uploadImages$).subscribe(
       {
         complete: () => this.createProduct()
       }
     );
-    // **************************TODO: IF CREATE ELSE UPDATE
-    // Create new product
-    // if (!this.slug) {
-    //   const uploadImages$ = formCreate.categories.map((x: any) => this.firebaseService.uploadImages(x.fileToUpload!).pipe(tap(url => x.image = url)));
-    //   forkJoin(uploadImages$).subscribe(
-    //     {
-    //       complete: () => this.createProduct()
-    //     }
-    //   );
-    // } else {
-    //   Update Product
-    //   if (this.fileToUpload) {
-    //     this.firebaseService.uploadImages(this.fileToUpload!).subscribe(
-    //       url => {
-    //         this.supplierLogo = url;
-    //         this.updateSupplier();
-    //       }
-    //     );
-    //   } else {
-    //     this.updateSupplier();
-    //   }
-    // }
-
   }
   createProduct(): void {
     this.isSpinning = true;
