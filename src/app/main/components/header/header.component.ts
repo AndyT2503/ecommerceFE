@@ -1,3 +1,4 @@
+import { UpdatePasswordService } from './../../../shared/component/update-password-form/update-password.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -36,7 +37,8 @@ export class HeaderComponent implements OnInit {
     private readonly router: Router,
     private readonly languageQuery: LanguageQuery,
     private readonly translateService: TranslateService,
-    private readonly languageService: LanguageService
+    private readonly languageService: LanguageService,
+    private readonly updatePasswordService: UpdatePasswordService
   ) { }
 
   ngOnInit(): void {
@@ -70,4 +72,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
+  updatePassword(): void {
+    this.updatePasswordService.openUpdatePasswordForm();
+  }
 }

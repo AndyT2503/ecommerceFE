@@ -1,3 +1,4 @@
+import { UpdatePasswordFormModule } from './../shared/component/update-password-form/update-password-form.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -32,7 +33,8 @@ const nzModule = [
     CommonModule,
     AdminRoutingModule,
     nzModule,
-    RoleDirectiveModule
+    RoleDirectiveModule,
+    UpdatePasswordFormModule
   ]
 })
 export class AdminModule { }

@@ -1,3 +1,4 @@
+import { UpdatePasswordService } from './../shared/component/update-password-form/update-password.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -65,7 +66,8 @@ export class AdminComponent implements OnInit {
     private readonly router: Router,
     private readonly supplierStore: SupplierStore,
     private readonly authenticationQuery: AuthenticationQuery,
-    private readonly authenticationService: AuthenticationService
+    private readonly authenticationService: AuthenticationService,
+    private readonly updatePasswordService: UpdatePasswordService
   ) { }
 
   ngOnInit(): void {
@@ -94,5 +96,9 @@ export class AdminComponent implements OnInit {
 
   logout(): void {
     this.authenticationService.logout();
+  }
+
+  updatePassword(): void {
+    this.updatePasswordService.openUpdatePasswordForm();
   }
 }
