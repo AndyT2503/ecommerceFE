@@ -11,7 +11,7 @@ const routes: Routes = [
     component: OrderTrackingComponent,
     children: [
       {
-        path: ':code',
+        path: 'info',
         component: OrderTrackingInfoComponent
       },
       {
@@ -19,7 +19,7 @@ const routes: Routes = [
         component: OrderTrackingFormComponent
       },
       {
-        path: ':code/timeline',
+        path: 'timeline',
         component: OrderTrackingTimelineComponent
       }
     ]

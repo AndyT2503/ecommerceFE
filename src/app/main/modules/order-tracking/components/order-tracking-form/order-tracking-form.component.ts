@@ -34,7 +34,12 @@ export class OrderTrackingFormComponent implements OnInit {
     if (this.orderTrackingForm.invalid) {
       return;
     }
-    const {code} = this.orderTrackingForm.value;
-    this.router.navigate([`/order-tracking/${code}`]);
+    const { code, tel } = this.orderTrackingForm.value;
+    this.router.navigate(['/order-tracking/info'], {
+      queryParams: {
+        code,
+        tel
+      }
+    });
   }
 }
