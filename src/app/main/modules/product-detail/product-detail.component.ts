@@ -10,11 +10,11 @@ export class ProductDetailComponent implements OnInit {
   @ViewChild(NzCarouselComponent, { static: false }) carousel!: NzCarouselComponent;
 
   sliderImages = [
-    { src: 'assets/promotion/slider_1.png' },
-    { src: 'assets/promotion/slider_2.png' },
-    { src: 'assets/promotion/slider_3.png' },
-    { src: 'assets/promotion/slider_4.png' },
-    { src: 'assets/promotion/slider_5.png' },
+    { src: 'assets/promotion/slider_1.png', isActive: true },
+    { src: 'assets/promotion/slider_2.png', isActive: true },
+    { src: 'assets/promotion/slider_3.png', isActive: true },
+    { src: 'assets/promotion/slider_4.png', isActive: true },
+    { src: 'assets/promotion/slider_5.png', isActive: false },
   ];
   category: any;
   isDescriptionCollapsed = true;
@@ -69,6 +69,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectCategory(index: number): void {
+    if (!this.sliderImages[index].isActive) {
+      return;
+    }
     this.category = index;
     this.carousel.goTo(index);
   }

@@ -26,19 +26,12 @@
       <div class="mt-2 grid grid-cols-3 gap-2">
         <div
           *ngFor="let item of sliderImages; let i = index"
-          class="
-            col-span-1
-            flex
-            items-center
-            h-12
-            rounded-md
-            px-1
-            cursor-pointer
-          "
+          class="col-span-1 flex items-center h-12 rounded-md px-1"
           (click)="selectCategory(i)"
-          [ngClass]="
-            category === i ? 'border-selected item-selected' : 'border'
-          "
+          [ngClass]="[
+            category === i ? 'border-selected item-selected' : 'border',
+            !item.isActive ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+          ]"
         >
           <img
             [src]="item.src"
@@ -97,14 +90,14 @@
       <div class="border p-2 rounded-xl">
         <h4 class="font-semibold text-base">Thông tin máy</h4>
         <p class="flex items-start mt-2">
-          <i nz-icon nzType="mobile" nzTheme="outline" class="mr-1 mt-1"></i>Mới, đầy
-          đủ phụ kiện từ nhà sản xuất
+          <i nz-icon nzType="mobile" nzTheme="outline" class="mr-1 mt-1"></i
+          >Mới, đầy đủ phụ kiện từ nhà sản xuất
         </p>
         <p class="flex items-start mt-2">
-          <i nz-icon nzType="sketch" nzTheme="outline" class="mr-1 mt-1"></i>Bảo hành
-          12 tháng tại trung tâm bảo hành của CellphoneS. 1 ĐỔI 1 trong 30 ngày
-          nếu có lỗi phần cứng nhà sản xuất. Gia hạn bảo hành thời gian giãn
-          cách.
+          <i nz-icon nzType="sketch" nzTheme="outline" class="mr-1 mt-1"></i>Bảo
+          hành 12 tháng tại trung tâm bảo hành của CellphoneS. 1 ĐỔI 1 trong 30
+          ngày nếu có lỗi phần cứng nhà sản xuất. Gia hạn bảo hành thời gian
+          giãn cách.
         </p>
       </div>
     </div>

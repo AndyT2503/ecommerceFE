@@ -53,6 +53,9 @@
               <i nz-icon nzType="home" nzTheme="outline" class="mr-2"></i
               >Trang chủ
             </li>
+            <li nz-menu-item (click)="updatePassword()">
+              <i nz-icon nzType="lock" nzTheme="outline" class="mr-2"></i>Cập nhật mật khẩu
+            </li>
             <li nz-menu-item (click)="logout()">
               <i nz-icon nzType="logout" nzTheme="outline" class="mr-2"></i
               >Đăng xuất
@@ -68,3 +71,6 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
+
+
+<app-update-password-form></app-update-password-form>

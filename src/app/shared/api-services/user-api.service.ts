@@ -32,7 +32,7 @@ export class UserApiService {
     return this.http.delete(`api/auth/users/${id}`);
   }
 
-  updatePassword(id: string, newPassword: string) {
+  adminUpdatePassword(id: string, newPassword: string) {
     return this.http.put(`api/auth/users/${id}/password`, {
       newPassword
     });
@@ -45,6 +45,13 @@ export class UserApiService {
       role,
       firstName,
       lastName
+    });
+  }
+
+  userUpdatePassword(currentPassword: string, newPassword: string) {
+    return this.http.put('api/auth/users/password', {
+      currentPassword,
+      newPassword
     });
   }
 }

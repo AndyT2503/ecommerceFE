@@ -1,3 +1,5 @@
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { UpdatePasswordFormModule } from './../shared/component/update-password-form/update-password-form.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +29,8 @@ const nzModules = [
   NzButtonModule,
   NzMessageModule,
   NzRadioModule,
-  NzAutocompleteModule
+  NzAutocompleteModule,
+  NzTypographyModule
 ];
 
 @NgModule({
@@ -39,6 +42,7 @@ const nzModules = [
     FooterComponent
   ],
   imports: [
+    UpdatePasswordFormModule,
     CommonModule,
     MainRoutingModule,
     nzModules,

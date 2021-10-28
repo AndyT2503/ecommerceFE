@@ -26,7 +26,7 @@ export class UserService {
   }
 
   updatePassword(id: string, newPassword: string) {
-    return this.userApiService.updatePassword(id, newPassword);
+    return this.userApiService.adminUpdatePassword(id, newPassword);
   }
 
   createUser(username: string, password: string, role: string, lastName: string, firstName: string) {
