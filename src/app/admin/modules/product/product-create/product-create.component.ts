@@ -3,8 +3,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { forkJoin, pipe } from 'rxjs';
+import { tap, finalize } from 'rxjs/operators';
 import { AvailableStatusProduct } from 'src/app/core/const/product-available-status';
 import * as XLSX from 'xlsx';
 import { ProductQuery } from '../state/product.query';
@@ -188,16 +188,16 @@ export class ProductCreateComponent implements OnInit {
     this.isSpinning = true;
     let formCreate = this.createProductForm.value;
     this.productService.createProduct(formCreate.name, formCreate.description, formCreate.status, formCreate.availableStatus,
-      formCreate.originalPrice, formCreate.specialFeatures, formCreate.configuration, formCreate.categories, formCreate.supplierId, formCreate.productTypeId).subscribe(
+      formCreate.originalPrice, formCreate.specialFeatures, formCreate.configuration, formCreate.categories, formCreate.supplierId, formCreate.productTypeId)
+      .pipe(
+        finalize(() => this.isSpinning = false)
+      ).subscribe(
         () => {
           this.nzMessage.success('Tạo sản phẩm thành công');
           this.productStore.reset();
           this.router.navigate(['admin/product']);
         },
-
-        (err) => this.nzMessage.error(err.error.detail),
-
-        () => this.isSpinning = false
+        (err) => this.nzMessage.error(err.error.detail)
       );
   }
 
