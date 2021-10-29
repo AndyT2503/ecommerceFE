@@ -14,15 +14,23 @@
   (click)="clickToCard(product)"
   [nzCover]="coverTemplate"
 >
-  <div class="sale-tag">
-    <p>Giảm 8%</p>
+  <div class="sale-tag" *ngIf="product.originalPrice !== product.currentPrice">
+    <p>Giảm {{salePercent}}%</p>
   </div>
-  <nz-card-meta class="mb-1" nzTitle="Tai nghe Bluetooth Samsung Galaxy Buds Live"></nz-card-meta>
+  <nz-card-meta class="mb-1" [nzTitle]="product.name"></nz-card-meta>
   <div>
     <p class="cellphones-color-price inline-block">
-      <span class="font-bold">{{ product.originalPrice | number: '1.0-2' }}</span> ₫
+      <span class="font-bold">{{
+        product.currentPrice | number: "1.0-2"
+      }}</span>
+      ₫
     </p>
-    <span class="ml-2 text-xs text-gray-500" nz-typography><del>10.000.000 ₫</del></span>
+    <span
+      class="ml-2 text-xs text-gray-500"
+      nz-typography
+      *ngIf="product.originalPrice !== product.currentPrice"
+      ><del>{{ product.originalPrice | number: "1.0-2" }} ₫</del></span
+    >
   </div>
   <nz-rate
     class="text-sm"
@@ -66,9 +74,5 @@
 </nz-card>
 
 <ng-template #coverTemplate>
-  <img
-    alt="example"
-    class="h-48"
-    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-  />
+  <img alt="example" class="h-48 object-contain" [src]="product.image" />
 </ng-template>

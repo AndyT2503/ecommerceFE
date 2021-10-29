@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Product } from './../../models/product.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { Product } from './../../models/product.model';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss']
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit {
   @Input() product!: Product;
   @Input() leftButtonTitle!: string;
   @Input() rightButtonTitle!: string;
@@ -14,7 +14,16 @@ export class ProductCardComponent {
   @Output() onClickLeftButton = new EventEmitter();
   @Output() onClickToCard = new EventEmitter();
   @Input() isShowFooter = false;
+  salePercent!: number;
   constructor() { }
+
+  ngOnInit(): void {
+    this.getSalePercent();
+  }
+
+  getSalePercent(): void {
+    this.salePercent = 100 - Math.round((this.product.currentPrice! / this.product.originalPrice) * 100);
+  }
 
   clickLeftButton(product: Product) {
     this.onClickLeftButton.emit(product);

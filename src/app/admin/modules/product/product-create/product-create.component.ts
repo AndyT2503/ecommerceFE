@@ -20,13 +20,17 @@ import { ProductStore } from './../state/product.store';
 })
 export class ProductCreateComponent implements OnInit {
 
-  createProductForm!: FormGroup; // ! là khai báo not null
+  createProductForm!: FormGroup;
   categories!: FormArray;
-  availableStatus = AvailableStatusProduct;
+  availableStatus = [
+    { value: AvailableStatusProduct.Waiting, status: "Chờ đặt hàng" },
+    { value: AvailableStatusProduct.Available, status: "Có sẵn" },
+    { value: AvailableStatusProduct.SoldOut, status: "Hết hàng" }
+  ];
   productTypeList$ = this.productQuery.select(x => x.productTypeList);
   supplierList$ = this.productQuery.select(x => x.supplierList);
   configuration!: FormArray;
-  product?: Product ;
+  product?: Product;
   specialOnEnter!: string;
   public configurationEditor = ClassicEditor;
   isSpinning = false;
@@ -169,7 +173,7 @@ export class ProductCreateComponent implements OnInit {
         this.createProductForm.controls[i].updateValueAndValidity();
       }
     }
-    if(this.createProductForm.invalid){
+    if (this.createProductForm.invalid) {
       return;
     }
 
