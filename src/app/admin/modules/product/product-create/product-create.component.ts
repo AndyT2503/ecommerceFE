@@ -27,8 +27,8 @@ export class ProductCreateComponent implements OnInit {
     { value: AvailableStatusProduct.Available, status: "Có sẵn" },
     { value: AvailableStatusProduct.SoldOut, status: "Hết hàng" }
   ];
-  productTypeList$ = this.productQuery.select(x => x.productTypeList);
-  supplierList$ = this.productQuery.select(x => x.supplierList);
+  productTypeList$ = this.productQuery.productTypeList$;
+  supplierList$ = this.productQuery.supplierList$;
   configuration!: FormArray;
   product?: Product;
   specialOnEnter!: string;

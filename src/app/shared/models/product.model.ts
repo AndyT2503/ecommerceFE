@@ -27,4 +27,5 @@ export interface ProductCategory {
   name: string;
   image: string;
   price: string;
+  isActive: boolean;
 }

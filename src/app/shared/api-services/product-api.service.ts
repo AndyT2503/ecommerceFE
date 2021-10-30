@@ -9,12 +9,14 @@ import { Injectable } from '@angular/core';
 export class ProductApiService {
 
   constructor(private readonly http: HttpClient) { }
-  getProducts(name: string, pageIndex?: number, pageSize?: number) {
+  getProducts(name: string, supplierId: string, productTypeId: string, pageIndex?: number, pageSize?: number) {
     return this.http.get<PagingModel<Product>>('api/product', {
       params: {
         pageIndex: `${pageIndex}`,
         pageSize: `${pageSize}`,
-        name
+        name,
+        supplierId,
+        productTypeId
       }
     });
   }
@@ -37,15 +39,6 @@ export class ProductApiService {
       supplierId,
       productTypeId
     });
-  }
-
-  updateProduct(code: string, percent: number, maxPrice: number, validUntil: Date) {
-    // return this.http.put(`api/sale-code`, {
-    //   code,
-    //   percent,
-    //   maxPrice,
-    //   validUntil
-    // });
   }
 
   deleteProduct(slug: string) {

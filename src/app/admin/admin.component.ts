@@ -1,3 +1,4 @@
+import { ProductStore } from './modules/product/state/product.store';
 import { UpdatePasswordService } from './../shared/component/update-password-form/update-password.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -65,6 +66,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly supplierStore: SupplierStore,
+    private readonly productStore: ProductStore,
     private readonly authenticationQuery: AuthenticationQuery,
     private readonly authenticationService: AuthenticationService,
     private readonly updatePasswordService: UpdatePasswordService
@@ -92,6 +94,7 @@ export class AdminComponent implements OnInit {
 
   resetModuleState(): void {
     this.supplierStore.reset();
+    this.productStore.reset();
   }
 
   logout(): void {

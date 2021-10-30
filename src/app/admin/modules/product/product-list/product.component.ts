@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { combineLatest, Subject } from 'rxjs';
+import { debounceTime, takeUntil, startWith, switchMap } from 'rxjs/operators';
 import { Product } from 'src/app/shared/models/product.model';
 import { ProductQuery } from '../state/product.query';
 import { ProductService } from '../state/product.service';
@@ -17,6 +17,10 @@ import { ProductStore } from '../state/product.store';
 export class ProductComponent implements OnInit, OnDestroy {
   productPaging$ = this.productQuery.productPaging$;
   searchNameForm = new FormControl('');
+  productType = new FormControl('');
+  supplier = new FormControl('');
+  supplierList$ = this.productQuery.supplierList$;
+  productTypeList$ = this.productQuery.productTypeList$;
   destroyed$ = new Subject<void>();
   pageSize = 10;
   leftButtonTitle = "Edit";
@@ -29,39 +33,74 @@ export class ProductComponent implements OnInit, OnDestroy {
     private readonly productStore: ProductStore
   ) { }
   ngOnInit(): void {
-    const filterName = this.productStore.getValue().productNameFilter;
+    const {productNameFilter, supplierIdFilter, productTypeIdFilter} = this.productStore.getValue();
     let pageIndex = this.productStore.getValue().pageIndex;
-    if (filterName) {
-      this.searchNameForm.setValue(filterName);
+    if (productNameFilter) {
+      this.searchNameForm.setValue(productNameFilter);
+    }
+    if (supplierIdFilter) {
+      this.supplier.setValue(supplierIdFilter);
+    }
+    if (productTypeIdFilter) {
+      this.productType.setValue(productTypeIdFilter);
     }
     if (!pageIndex) {
       pageIndex = 1;
     }
-    this.getProduct(pageIndex, this.searchNameForm.value);
-    this.setupSearchName();
+    this.getProductTypeList();
+    this.getSupplierList();
+    this.updateProductStore(pageIndex, this.searchNameForm.value);
+
+    this.setupGetData();
   }
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
-  setupSearchName(): void {
-    this.searchNameForm.valueChanges.pipe(
-      debounceTime(300),
-      takeUntil(this.destroyed$)
-    ).subscribe(
-      (val) => {
-        this.getProduct(1, val);
-      }
-    );
+  getProductTypeList(): void {
+    const { productTypeList } = this.productQuery.getValue();
+    if (productTypeList.length === 0) {
+      this.productService.getProductTypes().subscribe();
+    }
   }
-  getProduct(pageIndex: number, name?: string): void {
-    this.productStore.update({ supplierNameFilter: name, pageIndex: pageIndex, pageSize: this.pageSize });
-    this.productService.getProduct(name || '', pageIndex, this.pageSize).subscribe();
+
+  getSupplierList(): void {
+    const { supplierList } = this.productQuery.getValue();
+    if (supplierList.length === 0) {
+      this.productService.getSuppliers().subscribe();
+    }
+  }
+
+  setupGetData(): void {
+    const searchName$ = this.searchNameForm.valueChanges.pipe(startWith(this.searchNameForm.value), debounceTime(300));
+    const supplier$ = this.supplier.valueChanges.pipe(startWith(this.supplier.value));
+    const productType$ = this.productType.valueChanges.pipe(startWith(this.productType.value));
+
+    combineLatest([searchName$, supplier$, productType$]).pipe(
+      switchMap(([searchName, supplier, productType]) => {
+        this.updateProductStore(1, searchName, supplier, productType);
+        return this.productService.getProduct(searchName, supplier, productType, 1, this.pageSize);
+      }),
+      takeUntil(this.destroyed$)
+    ).subscribe();
+  }
+  updateProductStore(pageIndex: number, name?: string, supplier?: string, productType?: string): void {
+    this.productStore.update({pageIndex: pageIndex});
+    if (name) {
+      this.productStore.update({productNameFilter: name});
+    }
+    if (supplier) {
+      this.productStore.update({supplierIdFilter: supplier});
+    }
+    if (productType) {
+      this.productStore.update({productTypeIdFilter: productType});
+    }
   }
 
   onPageIndexChange(pageIndex: number): void {
-    this.getProduct(pageIndex, this.searchNameForm.value);
+    this.updateProductStore(pageIndex);
+    this.productService.getProduct(this.searchNameForm.value, this.supplier.value, this.productType.value, 1, this.pageSize).subscribe();
   }
 
   editProduct(item: Product): void {

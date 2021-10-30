@@ -20,8 +20,8 @@ export class ProductService {
   }
 
 
-  getProduct(name: string, pageIndex?: number, pageSize?: number) {
-    return this.productApiService.getProducts(name, pageIndex, pageSize).pipe(
+  getProduct(name: string, supplierId: string, productTypeId: string, pageIndex?: number, pageSize?: number) {
+    return this.productApiService.getProducts(name || '', supplierId || '', productTypeId || '', pageIndex, pageSize).pipe(
       tap(res => {
         this.productStore.update({ productPaging: res });
       })
