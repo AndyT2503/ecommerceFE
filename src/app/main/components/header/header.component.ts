@@ -1,3 +1,4 @@
+import { CartQuery } from './../../modules/cart/state/cart.query';
 import { UpdatePasswordService } from './../../../shared/component/update-password-form/update-password.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
     },
   ];
   flagLanguageSelected!: string;
+  totalCartItemsQuantity$ = this.cartQuery.totalQuantity$;
   constructor(
     private readonly authenticationQuery: AuthenticationQuery,
     private readonly authenticationService: AuthenticationService,
@@ -38,7 +40,8 @@ export class HeaderComponent implements OnInit {
     private readonly languageQuery: LanguageQuery,
     private readonly translateService: TranslateService,
     private readonly languageService: LanguageService,
-    private readonly updatePasswordService: UpdatePasswordService
+    private readonly updatePasswordService: UpdatePasswordService,
+    private readonly cartQuery: CartQuery
   ) { }
 
   ngOnInit(): void {

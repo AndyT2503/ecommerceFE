@@ -26,6 +26,7 @@ export interface ProductCategory {
   id?: string;
   name: string;
   image: string;
-  price: string;
+  price: number;
   isActive: boolean;
+  productName: string;
 }

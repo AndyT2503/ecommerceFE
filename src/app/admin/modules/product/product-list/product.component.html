@@ -29,7 +29,7 @@
   <div class="grid grid-cols-6 gap-4">
     <div *ngFor="let item of productPaging.items" class="py-2 col-span-1">
       <app-product-card [isShowFooter]="true" [product]="item" (onClickLeftButton)="editProduct(item)" (onClickRightButton)="deleteProduct(item)" [leftButtonTitle] = "leftButtonTitle" [rightButtonTitle] = "rightButtonTitle"
-       class="w-fit"></app-product-card>
+       class="w-fit" (onClickToCard)="openProductDetail($event)"></app-product-card>
     </div>
   </div>
 

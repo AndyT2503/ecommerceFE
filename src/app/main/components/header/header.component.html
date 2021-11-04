@@ -83,7 +83,7 @@
     }}</span>
   </div>
   <div class="ml-6 hover:cursor-pointer flex items-center item-header" routerLink="/cart">
-    <nz-badge [nzCount]="5" class="text-white text-2xl flex items-center">
+    <nz-badge [nzCount]="(totalCartItemsQuantity$ | async)!" class="text-white text-2xl flex items-center">
       <i nz-icon nzType="shopping" nzTheme="fill"></i>
     </nz-badge>
     <span class="ml-2 text-white">{{

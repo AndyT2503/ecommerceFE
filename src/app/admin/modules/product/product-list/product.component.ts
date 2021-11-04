@@ -108,4 +108,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   deleteProduct(item: Product): void {
   }
+
+  openProductDetail(item: Product): void {
+    this.router.navigate([`/product/${item.slug}`]);
+  }
 }
