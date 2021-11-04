@@ -8,10 +8,8 @@
     card
     rounded-xl
     hover:scale-105 hover:shadow-md
-    cursor-pointer
     relative
   "
-  (click)="clickToCard(product)"
   [nzCover]="coverTemplate"
 >
   <div class="sale-tag" *ngIf="product.originalPrice !== product.currentPrice">
@@ -33,7 +31,7 @@
     >
   </div>
   <div *ngIf="product.specialFeatures.length > 0">
-    <span *ngFor="let item of product.specialFeatures" nz-typography><code>{{item}}</code></span>
+    <div class="inline-block tag" *ngFor="let item of product.specialFeatures" nz-typography><code>{{item}}</code></div>
   </div>
   <nz-rate
     class="text-sm"
@@ -84,6 +82,7 @@
   </div>
 </nz-card>
 
+
 <ng-template #coverTemplate>
-  <img alt="example" class="h-48 object-contain" [src]="product.image" />
+  <img alt="example" (click)="clickToCard(product)" class="h-48 object-contain cursor-pointer" [src]="product.image" />
 </ng-template>
