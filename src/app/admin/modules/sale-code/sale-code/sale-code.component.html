@@ -24,19 +24,19 @@
     <form [formGroup]="createSaleCodeForm">
       <div class="grid grid-cols-2">
         <div class="col-span-1 p-2">
-          <label class="font-semibold">Sale Code: *</label>
+          <label class="font-semibold">Mã giảm giá: *</label>
           <input  nz-input type="text" placeholder="Nhập mã giảm giá" formControlName="code">
         </div>
         <div class="col-span-1 p-2">
-          <label class="font-semibold">Percent: *</label>
+          <label class="font-semibold">Phầm trăm giảm giá: *</label>
           <input  nz-input type="number" min="1" placeholder="Nhập phần trăm giảm giá" formControlName="percent">
         </div>
         <div class="col-span-1 p-2">
-          <label class="font-semibold">Max price: *</label>
+          <label class="font-semibold">Mức giảm giá tối đa: *</label>
           <input nz-input  type="number" min="1" placeholder="Nhập giá bạn muốn giảm tối đa" formControlName="maxPrice">
         </div>
         <div class="col-span-1 p-2">
-          <label class="font-semibold">Valid until: *</label>
+          <label class="font-semibold">Thời gian hết hạn: *</label>
           <nz-date-picker  formControlName="validUntil" nzShowTime ></nz-date-picker>
         </div>
       </div>
@@ -51,10 +51,10 @@
     (nzPageIndexChange)="onPageIndexChange($event)">
     <thead>
       <tr>
-        <th>Sale Code</th>
-        <th>Percent</th>
-        <th>Max Price</th>
-        <th>Valid Until</th>
+        <th>Mã giảm giá</th>
+        <th>Phầm trăm giảm giá</th>
+        <th>Mức giảm giá tối đa</th>
+        <th>Thời gian hết hạn</th>
         <th></th>
       </tr>
     </thead>

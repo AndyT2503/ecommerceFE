@@ -25,6 +25,7 @@ import { ProductCardModule } from './../../../shared/component/product-card/prod
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductComponent } from './product-list/product.component';
 import { ProductRoutingModule } from './product-routing.module';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 const nzModule = [
   NzInputModule,
@@ -52,7 +53,8 @@ const nzModule = [
 @NgModule({
   declarations: [
     ProductComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    ProductEditComponent
   ],
   imports: [
     CommonModule,
