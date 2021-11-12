@@ -1,5 +1,6 @@
 export interface Authentication extends AuthenticationUser {
   accessToken: string;
+  refreshToken: string;
 }
 
 export interface AuthenticationUser {
@@ -10,7 +11,11 @@ export interface AuthenticationUser {
   isAuthenticate: boolean;
   username: string;
 }
-export function createAuthentication(params: Partial<Authentication>) {
+
+export interface RefreshToken {
+  accessToken: string;
+}
+export function createAuthentication() {
   return {
 
   } as Authentication;

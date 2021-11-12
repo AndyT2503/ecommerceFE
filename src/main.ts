@@ -6,7 +6,7 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 persistState({
-  include: ['authentication', 'language'], // list store key
+  include: ['authentication', 'language', 'cart'], // list store key
   storage: localStorage, // (optional) default localStorage
 });
 

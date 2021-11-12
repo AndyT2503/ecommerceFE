@@ -1,12 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { EMPTY, of } from 'rxjs';
-import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
-import { SignalRService } from '../signalR/signal-r.service';
-import { Authentication, AuthenticationUser } from './authentication.model';
-import { AuthenticationQuery } from './authentication.query';
-import { AuthenticationStore } from './authentication.store';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {EMPTY, of} from 'rxjs';
+import {catchError, filter, map, mergeMap, tap} from 'rxjs/operators';
+import {SignalRService} from '../signalR/signal-r.service';
+import {Authentication, AuthenticationUser, RefreshToken} from './authentication.model';
+import {AuthenticationQuery} from './authentication.query';
+import {AuthenticationStore} from './authentication.store';
 
 @Injectable()
 export class AuthenticationService {
@@ -26,7 +26,8 @@ export class AuthenticationService {
       username,
       password
     }).pipe(tap((res) => {
-      this.authenticationStore.update({ accessToken: res.accessToken });
+      this.authenticationStore.update({accessToken: res.accessToken});
+      this.authenticationStore.update({refreshToken: res.refreshToken});
     }));
   }
 
@@ -34,6 +35,26 @@ export class AuthenticationService {
     this.disconnectSocket();
     this.authenticationStore.reset();
     this.router.navigate(['']);
+  }
+
+  refreshToken() {
+    const { refreshToken } = this.authenticationStore.getValue();
+    return this.http.post<RefreshToken>('api/auth/refresh-token', {
+      refreshToken
+    }).pipe(
+      tap(
+        res => {
+          this.authenticationStore.update({accessToken: res.accessToken});
+        }
+      ),
+      catchError(
+        _ => {
+          this.disconnectSocket();
+          this.authenticationStore.reset();
+          return EMPTY;
+        }
+      )
+    );
   }
 
   getUserProfile() {
@@ -45,17 +66,14 @@ export class AuthenticationService {
         });
         return this.http.get<AuthenticationUser>('api/auth/user-profile', {
           headers: header
-        }).pipe(
-          catchError((err) => {
-            this.disconnectSocket();
-            this.authenticationStore.reset();
-            return EMPTY;
-          })
-        );
+        });
       }),
       tap(res => {
         this.connectSocket();
-        this.authenticationStore.update({ userProfile: { ...res, isAuthenticate: true } });
+        this.authenticationStore.update({userProfile: {...res, isAuthenticate: true}});
+      }),
+      catchError(() => {
+        return this.refreshToken();
       })
     );
   }
@@ -69,7 +87,7 @@ export class AuthenticationService {
   }
 
   hasValidToken() {
-    const { accessToken } = this.authenticationQuery.getValue();
+    const {accessToken} = this.authenticationQuery.getValue();
     if (!accessToken) {
       return of(false);
     }
@@ -83,7 +101,10 @@ export class AuthenticationService {
         return true;
       }),
       catchError(_ => {
-        return of(false);
+        return this.refreshToken().pipe(
+          map(_ => true),
+          catchError(_ => of(false))
+        );
       }));
   }
 }

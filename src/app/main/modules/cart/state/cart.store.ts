@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, persistState, StoreConfig } from '@datorama/akita';
-import { ProductCategory } from './../../../../shared/models/product.model';
+import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { ProductCategory } from '../../../../shared/models/product.model';
 
 export interface CartItem extends ProductCategory {
   quantity: number;
@@ -20,13 +20,3 @@ export class CartStore extends EntityStore<CartState> {
   }
 
 }
-
-export const cartPersistStorage = persistState({
-  include: ['cart'],
-  key: 'cartStore',
-  storage: sessionStorage
-});
-
-const providers = [
-  { provide: 'persistStorage', useValue: cartPersistStorage, multi: true },
-];

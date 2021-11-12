@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
 import { environment } from 'src/environments/environment';
 import { AuthenticationQuery } from '../authentication/authentication.query';
-import { SocketEvent } from './../const/socket-event';
+import { SocketEvent } from '../const/socket-event';
 
 @Injectable()
 export class SignalRService {
@@ -28,7 +28,9 @@ export class SignalRService {
           this.listenNotification();
         }
       )
-      .catch(err => console.error('Error while starting connection: ' + err));
+      .catch(err => {
+        console.error('Error while starting connection: ' + err);
+      });
   }
 
   private listenNotification(): void {

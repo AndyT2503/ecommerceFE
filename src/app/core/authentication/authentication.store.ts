@@ -4,6 +4,7 @@ import { Authentication, AuthenticationUser } from './authentication.model';
 
 export interface AuthenticationState extends EntityState<Authentication> {
   accessToken: string;
+  refreshToken: string;
   userProfile: AuthenticationUser;
 }
 
