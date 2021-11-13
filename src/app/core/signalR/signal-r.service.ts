@@ -7,11 +7,15 @@ import { SocketEvent } from '../const/socket-event';
 @Injectable()
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
+  private isConnected = false;
   constructor(
     private readonly authenticationQuery: AuthenticationQuery
   ) { }
 
   startConnection(): void {
+    if (this.isConnected) {
+      return;
+    }
     const jwtToken = this.authenticationQuery.getValue().accessToken;
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${environment.apiUrl}/notification-hub`, {
@@ -21,6 +25,7 @@ export class SignalRService {
     this.hubConnection
       .start()
       .then(() => {
+        this.isConnected = true;
         console.log('Connection started');
       })
       .then(
@@ -29,6 +34,7 @@ export class SignalRService {
         }
       )
       .catch(err => {
+        this.isConnected = false;
         console.error('Error while starting connection: ' + err);
       });
   }
@@ -42,6 +48,7 @@ export class SignalRService {
 
   disconnectConnection(): void {
     if (this.hubConnection) {
+      this.isConnected = false;
       this.hubConnection.stop();
     }
   }
