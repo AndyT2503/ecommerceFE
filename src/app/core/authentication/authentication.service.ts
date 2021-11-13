@@ -4,13 +4,13 @@ import {Router} from '@angular/router';
 import {EMPTY, of} from 'rxjs';
 import {catchError, filter, map, mergeMap, tap} from 'rxjs/operators';
 import {SignalRService} from '../signalR/signal-r.service';
-import {Authentication, AuthenticationUser, RefreshToken} from './authentication.model';
+import {Authentication, AuthenticationUser, JwtModel, RefreshToken} from './authentication.model';
 import {AuthenticationQuery} from './authentication.query';
 import {AuthenticationStore} from './authentication.store';
 
 @Injectable()
 export class AuthenticationService {
-
+  private refreshTokenTimeout!: number;
   constructor(
     private authenticationStore: AuthenticationStore,
     private http: HttpClient,
@@ -33,6 +33,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.disconnectSocket();
+    this.stopTimerRefreshToken();
     this.authenticationStore.reset();
     this.router.navigate(['']);
   }
@@ -46,13 +47,6 @@ export class AuthenticationService {
         res => {
           this.authenticationStore.update({accessToken: res.accessToken});
         }
-      ),
-      catchError(
-        _ => {
-          this.disconnectSocket();
-          this.authenticationStore.reset();
-          return EMPTY;
-        }
       )
     );
   }
@@ -60,6 +54,11 @@ export class AuthenticationService {
   getUserProfile() {
     return this.authenticationQuery.select(x => x.accessToken).pipe(
       filter(x => !!x),
+      tap(
+        accessToken => {
+          this.startTimerRefreshToken(accessToken);
+        }
+      ),
       mergeMap(accessToken => {
         const header = new HttpHeaders({
           'authorization': `Bearer ${accessToken}`
@@ -68,14 +67,27 @@ export class AuthenticationService {
           headers: header
         });
       }),
+      catchError(() => {
+        this.disconnectSocket();
+        this.authenticationStore.reset();
+        return EMPTY;
+      }),
       tap(res => {
         this.connectSocket();
         this.authenticationStore.update({userProfile: {...res, isAuthenticate: true}});
       }),
-      catchError(() => {
-        return this.refreshToken();
-      })
     );
+  }
+
+  private startTimerRefreshToken(accessToken: string): void {
+    const jwt = this.parseJwt(accessToken);
+    const exp = new Date(jwt.exp * 1000);
+    const timeOut = exp.getTime() - Date.now() - (60 * 1000);
+    this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeOut);
+  }
+
+  private stopTimerRefreshToken(): void {
+    clearTimeout(this.refreshTokenTimeout);
   }
 
   private disconnectSocket(): void {
@@ -85,6 +97,16 @@ export class AuthenticationService {
   private connectSocket(): void {
     this.signalRService.startConnection();
   }
+
+  private parseJwt (token: string): JwtModel {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload) as JwtModel;
+  };
 
   hasValidToken() {
     const {accessToken} = this.authenticationQuery.getValue();
@@ -100,11 +122,6 @@ export class AuthenticationService {
       map(_ => {
         return true;
       }),
-      catchError(_ => {
-        return this.refreshToken().pipe(
-          map(_ => true),
-          catchError(_ => of(false))
-        );
-      }));
+      catchError(_ => of(false)));
   }
 }
