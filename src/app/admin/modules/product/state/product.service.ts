@@ -51,13 +51,9 @@ export class ProductService {
     return this.productApiService.createProduct(name, description, status, availableStatus, originalPrice, specialFeatures, configuration, categories, supplierId,productTypeId );
   }
 
-  // updateSaleCode(code: string, percent: number, maxPrice: number, validUntil: Date) {
-  //   return this.saleCodeApiService.updateSaleCode(code, percent, maxPrice, validUntil);
-  // }
-
-  // deleteSaleCode(code: string) {
-  //   return this.saleCodeApiService.deleteSaleCode(code);
-  // }
+  deleteProduct(id: string) {
+    return this.productApiService.deleteProduct(id);
+  }
 
 
 }

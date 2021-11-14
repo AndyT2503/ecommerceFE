@@ -8,6 +8,7 @@ import { Product } from 'src/app/shared/models/product.model';
 import { ProductQuery } from '../state/product.query';
 import { ProductService } from '../state/product.service';
 import { ProductStore } from '../state/product.store';
+import {NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-product',
@@ -30,7 +31,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     private readonly productQuery: ProductQuery,
     private readonly nzMessage: NzMessageService,
     private readonly router: Router,
-    private readonly productStore: ProductStore
+    private readonly productStore: ProductStore,
+    private  readonly modal: NzModalService
   ) { }
   ngOnInit(): void {
     const {productNameFilter, supplierIdFilter, productTypeIdFilter} = this.productStore.getValue();
@@ -108,6 +110,22 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(item: Product): void {
+    this.modal.confirm({
+      nzTitle: 'Xóa sản phẩm',
+      nzContent: 'Bạn có muốn xóa sản phẩm này',
+      nzOnOk: () => {
+        this.productService.deleteProduct(item.id!).subscribe(
+          () => {
+            this.nzMessage.success('Xóa sản phẩm thành công');
+            this.productService.getProduct(this.searchNameForm.value, this.supplier.value, this.productType.value, 1, this.pageSize).subscribe();
+          },
+          (err) => {
+            this.nzMessage.error(err.error.detail);
+          }
+        )
+      }
+
+    })
   }
 
   openProductDetail(item: Product): void {

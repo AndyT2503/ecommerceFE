@@ -41,7 +41,7 @@ export class ProductApiService {
     });
   }
 
-  deleteProduct(slug: string) {
-    return this.http.delete(`api/product/${slug}`);
+  deleteProduct(id: string) {
+    return this.http.delete(`api/product/${id}`);
   }
 }
