@@ -10,7 +10,7 @@ import {AuthenticationStore} from './authentication.store';
 
 @Injectable()
 export class AuthenticationService {
-  private refreshTokenTimeout!: number;
+  private refreshTokenTimeout!: any;
   constructor(
     private authenticationStore: AuthenticationStore,
     private http: HttpClient,
@@ -47,7 +47,8 @@ export class AuthenticationService {
         res => {
           this.authenticationStore.update({accessToken: res.accessToken});
         }
-      )
+      ),
+      catchError(() => EMPTY)
     );
   }
 
