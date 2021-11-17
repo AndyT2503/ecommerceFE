@@ -42,5 +42,9 @@ export class SaleCodeApiService {
     return this.http.delete(`api/sale-code/${code}`);
   }
 
+  getSaleCodeByCode(code: string) {
+    return this.http.get<SaleCode>(`api/sale-code/${code}`);
+  }
+
 
 }

@@ -1,14 +1,13 @@
-import { CartQuery } from './cart.query';
-import { ProductCategory } from './../../../../shared/models/product.model';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { CartStore, CartItem } from './cart.store';
+import { SaleCodeApiService } from './../../../../shared/api-services/sale-code-api.service';
+import { ProductCategory } from './../../../../shared/models/product.model';
+import { CartQuery } from './cart.query';
+import { CartStore } from './cart.store';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
 
-  constructor(private cartStore: CartStore, private cartQuery: CartQuery, private http: HttpClient) {
+  constructor(private cartStore: CartStore, private cartQuery: CartQuery, private saleCodeApiService: SaleCodeApiService) {
   }
 
   updateQuantityCategory(id: string, quantity: number): void {
@@ -42,5 +41,9 @@ export class CartService {
 
   removeProduct(categoryId: string): void {
     this.cartStore.remove(categoryId);
+  }
+
+  getSaleCodeByCode(code: string) {
+    return this.saleCodeApiService.getSaleCodeByCode(code);
   }
 }

@@ -37,7 +37,7 @@
         </div>
         <div class="col-span-1 p-2">
           <label class="font-semibold">Thời gian hết hạn: *</label>
-          <nz-date-picker  formControlName="validUntil" nzShowTime ></nz-date-picker>
+          <nz-date-picker  formControlName="validUntil" ></nz-date-picker>
         </div>
       </div>
     </form>
@@ -64,7 +64,7 @@
           <td>{{data.code}}</td>
           <td>{{data.percent}}</td>
           <td>{{data.maxPrice}}</td>
-          <td>{{data.validUntil | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{data.validUntil | date:'dd/MM/yyyy' }}</td>
           <td nzAlign="center">
             <i nz-icon nzType="delete" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500" nz-popconfirm
               nzPopconfirmTitle="Bạn có muốn xoá người dùng này?" nzPopconfirmPlacement="bottom"
@@ -79,7 +79,7 @@
           <td>{{data.code}}</td>
           <td><input nz-input type="text" [(ngModel)]="editCache[data.code].data.percent"></td>
           <td><input nz-input type="text" [(ngModel)]="editCache[data.code].data.maxPrice"></td>
-          <td><nz-date-picker  [(ngModel)]="editCache[data.code].data.validUntil" nzShowTime ></nz-date-picker> </td>
+          <td><nz-date-picker  [(ngModel)]="editCache[data.code].data.validUntil" ></nz-date-picker> </td>
           <td nzAlign="center">
             <i nz-icon nzType="close-square" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500"
               (click)="closeEdit(data.code)"></i>

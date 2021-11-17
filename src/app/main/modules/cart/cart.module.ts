@@ -1,3 +1,4 @@
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -25,7 +26,8 @@ const nzModules = [
   NzSelectModule,
   NzDividerModule,
   NzRadioModule,
-  NzCheckboxModule
+  NzCheckboxModule,
+  NzModalModule
 ];
 
 @NgModule({

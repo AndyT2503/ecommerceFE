@@ -23,13 +23,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.sliderCategories = x.categories!;
       this.categorySelected = x.categories![0];
     }));
-  sliderImages = [
-    { src: 'assets/promotion/slider_1.png', isActive: true },
-    { src: 'assets/promotion/slider_2.png', isActive: true },
-    { src: 'assets/promotion/slider_3.png', isActive: true },
-    { src: 'assets/promotion/slider_4.png', isActive: true },
-    { src: 'assets/promotion/slider_5.png', isActive: false },
-  ];
   categorySelected!: ProductCategory;
   isDescriptionCollapsed = true;
 
