@@ -102,7 +102,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   onPageIndexChange(pageIndex: number): void {
     this.updateProductStore(pageIndex);
-    this.productService.getProduct(this.searchNameForm.value, this.supplier.value, this.productType.value, 1, this.pageSize).subscribe();
+    this.productService.getProduct(this.searchNameForm.value, this.supplier.value, this.productType.value, pageIndex, this.pageSize).subscribe();
   }
 
   editProduct(item: Product): void {

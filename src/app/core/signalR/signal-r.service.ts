@@ -1,3 +1,4 @@
+import { NotificationService } from './../notification/notification.service';
 import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
 import { environment } from 'src/environments/environment';
@@ -9,7 +10,8 @@ export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   private isConnected = false;
   constructor(
-    private readonly authenticationQuery: AuthenticationQuery
+    private readonly authenticationQuery: AuthenticationQuery,
+    private readonly notificationService: NotificationService
   ) { }
 
   startConnection(): void {
@@ -42,7 +44,7 @@ export class SignalRService {
   private listenNotification(): void {
     this.hubConnection.on(SocketEvent.newNotification,
       data => {
-        console.log(data);
+        this.notificationService.receiveNewNotification(data);
       });
   }
 

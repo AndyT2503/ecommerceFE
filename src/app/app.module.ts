@@ -14,8 +14,11 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
-
+const nzModules = [
+  NzNotificationModule
+];
 
 registerLocaleData(en);
 
@@ -31,6 +34,7 @@ export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoad
     HttpClientModule,
     BrowserAnimationsModule,
     CoreModule,
+    nzModules,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     TranslateModule.forRoot({

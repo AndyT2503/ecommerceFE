@@ -4,6 +4,7 @@ import { authenticationProviders } from './authentication/authentication-provide
 import { guardProviders } from './guards/guard-providers';
 import { interceptorProviders } from './interceptors/index';
 import { localizationProviders } from './localization/localization-providers';
+import { notificationProviders } from './notification/notification-providers';
 import { SignalRService } from './signalR/signal-r.service';
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { SignalRService } from './signalR/signal-r.service';
     SignalRService,
     authenticationProviders,
     guardProviders,
-    localizationProviders
+    localizationProviders,
+    notificationProviders
   ]
 })
 export class CoreModule {
