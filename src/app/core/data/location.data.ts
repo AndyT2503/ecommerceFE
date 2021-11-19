@@ -1,4 +1,4 @@
-import { Province } from "src/app/shared/models/location-model";
+import { Province } from "src/app/shared/models/location.model";
 
 export const LOCATIONDATA: Province[] = [
   {

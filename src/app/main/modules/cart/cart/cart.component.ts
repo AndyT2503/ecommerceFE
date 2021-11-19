@@ -1,13 +1,15 @@
+import { PaymentMethod } from './../../../../core/const/payment-method';
 import { SaleCode } from './../../../../shared/models/sale-code.model';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CartItem } from './../state/cart.store';
 import { CartService } from './../state/cart.service';
 import { CartQuery } from './../state/cart.query';
-import { Province } from './../../../../shared/models/location-model';
+import { Province } from '../../../../shared/models/location.model';
 import { LOCATIONDATA } from './../../../../core/data/location.data';
 import { Component, OnInit } from '@angular/core';
-import { District } from 'src/app/shared/models/location-model';
+import { District } from 'src/app/shared/models/location.model';
+import { OrderDetail } from 'src/app/shared/models/order.model';
 
 @Component({
   selector: 'app-cart',
@@ -37,11 +39,11 @@ export class CartComponent implements OnInit {
   initFormInfo(): void {
     this.formInfo = new FormGroup(
       {
-        name: new FormControl('', [Validators.required]),
-        tel: new FormControl('', [Validators.required]),
+        customerName: new FormControl('', [Validators.required]),
+        phoneNumber: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required]),
-        province: new FormControl('', [Validators.required]),
-        district: new FormControl('', Validators.required),
+        provinceCode: new FormControl('', [Validators.required]),
+        districtCode: new FormControl('', Validators.required),
         address: new FormControl('', [Validators.required]),
         note: new FormControl('')
       }
@@ -67,7 +69,34 @@ export class CartComponent implements OnInit {
       });
       return;
     }
-    console.log(this.formInfo.value);
+    const order = this.cartQuery.getAll();
+    const orderDetails = order.map(item => ({
+      categoryId: item.id!,
+      quantity: item.quantity
+    }));
+    const orderInfo = {
+      orderDetails,
+      paymentMethod: PaymentMethod.Cash,
+      saleCode: this.saleCode
+    };
+    const customerInfo = this.formInfo.value;
+    this.cartService.createOrder(customerInfo, orderInfo).subscribe(
+      () => {
+        this.modal.success({
+          nzTitle: 'Đặt hàng thành công',
+          nzContent: 'Đơn hàng của quý khách đã được tiếp nhận. Vui lòng kiểm tra email để biết thông tin chi tiết',
+          nzCentered: true,
+          nzOnOk: () => this.cartService.resetStore()
+        });
+      },
+      (err) => {
+        this.modal.error({
+          nzTitle: 'Đặt hàng thất bại',
+          nzContent: err.error.detail,
+          nzCentered: true
+        });
+      }
+    );
   }
 
   paymentByBank(): void {
@@ -88,7 +117,34 @@ export class CartComponent implements OnInit {
       });
       return;
     }
-    console.log(this.formInfo.value);
+    const order = this.cartQuery.getAll();
+    const orderDetails = order.map(item => ({
+      categoryId: item.id!,
+      quantity: item.quantity
+    }));
+    const orderInfo = {
+      orderDetails,
+      paymentMethod: PaymentMethod.BankTransfer,
+      saleCode: this.saleCode
+    };
+    const customerInfo = this.formInfo.value;
+    this.cartService.createOrder(customerInfo, orderInfo).subscribe(
+      () => {
+        this.modal.success({
+          nzTitle: 'Đặt hàng thành công',
+          nzContent: 'Đơn hàng của quý khách đã được tiếp nhận. Vui lòng kiểm tra email để biết thông tin chi tiết',
+          nzCentered: true,
+          nzOnOk: () => this.cartService.resetStore()
+        });
+      },
+      (err) => {
+        this.modal.error({
+          nzTitle: 'Đặt hàng thất bại',
+          nzContent: err.error.detail,
+          nzCentered: true
+        });
+      }
+    );
   }
 
 
@@ -121,6 +177,7 @@ export class CartComponent implements OnInit {
         nzContent: 'Mã giảm giá quá hạn sử dụng',
         nzCentered: true
       });
+      this.saleCode = '';
       return;
     }
     const { totalPrice } = this.cartQuery.getValue();
@@ -146,6 +203,7 @@ export class CartComponent implements OnInit {
           nzContent: 'Mã giảm giá không tồn tại',
           nzCentered: true
         });
+        this.saleCode = '';
       }
     );
   }

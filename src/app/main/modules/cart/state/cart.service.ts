@@ -1,4 +1,6 @@
+import { OrderApiService } from './../../../../shared/api-services/order-api.service';
 import { Injectable } from '@angular/core';
+import { CustomerInfo, OrderInfo } from 'src/app/shared/models/order.model';
 import { SaleCodeApiService } from './../../../../shared/api-services/sale-code-api.service';
 import { ProductCategory } from './../../../../shared/models/product.model';
 import { CartQuery } from './cart.query';
@@ -7,7 +9,12 @@ import { CartStore } from './cart.store';
 @Injectable({ providedIn: 'root' })
 export class CartService {
 
-  constructor(private cartStore: CartStore, private cartQuery: CartQuery, private saleCodeApiService: SaleCodeApiService) {
+  constructor(
+    private cartStore: CartStore,
+    private cartQuery: CartQuery,
+    private saleCodeApiService: SaleCodeApiService,
+    private orderApiService: OrderApiService
+  ) {
   }
 
   updateQuantityCategory(id: string, quantity: number): void {
@@ -43,7 +50,16 @@ export class CartService {
     this.cartStore.remove(categoryId);
   }
 
+  resetStore(): void {
+    this.cartStore.reset();
+  }
+
   getSaleCodeByCode(code: string) {
     return this.saleCodeApiService.getSaleCodeByCode(code);
   }
+
+  createOrder(customerInfo: CustomerInfo, orderInfo: OrderInfo) {
+    return this.orderApiService.createOrder(customerInfo, orderInfo);
+  }
+
 }

@@ -57,13 +57,13 @@
     <nz-form-item nz-col nzSpan="12">
       <nz-form-label nzRequired>Họ và tên</nz-form-label>
       <nz-form-control nzErrorTip="Vui lòng điền họ tên">
-        <input type="text" formControlName="name" nz-input />
+        <input type="text" formControlName="customerName" nz-input />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item nz-col nzSpan="12">
       <nz-form-label nzRequired>Số điện thoại đặt hàng</nz-form-label>
       <nz-form-control nzErrorTip="Vui lòng điền số điện thoại">
-        <input type="tel" formControlName="tel" nz-input />
+        <input type="tel" formControlName="phoneNumber" nz-input />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item nz-col nzSpan="12">
@@ -75,7 +75,7 @@
     <nz-form-item nz-col nzSpan="12">
       <nz-form-label nzRequired>Thành phố</nz-form-label>
       <nz-form-control nzErrorTip="Vui lòng chọn thành phố">
-        <nz-select formControlName="province"
+        <nz-select formControlName="provinceCode"
         (ngModelChange)="provinceChange($event)"
         (nzOpenChange)="openProvinceSelect($event)"
         >
@@ -90,7 +90,7 @@
     <nz-form-item nz-col nzSpan="12">
       <nz-form-label nzRequired>Quận/huyện</nz-form-label>
       <nz-form-control nzErrorTip="Vui lòng chọn quận huyện">
-        <nz-select formControlName="district">
+        <nz-select formControlName="districtCode">
           <nz-option
             *ngFor="let item of districtList"
             [nzValue]="item.code"
