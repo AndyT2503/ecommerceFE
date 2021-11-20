@@ -6,3 +6,7 @@ export interface Notification {
   metaData: any;
   id: string;
 }
+
+export interface NumberNewNotification {
+  numberNotification: number;
+}

@@ -1,5 +1,5 @@
 
-<nz-badge [nzCount]="5" class="cursor-pointer" nzTrigger="click" nzPlacement="bottomRight" nz-dropdown [nzDropdownMenu]="menu">
+<nz-badge [nzCount]="numberNewNotification$ | async" class="cursor-pointer" nzTrigger="click" nzPlacement="bottomRight" nz-dropdown [nzDropdownMenu]="menu">
   <i nz-icon nzType="bell" class="icon" nzTheme="outline"></i>
 </nz-badge>
 <nz-dropdown-menu #menu="nzDropdownMenu">

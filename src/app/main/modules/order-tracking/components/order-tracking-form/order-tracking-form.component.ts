@@ -1,3 +1,5 @@
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { OrderTrackingService } from './../../state/order-tracking.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +12,9 @@ import { Component, OnInit } from '@angular/core';
 export class OrderTrackingFormComponent implements OnInit {
   orderTrackingForm!: FormGroup;
   constructor(
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly orderTrackingService: OrderTrackingService,
+    private readonly modal: NzModalService
   ) { }
 
   ngOnInit(): void {
@@ -35,11 +39,24 @@ export class OrderTrackingFormComponent implements OnInit {
       return;
     }
     const { code, tel } = this.orderTrackingForm.value;
-    this.router.navigate(['/order-tracking/info'], {
-      queryParams: {
-        code,
-        tel
+
+    this.orderTrackingService.getOrderInfo(tel, code).subscribe(
+      () => {
+        this.router.navigate(['/order-tracking/info'], {
+          queryParams: {
+            code,
+            tel
+          }
+        });
+      },
+      (err) => {
+        this.modal.error({
+          nzTitle: 'Không tìm thấy đơn hàng',
+          nzContent: err.error.detail,
+          nzCentered: true
+        });
       }
-    });
+    );
+
   }
 }

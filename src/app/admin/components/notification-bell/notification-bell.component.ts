@@ -1,3 +1,4 @@
+import { NotificationQuery } from './../../../core/notification/notification.query';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationBellComponent implements OnInit {
   data = [1, 2, 3, 4];
-  constructor() { }
+  numberNewNotification$ = this.notificationQuery.numberNewNotification$;
+  constructor(
+    private readonly notificationQuery: NotificationQuery
+  ) { }
 
   ngOnInit(): void {
     //TODO: implement something

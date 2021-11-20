@@ -1,6 +1,6 @@
 import { OrderApiService } from './../../../../shared/api-services/order-api.service';
 import { Injectable } from '@angular/core';
-import { CustomerInfo, OrderInfo } from 'src/app/shared/models/order.model';
+import { CustomerInfo, PurchaseOrderInfo } from 'src/app/shared/models/order.model';
 import { SaleCodeApiService } from './../../../../shared/api-services/sale-code-api.service';
 import { ProductCategory } from './../../../../shared/models/product.model';
 import { CartQuery } from './cart.query';
@@ -58,7 +58,7 @@ export class CartService {
     return this.saleCodeApiService.getSaleCodeByCode(code);
   }
 
-  createOrder(customerInfo: CustomerInfo, orderInfo: OrderInfo) {
+  createOrder(customerInfo: CustomerInfo, orderInfo: PurchaseOrderInfo) {
     return this.orderApiService.createOrder(customerInfo, orderInfo);
   }
 

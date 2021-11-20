@@ -4,6 +4,7 @@ import { Notification } from './notification.model';
 
 export interface NotificationState extends EntityState<Notification> {
   newNotification: any;
+  numberNewNotification: number;
 }
 
 @Injectable()

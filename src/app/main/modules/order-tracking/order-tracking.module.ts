@@ -1,3 +1,8 @@
+import { PaymentStatusPipeModule } from './../../../shared/pipes/payment-status-pipe/payment-status-pipe.module';
+import { OrderStatusPipeModule } from './../../../shared/pipes/order-status-pipe/order-status-pipe.module';
+import { DistrictPipeModule } from './../../../shared/pipes/district-pipe/district-pipe.module';
+import { ProvincePipeModule } from './../../../shared/pipes/province-pipe/province-pipe.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +22,8 @@ const nzModules = [
   NzInputModule,
   NzIconModule,
   NzTimelineModule,
-  NzDividerModule
+  NzDividerModule,
+  NzModalModule
 ];
 
 @NgModule({
@@ -32,7 +38,11 @@ const nzModules = [
     OrderTrackingRoutingModule,
     nzModules,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProvincePipeModule,
+    DistrictPipeModule,
+    OrderStatusPipeModule,
+    PaymentStatusPipeModule
   ]
 })
 export class OrderTrackingModule { }

@@ -122,10 +122,10 @@ export class ProductComponent implements OnInit, OnDestroy {
           (err) => {
             this.nzMessage.error(err.error.detail);
           }
-        )
+        );
       }
 
-    })
+    });
   }
 
   openProductDetail(item: Product): void {

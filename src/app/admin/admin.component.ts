@@ -1,3 +1,4 @@
+import { NotificationService } from './../core/notification/notification.service';
 import { ProductStore } from './modules/product/state/product.store';
 import { UpdatePasswordService } from './../shared/component/update-password-form/update-password.service';
 import { Component, OnInit } from '@angular/core';
@@ -69,7 +70,8 @@ export class AdminComponent implements OnInit {
     private readonly productStore: ProductStore,
     private readonly authenticationQuery: AuthenticationQuery,
     private readonly authenticationService: AuthenticationService,
-    private readonly updatePasswordService: UpdatePasswordService
+    private readonly updatePasswordService: UpdatePasswordService,
+    private readonly notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -81,6 +83,11 @@ export class AdminComponent implements OnInit {
       this.currentMenuSelected = currentMenuSelected;
     }
     this.menuSelected$.next(this.currentMenuSelected);
+    this.getNewNotification();
+  }
+
+  getNewNotification(): void {
+    this.notificationService.getNewNotification().subscribe();
   }
 
   onSelectMenu(item: Menu): void {

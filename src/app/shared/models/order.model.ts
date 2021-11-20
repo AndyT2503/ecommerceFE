@@ -10,7 +10,7 @@ export interface CustomerInfo {
   customerName: string;
 }
 
-export interface OrderInfo {
+export interface PurchaseOrderInfo {
   saleCode: string;
   paymentMethod: PaymentMethod;
   orderDetails: OrderDetail[];
@@ -19,4 +19,26 @@ export interface OrderInfo {
 export interface OrderDetail {
   categoryId: string;
   quantity: number;
+  price?: number;
+  name?: number;
+  image?: string;
+}
+
+export interface Order {
+  id: string;
+  orderCode: string;
+  status: string;
+  address: string;
+  customerName: string;
+  phoneNumber: string;
+  provinceCode: string;
+  districtCode: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  estimatedDeliveryAt: Date;
+  createdAt: Date;
+  saleCode: string;
+  priceSale: number;
+  totalPrice: number;
+  orderDetails: OrderDetail[];
 }
