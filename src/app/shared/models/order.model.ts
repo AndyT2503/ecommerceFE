@@ -24,6 +24,10 @@ export interface OrderDetail {
   image?: string;
 }
 
+export interface OrderLog {
+  status: string;
+  timeStamp: Date;
+}
 export interface Order {
   id: string;
   orderCode: string;
@@ -41,4 +45,5 @@ export interface Order {
   priceSale: number;
   totalPrice: number;
   orderDetails: OrderDetail[];
+  orderLogs: OrderLog[];
 }

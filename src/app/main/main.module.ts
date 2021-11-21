@@ -2,7 +2,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { UpdatePasswordFormModule } from './../shared/component/update-password-form/update-password-form.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -47,7 +47,8 @@ const nzModules = [
     MainRoutingModule,
     nzModules,
     FormsModule,
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule
   ]
 })
 export class MainModule { }

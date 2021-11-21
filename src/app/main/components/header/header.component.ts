@@ -1,26 +1,34 @@
-import { CartQuery } from './../../modules/cart/state/cart.query';
-import { UpdatePasswordService } from './../../../shared/component/update-password-form/update-password.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 import { AuthenticationQuery } from 'src/app/core/authentication/authentication.query';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { LanguageQuery } from 'src/app/core/localization/language.query';
 import { LanguageService } from 'src/app/core/localization/language.service';
 import { LoginComponent } from '../login/login.component';
+import { ProductApiService } from './../../../shared/api-services/product-api.service';
+import { UpdatePasswordService } from './../../../shared/component/update-password-form/update-password.service';
+import { PagingModel } from './../../../shared/models/paging-model';
+import { Product } from './../../../shared/models/product.model';
+import { CartQuery } from './../../modules/cart/state/cart.query';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('loginPage') loginComponent!: LoginComponent;
   userProfile$ = this.authenticationQuery.userProfile$;
   languages = this.translateService.getLangs();
   languageSelected!: string;
-  // TODO: Get data from server
-  autoCompleteData = [1, 2, 3, 4];
+
+  autoCompleteData: Product[] = [];
+  searchValue = new FormControl('');
+  destroyed$ = new Subject<void>();
   listFlag = [
     {
       lang: 'vi',
@@ -41,13 +49,33 @@ export class HeaderComponent implements OnInit {
     private readonly translateService: TranslateService,
     private readonly languageService: LanguageService,
     private readonly updatePasswordService: UpdatePasswordService,
-    private readonly cartQuery: CartQuery
+    private readonly cartQuery: CartQuery,
+    private readonly productApiService: ProductApiService
   ) { }
 
   ngOnInit(): void {
     this.getCurrentLanguage();
+    this.setUpAutoCompleteSearch();
   }
 
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete;
+  }
+
+  setUpAutoCompleteSearch(): void {
+    this.searchValue.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => {
+        if(!value) {
+          return of({} as PagingModel<Product>);
+        }
+        return this.productApiService.getProducts(value, '', '', 1, 5);
+      }),
+      takeUntil(this.destroyed$)
+    ).subscribe(res => this.autoCompleteData = res.items);
+  }
 
   getCurrentLanguage(): void {
     this.languageQuery.select(x => x.language).subscribe((lang) => {
@@ -77,5 +105,9 @@ export class HeaderComponent implements OnInit {
 
   updatePassword(): void {
     this.updatePasswordService.openUpdatePasswordForm();
+  }
+
+  goToDetail(slug: string): void {
+    this.router.navigate([`product/${slug}`]);
   }
 }
