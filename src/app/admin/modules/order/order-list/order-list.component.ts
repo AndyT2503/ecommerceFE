@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { TableQueryParams } from './../../../../shared/models/table-query-params.model';
 import { OrderStatus } from './../../../../core/const/order-status';
 import { PaymentStatus } from './../../../../core/const/payment-status';
@@ -19,6 +20,7 @@ export class OrderListComponent implements OnInit {
       key: 'orderCode',
       canFilter: true,
       canSort: true,
+      placeholder: 'Mã đơn hàng'
     },
     {
       label: 'Ngày mua',
@@ -37,25 +39,27 @@ export class OrderListComponent implements OnInit {
       label: 'Quận/Huyện',
       dataType: 'select',
       canFilter: true,
-      dataFilters: LOCATIONDATA.flatMap(x => x.districts).map(x => ({
+      dataFilters: of(LOCATIONDATA.flatMap(x => x.districts).map(x => ({
         value: x.code,
         label: x.name
-      }))
+      }))),
+      placeholder: 'Quận/huyện'
     },
     {
       label: 'Thành phố',
       dataType: 'select',
       canFilter: true,
-      dataFilters: LOCATIONDATA.map(x => ({
+      dataFilters: of(LOCATIONDATA.map(x => ({
         value: x.code,
         label: x.name
-      }))
+      }))),
+      placeholder: 'Thành phố'
     },
     {
       label: 'Trạng thái thanh toán',
       dataType: 'select',
       canFilter: true,
-      dataFilters: [
+      dataFilters: of([
         {
           value: PaymentStatus.Complete,
           label: 'Đã hoàn thành'
@@ -64,13 +68,14 @@ export class OrderListComponent implements OnInit {
           value: PaymentStatus.Waiting,
           label: 'Chờ thanh toán'
         }
-      ]
+      ]),
+      placeholder: 'Trạng thái'
     },
     {
       label: 'Trạng thái đơn hàng',
       dataType: 'select',
       canFilter: true,
-      dataFilters: [
+      dataFilters: of([
         {
           value: OrderStatus.Complete,
           label: 'Đã hoàn thành'
@@ -91,7 +96,8 @@ export class OrderListComponent implements OnInit {
           value: OrderStatus.Transporting,
           label: 'Đang vận chuyển'
         },
-      ]
+      ]),
+      placeholder: 'Trạng thái'
     },
   ];
   constructor() { }

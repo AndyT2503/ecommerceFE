@@ -3,14 +3,24 @@
     <h4 class="text-base font-bold">Danh sách đơn hàng</h4>
   </div>
 </div>
-<nz-table class="mt-2" #basicTable [nzData]="data" (nzQueryParams)="onQueryParamsChange($event)">
+<nz-table
+  class="mt-2"
+  #basicTable
+  [nzData]="data"
+  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzScroll]="{ x: '1200px' }"
+>
   <thead>
     <tr>
       <ng-container *ngFor="let header of headers">
-        <th [nzShowSort]="header.canSort"  [nzColumnKey]="header.key" [nzSortFn]="header.canSort || null" [nzCustomFilter]="header.canFilter">
+        <th
+          [nzShowSort]="header.canSort"
+          [nzColumnKey]="header.key"
+          [nzSortFn]="header.canSort || null"
+          [nzCustomFilter]="header.canFilter"
+        >
           {{ header.label }}
-          <nz-filter-trigger
-            [(nzVisible)]="header.isSortVisible!"
+          <nz-filter-trigger *ngIf="header.canFilter"
             [nzDropdownMenu]="menu"
           >
             <i nz-icon nzType="filter" nzTheme="fill"></i>
@@ -23,6 +33,7 @@
                   class="w-44 block mb-2"
                   type="text"
                   nz-input
+                  [placeholder]="header.placeholder"
                 />
                 <nz-date-picker
                   *ngIf="header.dataType === 'date'"
@@ -31,9 +42,10 @@
                 <nz-select
                   *ngIf="header.dataType === 'select'"
                   class="w-44 block mb-2"
+                  [nzPlaceHolder]="header.placeholder!"
                 >
                   <nz-option
-                    *ngFor="let item of header.dataFilters"
+                    *ngFor="let item of header.dataFilters | async"
                     [nzValue]="item.value"
                     [nzLabel]="item.label"
                   ></nz-option>

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 export interface HeaderTable {
   canFilter?: boolean;
   canSort?: boolean;
@@ -6,6 +7,6 @@ export interface HeaderTable {
   key?: string;
   width?: number;
   dataType?: 'text' | 'date' | 'select';
-  dataFilters?: {value: string, label: string}[];
-  //onFilterChange?: (value: any) => void;
+  placeholder?: string;
+  dataFilters?: Observable<Array<{ value: string, label: string }>>;
 }
