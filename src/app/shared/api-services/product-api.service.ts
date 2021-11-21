@@ -1,4 +1,4 @@
-import { PagingModel } from './../models/paging-model';
+import { PagingModel } from '../models/paging.model';
 import { Product, ProductCategory } from './../models/product.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

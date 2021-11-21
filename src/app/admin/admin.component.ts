@@ -46,7 +46,7 @@ export class AdminComponent implements OnInit {
       title: 'Đơn hàng',
       link: 'admin/order',
       icon: 'shopping-cart',
-      requireRole: [AppRole.Admin, AppRole.SuperAdmin]
+      requireRole: [AppRole.Admin]
     },
     {
       title: 'Quản trị',

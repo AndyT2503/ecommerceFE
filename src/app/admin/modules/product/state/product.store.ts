@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { PagingModel } from './../../../../shared/models/paging-model';
+import { PagingModel } from '../../../../shared/models/paging.model';
 import { ProductType } from './../../../../shared/models/product-type.model';
 import { Product } from './../../../../shared/models/product.model';
 import { Supplier } from './../../../../shared/models/supplier.model';

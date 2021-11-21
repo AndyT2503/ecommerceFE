@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { PagingModel } from 'src/app/shared/models/paging-model';
+import { PagingModel } from 'src/app/shared/models/paging.model';
 import { User } from 'src/app/shared/models/user.model';
 
 export interface UserState {

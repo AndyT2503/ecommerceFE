@@ -11,7 +11,7 @@ import { LanguageService } from 'src/app/core/localization/language.service';
 import { LoginComponent } from '../login/login.component';
 import { ProductApiService } from './../../../shared/api-services/product-api.service';
 import { UpdatePasswordService } from './../../../shared/component/update-password-form/update-password.service';
-import { PagingModel } from './../../../shared/models/paging-model';
+import { PagingModel } from '../../../shared/models/paging.model';
 import { Product } from './../../../shared/models/product.model';
 import { CartQuery } from './../../modules/cart/state/cart.query';
 

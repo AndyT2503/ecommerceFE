@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PagingModel } from '../models/paging-model';
+import { PagingModel } from '../models/paging.model';
 import { User } from '../models/user.model';
 
 @Injectable({

@@ -52,6 +52,14 @@ const routes: Routes = [
         canActivate: [RoleGuard]
       },
       {
+        path: 'order',
+        loadChildren: () => import('./modules/order/order.module').then((m) => m.OrderModule),
+        data: {
+          requireRoles: [AppRole.Admin]
+        },
+        canActivate: [RoleGuard]
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'supplier'

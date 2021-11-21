@@ -1,4 +1,4 @@
-import { PagingModel } from './../../../../shared/models/paging-model';
+import { PagingModel } from '../../../../shared/models/paging.model';
 import { SaleCode } from './../../../../shared/models/sale-code.model';
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
